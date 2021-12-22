@@ -1,0 +1,41 @@
+/**
+ * Define global styles for the application,
+ * usually html and body content.
+ */
+
+html,
+body {
+  color: value($color-basic, darkest);
+  font-family: 'Lato-Regular';
+  font-size: calc($default-font-size * 0.65);
+  height: 100%;
+  width: 100%;
+
+  @media screen and (min-width: value($media, s)) {
+    font-size: calc($default-font-size * 0.8);
+  }
+
+  @media screen and (min-width: value($media, m)) {
+    font-size: $default-font-size;
+  }
+}
+
+a,
+a:active,
+a:hover,
+a:visited {
+  text-decoration: none;
+}
+
+p {
+  margin-bottom: 0px;
+}
+
+.app {
+  position: relative;
+  min-height: 150vh;
+  background: url('~/assets/images/sub-bg.svg'), url('~/assets/images/main-bg.svg');
+  background-repeat: no-repeat;
+  background-position: 0% 45%, 0% 100%;
+  /* background-size: contain; */
+}

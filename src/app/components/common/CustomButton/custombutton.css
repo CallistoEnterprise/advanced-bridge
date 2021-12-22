@@ -1,0 +1,12 @@
+.custombutton {
+  background-color: value($color-primary, normal);
+  border: none;
+  font-family: 'Lato-Regular';
+  font-size: calc(10px + 0.8vmin);
+  color: value($color-basic, brightest);
+  padding: rem(6px) rem(23px);
+  border-radius: value($border-radius, normal);
+  &:hover {
+    opacity: 0.8;
+  }
+}

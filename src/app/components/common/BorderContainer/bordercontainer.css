@@ -1,0 +1,5 @@
+.bordercontainer {
+  position: relative;
+  border: 2px solid rgba(value($color-basic, bright), 0.22);
+  border-radius: rem(27px);
+}

@@ -1,0 +1,91 @@
+.home {
+  &__title {
+    margin-top: rem(20px);
+    text-align: center;
+    font-family: 'Lato-Bold';
+    font-size: calc(12px + 2vmin);
+    color: value($color-basic, dark);
+  }
+  &__content {
+    margin-top: rem(25px);
+    display: flex;
+    padding-top: rem(82px);
+    padding-left: rem(80px);
+    padding-right: rem(100px);
+    padding-bottom: rem(40px);
+  }
+  &__wallets {
+    text-align: center;
+    &__title {
+      font-family: 'Lato-Regular';
+      font-size: calc(12px + 1.3vmin);
+      color: value($color-basic, dark);
+    }
+    &__block {
+      cursor: pointer;
+      width: rem(150px);
+      height: rem(150px);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      /* padding: rem(15px) rem(27px); */
+      margin-left: rem(20px);
+      margin-right: rem(20px);
+      transition: transform value($time, normal);
+      p {
+        font-family: 'Lato-Regular';
+        font-size: rem(14px);
+        text-transform: uppercase;
+      }
+      &:hover {
+        transform: translateY(-10px);
+      }
+      &--more {
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        text-align: center;
+        bottom: rem(10px);
+      }
+    }
+  }
+  &__claimbtnbox {
+    margin-left: rem(20px);
+    margin-right: rem(20px);
+  }
+  &__claimbtn {
+    width: 100%;
+    text-transform: uppercase;
+    font-size: rem(14px);
+    padding-top: rem(10px);
+    padding-bottom: rem(10px);
+  }
+  &__animal {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__help {
+    cursor: pointer;
+    position: absolute;
+    top: rem(40px);
+    right: rem(50px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform value($time, normal);
+    p {
+      font-family: 'Lato-Regular';
+      font-size: rem(18px);
+      line-height: rem(15px);
+      margin-left: rem(10px);
+    }
+    &:hover {
+      transform: translateY(-5px);
+    }
+  }
+}

@@ -1,0 +1,15 @@
+.header {
+  padding: rem(20px) rem(100px);
+  p {
+    font-size: calc(10px + 0.7vmin);
+    font-family: 'Lato-Regular';
+    color: value($color-basic, darker);
+    margin-right: rem(20px);
+  }
+  .nav-link {
+    color: value($color-basic, darker);
+  }
+  .dropdown-item {
+    color: value($color-primary, normal);
+  }
+}
