@@ -15,5 +15,13 @@
   "Monetary Policy": "Monetary Policy",
   "ERC 223 Token Standard": "ERC 223 Token Standard",
   "Select your wallet": "Select your wallet",
-  "Claim a  Previous Transaction": "Claim a  Previous Transaction"
+  "Claim a  Previous Transaction": "Claim a  Previous Transaction",
+  "Balance": "Balance",
+  "Disconnect": "Disconnect",
+  "Step 1:": "Step 1:",
+  "Select the origin network": "Select the origin network",
+  "The network from which you want to send your assets.": "The network from which you want to send your assets.",
+  "Step 2:": "Step 2:",
+  "Select the destination network": "Select the destination network",
+  "The network to which you want to send your assets.": "The network to which you want to send your assets."
 }

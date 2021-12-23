@@ -1,6 +1,7 @@
 .footer {
-  position: absolute;
-  bottom: rem(120px);
+  /* position: absolute;
+  bottom: rem(120px); */
+  padding-bottom: rem(100px);
   min-width: 100vw;
   &__content {
     display: flex;

@@ -1,0 +1,60 @@
+.network {
+  min-height: rem(900px);
+  margin-top: rem(50px);
+  &__content {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    &__balance {
+      padding: rem(38px) rem(44px);
+      text-align: center;
+      &--title {
+        margin-top: rem(45px);
+        font-family: 'Lato-Bold';
+        font-size: rem(20px);
+        color: value($color-basic, dark);
+      }
+      &--disconnect {
+        margin-top: rem(30px);
+        font-family: 'Lato-Bold';
+        font-size: rem(16px);
+        color: value($color-basic, dark);
+        text-transform: uppercase;
+        cursor: pointer;
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+    &__steps {
+      flex: 1;
+      padding: rem(100px) rem(80px);
+      padding-top: rem(0px);
+      margin-bottom: rem(150px);
+      p {
+        font-family: 'Lato-Regular';
+        font-size: rem(23px);
+        color: value($color-basic, dark);
+        letter-spacing: 0.5px;
+        strong {
+          font-family: 'Lato-Bold';
+        }
+      }
+      h6 {
+        font-family: 'Lato-Regular';
+        font-size: rem(14px);
+        color: value($color-basic, dark);
+      }
+    }
+  }
+  .tokenitem {
+    padding-top: rem(30px);
+    display: flex;
+    justify-content: space-between;
+    p {
+      font-family: 'Lato-Regular';
+      font-size: rem(16px);
+      color: value($color-basic, dark);
+    }
+  }
+}

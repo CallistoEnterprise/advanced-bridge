@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import BorderContainer from '~/app/components/common/BorderContainer';
 import CustomButton from '~/app/components/common/CustomButton';
 import animal from '~/assets/images/animal.png';
@@ -12,7 +13,11 @@ import './home.css';
 
 export default function Home() {
   const [t] = useTranslation();
+  const navigate = useNavigate();
 
+  const onClaim = () => {
+    navigate('/network');
+  };
   return (
     <div className="home container">
       <p className="home__title">{t('Soy Finance Bridge')}</p>
@@ -24,13 +29,13 @@ export default function Home() {
             <p>Help</p>
           </div>
           <div className="mt-5">
-            <BorderContainer className="home__wallets__block">
+            <BorderContainer className="home__wallets__block" onClick={onClaim}>
               <div>
                 <img src={metamaskIcon} alt="metamaskIcon" />
                 <p className="home__wallets__block--more">Metamask</p>
               </div>
             </BorderContainer>
-            <BorderContainer className="home__wallets__block">
+            <BorderContainer className="home__wallets__block" onClick={onClaim}>
               <div>
                 <img src={trustIcon} alt="trustIcon" />
                 <p className="home__wallets__block--more">trust wallet</p>
@@ -38,13 +43,13 @@ export default function Home() {
             </BorderContainer>
           </div>
           <div className="mt-4">
-            <BorderContainer className="home__wallets__block">
+            <BorderContainer className="home__wallets__block" onClick={onClaim}>
               <div>
                 <img src={walletConnect} alt="walletConnect" />
                 <p className="home__wallets__block--more">wallet connect</p>
               </div>
             </BorderContainer>
-            <BorderContainer className="home__wallets__block">
+            <BorderContainer className="home__wallets__block" onClick={onClaim}>
               <div>
                 <img src={moreWallet} alt="moreWallet" />
                 <p className="home__wallets__block--more">more</p>

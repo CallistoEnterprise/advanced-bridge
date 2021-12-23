@@ -3,14 +3,14 @@ import React from 'react';
 import './custombutton.css';
 
 type props = {
-  children: string;
+  children: any;
   className?: string;
   onClick?: () => void;
 };
 
 export default function CustomButton({ className, children, onClick }: props) {
   return (
-    <button className={classNames(className, 'custombutton')} onClick={onClick}>
+    <button className={classNames('custombutton', className)} onClick={onClick}>
       {children}
     </button>
   );

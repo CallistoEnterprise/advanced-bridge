@@ -1,0 +1,32 @@
+.networkselection {
+  margin-top: rem(30px);
+  &-option {
+    /* width: 50px;
+    height: 50px; */
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-right: rem(15px);
+    border: 2px solid value($color-basic, bright);
+    padding: rem(15px) rem(20px);
+    border-radius: rem(16px);
+    opacity: 0.4;
+    font-family: 'Lato-Regular';
+    font-size: rem(18px);
+    color: value($color-basic, dark);
+    img {
+      width: rem(36px);
+      height: rem(36px);
+      margin-right: rem(8px);
+    }
+  }
+  &-container {
+    display: flex;
+    flex-direction: row;
+  }
+  &-selected {
+    opacity: 1;
+  }
+}

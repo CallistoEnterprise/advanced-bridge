@@ -1,4 +1,5 @@
 .home {
+  min-height: rem(900px);
   &__title {
     margin-top: rem(20px);
     text-align: center;
