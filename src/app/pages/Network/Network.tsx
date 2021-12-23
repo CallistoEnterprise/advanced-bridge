@@ -107,6 +107,8 @@ export default function Network() {
     navigate('/');
   };
 
+  console.log(networkOne, networkTwo);
+
   return (
     <div className="network container">
       <div className="network__content">
