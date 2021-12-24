@@ -151,7 +151,7 @@ export default function TokenList() {
     if (token !== null) {
       navigate('/tokens');
     }
-  }, [token]);
+  }, [navigate, token]);
 
   const onChangeToken = (option: network) => {
     setToken(option.value);

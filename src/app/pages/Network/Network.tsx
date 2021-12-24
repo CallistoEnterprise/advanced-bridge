@@ -51,7 +51,7 @@ export default function Network() {
     if (networkOne !== null && networkTwo !== null) {
       navigate('/tokens');
     }
-  }, [networkOne, networkTwo]);
+  }, [navigate, networkOne, networkTwo]);
 
   const onChangeNetworkOne = (option: network) => {
     setNetworkOne(option.value);
