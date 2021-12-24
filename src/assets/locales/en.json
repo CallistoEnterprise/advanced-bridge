@@ -23,5 +23,7 @@
   "The network from which you want to send your assets.": "The network from which you want to send your assets.",
   "Step 2:": "Step 2:",
   "Select the destination network": "Select the destination network",
-  "The network to which you want to send your assets.": "The network to which you want to send your assets."
+  "The network to which you want to send your assets.": "The network to which you want to send your assets.",
+  "Step 3 :": "Step 3 :",
+  "Select the token to swap": "Select the token to swap"
 }

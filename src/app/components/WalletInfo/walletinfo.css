@@ -1,0 +1,23 @@
+.walletinfo {
+  &__balance {
+    padding: rem(38px) rem(44px);
+    text-align: center;
+    &--title {
+      margin-top: rem(45px);
+      font-family: 'Lato-Bold';
+      font-size: rem(20px);
+      color: value($color-basic, dark);
+    }
+    &--disconnect {
+      margin-top: rem(30px);
+      font-family: 'Lato-Bold';
+      font-size: rem(16px);
+      color: value($color-basic, dark);
+      text-transform: uppercase;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}
