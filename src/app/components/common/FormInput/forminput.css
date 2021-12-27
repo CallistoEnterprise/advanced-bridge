@@ -1,0 +1,23 @@
+.forminput {
+  .form-control {
+    border: none;
+    border-bottom: 2px solid value($color-basic, bright);
+    background: transparent;
+    font-family: 'Lato-Regular';
+    font-size: rem(20px);
+    border-radius: 0px;
+    padding-left: 0px;
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  .input-group-text {
+    background-color: transparent !important;
+    border: none;
+    border-bottom: 2px solid value($color-basic, bright);
+    font-family: 'Lato-Bold';
+    border-radius: 0px;
+    font-size: rem(20px);
+    padding-right: 0px;
+  }
+}

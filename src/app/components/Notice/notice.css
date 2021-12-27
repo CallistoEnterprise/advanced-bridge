@@ -1,0 +1,26 @@
+.notice {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  padding: rem(28px) rem(36px) rem(20px);
+  text-align: center;
+  max-width: 281px;
+  h5 {
+    font-family: 'Lato-Bold';
+    font-size: rem(21px);
+    color: value($color-basic, dark);
+    margin-top: rem(27px);
+  }
+  h4 {
+    font-family: 'Lato-Bold';
+    font-size: rem(16px);
+    color: value($color-basic, dark);
+    margin-top: rem(20px);
+  }
+  p {
+    font-family: 'Lato-Regular';
+    font-size: rem(16px);
+    color: value($color-basic, dark);
+    margin-top: rem(20px);
+  }
+}

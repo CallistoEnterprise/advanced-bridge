@@ -25,5 +25,15 @@
   "Select the destination network": "Select the destination network",
   "The network to which you want to send your assets.": "The network to which you want to send your assets.",
   "Step 3 :": "Step 3 :",
-  "Select the token to swap": "Select the token to swap"
+  "Select the token to swap": "Select the token to swap",
+  "Step 4 :": "Step 4 :",
+  "Swap": "Swap",
+  "Amount to swap": "Amount to swap",
+  "Amount": "Amount",
+  "Buy Callisto coins": "Buy Callisto coins",
+  "Minimum received": "Minimum received",
+  "Price impact": "Price impact",
+  "The value will be deducted from your swap. No fees are applied.": "The value will be deducted from your swap. No fees are applied.",
+  "Specific destination wallet": "Specific destination wallet",
+  "destination_wallet": "destination_wallet"
 }

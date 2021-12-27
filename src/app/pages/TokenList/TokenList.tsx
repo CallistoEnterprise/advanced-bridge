@@ -149,7 +149,7 @@ export default function TokenList() {
 
   useEffect(() => {
     if (token !== null) {
-      navigate('/tokens');
+      navigate('/swap');
     }
   }, [navigate, token]);
 

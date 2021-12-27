@@ -7,7 +7,7 @@ $color-basic: (
   normal: null,
   dark: #000000,
   darker: #b0b0b0,
-  darkest: #131313,
+  darkest: #131313
 );
 
 $color-primary: (
