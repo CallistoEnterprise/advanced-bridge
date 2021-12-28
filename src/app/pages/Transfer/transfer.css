@@ -1,0 +1,46 @@
+.transfer {
+  min-height: rem(900px);
+  margin-top: rem(50px);
+  &__content {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    &__steps {
+      flex: 1;
+      padding: rem(100px) rem(80px);
+      padding-top: rem(0px);
+      margin-bottom: rem(80px);
+      padding-left: 0px;
+      text-align: center;
+      h4 {
+        display: inline-block;
+        font-family: 'Lato-Bold';
+        font-size: rem(45px);
+        color: value($color-primary, normal);
+        border: 2px solid rgba(value($color-basic, bright), 0.22);
+        border-radius: rem(27px);
+        padding: rem(20px) rem(90px);
+      }
+      p {
+        font-family: 'Lato-Regular';
+        font-size: rem(23px);
+        color: value($color-basic, dark);
+        letter-spacing: 0.5px;
+        strong {
+          font-family: 'Lato-Bold';
+        }
+      }
+      h6 {
+        font-family: 'Lato-Regular';
+        font-size: rem(22px);
+        color: value($color-basic, dark);
+      }
+    }
+  }
+  &__selection {
+    justify-content: center !important;
+    .tokenselection-option {
+      opacity: 1;
+    }
+  }
+}

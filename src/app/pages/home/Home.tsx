@@ -18,6 +18,11 @@ export default function Home() {
   const onClaim = () => {
     navigate('/network');
   };
+
+  const onPreviousClaim = () => {
+    navigate('/previousclaim');
+  };
+
   return (
     <div className="home container">
       <p className="home__title">{t('Soy Finance Bridge')}</p>
@@ -57,7 +62,9 @@ export default function Home() {
             </BorderContainer>
           </div>
           <div className="mt-4 home__claimbtnbox">
-            <CustomButton className="home__claimbtn">{t('Claim a  Previous Transaction')}</CustomButton>
+            <CustomButton className="home__claimbtn" onClick={onPreviousClaim}>
+              {t('Claim a  Previous Transaction')}
+            </CustomButton>
           </div>
         </div>
         <div className="home__animal">

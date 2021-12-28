@@ -1,3 +1,4 @@
+/* stylelint-disable property-no-vendor-prefix */
 .customcheckbox {
   .container {
     display: block;
@@ -28,12 +29,12 @@
     left: 0;
     height: 25px;
     width: 25px;
-    background-color: #eee;
+    background-color: #eeeeee;
     border-radius: 100%;
   }
 
   .container:hover input ~ .checkmark {
-    background-color: #ccc;
+    background-color: #cccccc;
   }
 
   .container input:checked ~ .checkmark {
@@ -41,7 +42,7 @@
   }
 
   .checkmark:after {
-    content: "";
+    content: '';
     position: absolute;
     display: none;
   }

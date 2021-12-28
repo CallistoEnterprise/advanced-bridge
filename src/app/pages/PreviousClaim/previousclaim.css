@@ -1,0 +1,77 @@
+.previousclaim {
+  min-height: rem(950px);
+  margin-top: rem(20px);
+  &__content {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    &__steps {
+      flex: 1;
+      padding: rem(100px) rem(50px);
+      padding-top: rem(0px);
+      padding-right: rem(0px);
+      margin-bottom: rem(150px);
+      h5 {
+        font-family: 'Lato-Regular';
+        font-size: rem(26px);
+        color: value($color-basic, dark);
+        letter-spacing: 0.5px;
+      }
+      p {
+        font-family: 'Lato-Regular';
+        font-size: rem(23px);
+        color: value($color-basic, dark);
+        letter-spacing: 0.5px;
+      }
+      h6 {
+        font-family: 'Lato-Regular';
+        font-size: rem(14px);
+        color: value($color-basic, dark);
+      }
+    }
+  }
+  &__claiminfo {
+    margin-top: rem(100px);
+    padding: rem(40px) rem(0px) rem(0px);
+    p {
+      padding: rem(0px) rem(35px);
+      font-family: 'Lato-Bold';
+      font-size: rem(18px);
+      color: value($color-basic, dark);
+      letter-spacing: 0.5px;
+    }
+    h6 {
+      padding: rem(0px) rem(35px);
+      margin-top: rem(26px);
+      font-family: 'Lato-Regular';
+      font-size: rem(16px);
+      color: value($color-basic, dark);
+    }
+    hr {
+      margin: rem(20px) rem(35px);
+      background-color: value($color-primary, normal);
+    }
+    &__button {
+      margin-top: rem(15px);
+      width: 100%;
+      padding: rem(15px) rem(0px);
+      border: none;
+      border-bottom-left-radius: rem(27px);
+      border-bottom-right-radius: rem(27px);
+      background-color: value($color-primary, normal);
+      font-family: 'Lato-Bold';
+      font-size: rem(20px);
+      color: value($color-basic, brightest);
+    }
+  }
+  .tokenitem {
+    padding-top: rem(30px);
+    display: flex;
+    justify-content: space-between;
+    p {
+      font-family: 'Lato-Regular';
+      font-size: rem(16px);
+      color: value($color-basic, dark);
+    }
+  }
+}

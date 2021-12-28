@@ -22,14 +22,15 @@
   &__submit {
     margin-top: rem(15px);
     width: 100%;
-    padding: rem(10px) rem(0px);
+    padding: rem(15px) rem(0px);
     border: none;
     border-bottom-left-radius: rem(27px);
     border-bottom-right-radius: rem(27px);
     background-color: value($color-primary, normal);
     font-family: 'Lato-Bold';
-    font-size: rem(25px);
+    font-size: rem(20px);
     color: value($color-basic, brightest);
+    letter-spacing: 1px;
   }
   &__row {
     padding: rem(0px) rem(44px);

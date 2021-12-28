@@ -1,10 +1,9 @@
-.guidepet {
-  text-align: center;
+.claimpet {
   position: absolute;
-  right: 0px;
+  right: -60px;
   bottom: 0px;
   &__videoguide {
+    margin-top: rem(20px);
     margin-left: rem(30px);
-    width: rem(190px);
   }
 }

@@ -15,7 +15,11 @@ const Swap = () => {
   const navigate = useNavigate();
 
   const onPrevious = () => {
-    navigate('/network');
+    navigate('/tokens');
+  };
+
+  const onSubmit = () => {
+    navigate('/claim');
   };
 
   return (
@@ -24,7 +28,7 @@ const Swap = () => {
         <CustomButton className="previous_btn" onClick={onPrevious}>
           <div>
             <img src={previousIcon} alt="previousIcon" className="me-2" />
-            Previous
+            {t('Previous')}
           </div>
         </CustomButton>
         <GuidePet />
@@ -35,7 +39,7 @@ const Swap = () => {
               <p className="swap__content--row">
                 <strong>{t('Step 4:')}</strong> {t('Swap')}
               </p>
-              <SwapForm />
+              <SwapForm submit={onSubmit} />
             </div>
           </BorderContainer>
         </div>

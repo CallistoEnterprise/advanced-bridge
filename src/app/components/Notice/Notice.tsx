@@ -9,7 +9,7 @@ export default function Notice() {
       <img src={noticeIcon} alt="noticeIcon" />
       <h5>Notice</h5>
       <p>You have currently: </p>
-      <h5>0 CLO</h5>
+      <h4>0 CLO</h4>
       <h4>CLO coins are required to cover the transaction fee on Callisto Network.</h4>
       <p>Please consider buying some to complete the operation. </p>
     </BorderContainer>

@@ -167,7 +167,7 @@ export default function TokenList() {
         <CustomButton className="previous_btn" onClick={onPrevious}>
           <div>
             <img src={previousIcon} alt="previousIcon" className="me-2" />
-            Previous
+            {t('Previous')}
           </div>
         </CustomButton>
         <GuidePet />

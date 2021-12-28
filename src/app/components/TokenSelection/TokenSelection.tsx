@@ -12,12 +12,13 @@ interface network {
 type props = {
   options: Array<network>;
   onChange?: (option: network) => void;
+  className?: string;
 };
 
-export default function TokenSelection({ options, onChange }: props) {
+export default function TokenSelection({ options, className, onChange }: props) {
   return (
     <div className="tokenselection">
-      <RadioGroup containerStyle={classNames('tokenselection-container')} onChange={onChange}>
+      <RadioGroup containerStyle={classNames('tokenselection-container', className)} onChange={onChange}>
         {options.map((option, index) => (
           <Radio
             key={index}

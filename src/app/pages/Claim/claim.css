@@ -1,0 +1,40 @@
+.claim {
+  min-height: rem(755px);
+  margin-top: rem(50px);
+  &__content {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+    &__animal {
+      margin-top: rem(300px);
+      width: rem(300px);
+    }
+    &__block {
+      margin-top: rem(450px);
+      width: rem(150px);
+    }
+    h4 {
+      font-family: 'Lato-Bold';
+      font-size: rem(45px);
+      color: value($color-primary, normal);
+    }
+    p {
+      width: rem(450px);
+      margin-top: rem(49px);
+      font-family: 'Lato-Regular';
+      font-size: rem(25px);
+      color: value($color-basic, dark);
+    }
+  }
+  &__claimbtn {
+    margin-top: rem(49px);
+    width: rem(200px);
+    text-transform: uppercase;
+    font-size: rem(14px);
+    padding-top: rem(10px);
+    padding-bottom: rem(10px);
+    font-family: 'Lato-Bold';
+    letter-spacing: 0.8px;
+  }
+}
