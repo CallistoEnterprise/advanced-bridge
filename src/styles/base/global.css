@@ -48,6 +48,12 @@ hr.solid {
   background-repeat: no-repeat;
   background-position: 0% 45%, 0% 100%;
   /* background-size: contain; */
+  @media only screen and (max-width: $md) {
+    background-position: 0% 25%, 0% 100%;
+  }
+  @media only screen and (max-width: $sm) {
+    background-position: 0% 25%, 0% 125%;
+  }
 }
 
 .previous_btn {

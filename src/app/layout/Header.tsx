@@ -25,7 +25,7 @@ export default function Header() {
   };
 
   return (
-    <Navbar className="header">
+    <Navbar className="header" expand="lg">
       <Navbar.Brand href="#home">
         <img src={logo} alt="logo" />
       </Navbar.Brand>

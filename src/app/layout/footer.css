@@ -3,9 +3,25 @@
   bottom: rem(120px); */
   padding-bottom: rem(100px);
   min-width: 100vw;
+  @media only screen and (max-width: $sm) {
+    padding-bottom: rem(80px);
+  }
   &__content {
     display: flex;
     justify-content: space-between;
+    @media only screen and (max-width: $sm) {
+      display: block;
+      text-align: center;
+      /* margin-top: rem(50px); */
+    }
+    &--center {
+      display: flex;
+      justify-content: space-between;
+      @media only screen and (max-width: $sm) {
+        display: block;
+        margin-top: rem(50px);
+      }
+    }
   }
   &__link {
     cursor: pointer;
@@ -17,6 +33,9 @@
     &:hover {
       text-decoration: underline;
     }
+    @media only screen and (max-width: $sm) {
+      display: none;
+    }
   }
   &__bold {
     margin-top: rem(10px);
@@ -24,12 +43,19 @@
     font-size: value($font-size, m);
     color: value($color-basic, brightest);
     letter-spacing: 0.8px;
+    @media only screen and (max-width: $sm) {
+      display: block;
+      margin-top: rem(20px);
+    }
   }
   &__center {
     margin-right: rem(50px);
     margin-left: rem(50px);
   }
   &__socialmedia {
+    @media only screen and (max-width: $sm) {
+      margin-top: rem(50px);
+    }
     img {
       margin-left: rem(5px);
       margin-right: rem(5px);

@@ -60,3 +60,10 @@ $z: (
   xl: 50,
   xxl: 100
 );
+
+$xl: 1539px;
+$lg: 1280px;
+$md: 991px;
+$sm: 767px;
+$xs: 479px;
+$width: normal;

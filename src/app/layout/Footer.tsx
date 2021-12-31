@@ -20,7 +20,7 @@ export default function Footer() {
             <p className="footer__link">{t('All rights reserved by')}</p>
             <p className="footer__bold">{t('Callisto Enterprise')}</p>
           </div>
-          <div className="d-flex justify-content-between">
+          <div className="footer__content--center">
             <div className="footer__center">
               <p className="footer__bold">{t('Ressources')}</p>
               <p className="footer__link">{t('Team')}</p>

@@ -1,5 +1,9 @@
 .header {
   padding: rem(20px) rem(100px);
+  @media only screen and (max-width: $md) {
+    padding: rem(20px) rem(45px);
+  }
+
   p {
     font-size: calc(10px + 0.7vmin);
     font-family: 'Lato-Regular';

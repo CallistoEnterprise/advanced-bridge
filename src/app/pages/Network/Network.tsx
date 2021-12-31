@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import CustomButton from '~/app/components/common/CustomButton';
@@ -47,11 +47,11 @@ export default function Network() {
   const [networkOne, setNetworkOne] = useState(null);
   const [networkTwo, setNetworkTwo] = useState(null);
 
-  useEffect(() => {
-    if (networkOne !== null && networkTwo !== null) {
-      navigate('/tokens');
-    }
-  }, [navigate, networkOne, networkTwo]);
+  // useEffect(() => {
+  //   if (networkOne !== null && networkTwo !== null) {
+  //     navigate('/tokens');
+  //   }
+  // }, [navigate, networkOne, networkTwo]);
 
   const onChangeNetworkOne = (option: network) => {
     setNetworkOne(option.value);
@@ -65,7 +65,11 @@ export default function Network() {
     navigate('/');
   };
 
-  console.log(networkOne, networkTwo);
+  const onNext = () => {
+    if (networkOne !== null && networkTwo !== null) {
+      navigate('/tokens');
+    }
+  };
 
   return (
     <div className="network container">
@@ -90,6 +94,9 @@ export default function Network() {
           </p>
           <h6>{t('The network to which you want to send your assets.')}</h6>
           <NetworkSelection options={options} onChange={onChangeNetworkTwo} />
+          <CustomButton className="mt-5" onClick={onNext} disabled={networkOne === null || networkTwo === null}>
+            {t('Next')}
+          </CustomButton>
         </div>
       </div>
     </div>

@@ -1,5 +1,8 @@
 .home {
   min-height: rem(900px);
+  @media only screen and (max-width: $md) {
+    min-height: rem(950px);
+  }
   &__title {
     margin-top: rem(20px);
     text-align: center;
@@ -10,10 +13,15 @@
   &__content {
     margin-top: rem(25px);
     display: flex;
+    justify-content: center;
     padding-top: rem(82px);
     padding-left: rem(80px);
     padding-right: rem(100px);
     padding-bottom: rem(40px);
+    @media only screen and (max-width: $sm) {
+      padding-left: rem(40px);
+      padding-right: rem(40px);
+    }
   }
   &__wallets {
     text-align: center;
@@ -24,8 +32,8 @@
     }
     &__block {
       cursor: pointer;
-      width: rem(150px);
-      height: rem(150px);
+      width: rem(170px);
+      height: rem(170px);
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -34,10 +42,18 @@
       margin-left: rem(20px);
       margin-right: rem(20px);
       transition: transform value($time, normal);
+      @media only screen and (max-width: $sm) {
+        width: rem(210px);
+        height: rem(210px);
+      }
       p {
         font-family: 'Lato-Regular';
         font-size: rem(14px);
         text-transform: uppercase;
+        @media only screen and (max-width: $sm) {
+          font-size: rem(16px);
+          text-transform: uppercase;
+        }
       }
       &:hover {
         transform: translateY(-10px);
@@ -69,6 +85,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    @media only screen and (max-width: $md) {
+      display: none;
+    }
   }
   &__help {
     cursor: pointer;
@@ -87,6 +106,16 @@
     }
     &:hover {
       transform: translateY(-5px);
+    }
+    @media only screen and (max-width: $sm) {
+      bottom: rem(-50px);
+      right: 0px;
+      top: auto;
+      margin-left: auto;
+      margin-right: auto;
+      left: 0;
+      right: 0;
+      text-align: center;
     }
   }
 }

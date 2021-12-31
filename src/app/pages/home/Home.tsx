@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <div className="home container">
       <p className="home__title">{t('Soy Finance Bridge')}</p>
-      <BorderContainer className="home__content">
+      <BorderContainer className="home__content bordercontainer--noborder">
         <div className="home__wallets">
           <p className="home__wallets__title">{t('Select your wallet')}</p>
           <div className="home__help">
@@ -67,7 +67,7 @@ export default function Home() {
             </CustomButton>
           </div>
         </div>
-        <div className="home__animal">
+        <div className="home__animal home__animal@m">
           <img src={animal} alt="animal" />
         </div>
       </BorderContainer>

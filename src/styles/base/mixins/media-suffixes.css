@@ -35,3 +35,42 @@
     }
   }
 }
+
+$xl: 1539px;
+$lg: 1280px;
+$md: 991px;
+$sm: 767px;
+$xs: 479px;
+$width: normal;
+
+@define-mixin respond-to($media, $width: normal) {
+  @if ($width == normal) {
+    @if ($media == xl) {
+      @media only screen and (max-width: $xl) {
+        @mixin-content;
+      }
+    } @else if ($media == lg) {
+      @media only screen and (max-width: $lg) {
+        @mixin-content;
+      }
+    } @else if ($media == md) {
+      @media only screen and (max-width: $md) {
+        @mixin-content;
+      }
+    } @else if ($media == sm) {
+      @media only screen and (max-width: $sm) {
+        @mixin-content;
+      }
+    } @else if ($media == xs) {
+      @media only screen and (max-width: $xs) {
+        @mixin-content;
+      }
+    }
+  } @else {
+    @if ($media == md) {
+      @media only screen and (max-width: ($md - 121px)) {
+        @mixin-content;
+      }
+    }
+  }
+}
