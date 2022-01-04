@@ -43,7 +43,7 @@ module.exports = {
     },
     plugins: [
       new PurgecssPlugin({
-        paths: () => glob.sync('./src/**/*.tsx', { nodir: true })
+        paths: () => glob.sync('./src/**/*', { nodir: true })
       })
     ]
   },
