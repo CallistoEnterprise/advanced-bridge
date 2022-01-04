@@ -51,7 +51,7 @@
       }
       p {
         font-family: 'Lato-Regular';
-        font-size: calc(12px + 0.2vmin);
+        font-size: 1rem;
         text-transform: uppercase;
         @media only screen and (max-width: $sm) {
           font-size: rem(16px);

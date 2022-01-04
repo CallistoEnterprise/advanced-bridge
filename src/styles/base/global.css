@@ -7,25 +7,17 @@ html,
 body {
   color: value($color-basic, darkest);
   font-family: 'Lato-Regular';
-  font-size: 10px;
+  font-size: calc($default-font-size * 0.65);
   height: 100%;
   width: 100%;
 
-  @media screen and (min-width: 767px) {
+  @media screen and (min-width: 768px) {
     font-size: 12px;
   }
 
   @media screen and (min-width: 991px) {
     font-size: 16px;
   }
-
-  /* @media screen and (min-width: value($media, s)) {
-    font-size: calc($default-font-size * 0.8);
-  } */
-
-  /* @media screen and (min-width: value($media, m)) {
-    font-size: $default-font-size;
-  } */
 }
 
 a,
