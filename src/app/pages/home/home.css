@@ -127,3 +127,18 @@
     }
   }
 }
+html {
+  color: #131313;
+  font-family: 'Lato-Regular';
+  font-size: 10px;
+  height: 100%;
+  width: 100%;
+
+  @media screen and (min-width: 768px) {
+    font-size: 12px;
+  }
+
+  @media screen and (min-width: 991px) {
+    font-size: 16px;
+  }
+}
