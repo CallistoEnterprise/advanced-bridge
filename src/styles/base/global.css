@@ -11,13 +11,21 @@ body {
   height: 100%;
   width: 100%;
 
-  @media screen and (min-width: value($media, s)) {
+  @media only screen and (min-width: $sm) {
     font-size: calc($default-font-size * 0.8);
   }
 
-  @media screen and (min-width: value($media, m)) {
+  @media only screen and (min-width: $md) {
     font-size: $default-font-size;
   }
+
+  /* @media screen and (min-width: value($media, s)) {
+    font-size: calc($default-font-size * 0.8);
+  } */
+
+  /* @media screen and (min-width: value($media, m)) {
+    font-size: $default-font-size;
+  } */
 }
 
 a,
