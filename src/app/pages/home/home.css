@@ -45,10 +45,10 @@
       margin-left: rem(20px);
       margin-right: rem(20px);
       transition: transform value($time, normal);
-      /* @media only screen and (max-width: $sm) {
+      @media only screen and (max-width: $sm) {
         width: rem(210px);
         height: rem(210px);
-      } */
+      }
       p {
         font-family: 'Lato-Regular';
         font-size: calc(12px + 0.2vmin);
