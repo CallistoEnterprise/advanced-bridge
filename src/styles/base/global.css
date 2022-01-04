@@ -7,30 +7,12 @@ html,
 body {
   color: value($color-basic, darkest);
   font-family: 'Lato-Regular';
-  font-size: calc($default-font-size * 0.65);
+  font-size: 16px;
   height: 100%;
   width: 100%;
 
-  @media screen and (min-width: 768px) {
+  @media only screen and (max-width: 767px) {
     font-size: 12px;
-  }
-
-  @media screen and (min-width: 991px) {
-    font-size: 16px;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  html,
-  body {
-    font-size: 12px;
-  }
-}
-
-@media screen and (min-width: 991px) {
-  html,
-  body {
-    font-size: 16px;
   }
 }
 
