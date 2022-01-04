@@ -5,12 +5,7 @@
 
 html,
 body {
-  color: value($color-basic, darkest);
-  font-family: 'Lato-Regular';
-  font-size: 16px;
-  height: 100%;
-  width: 100%;
-
+  font-size: 12px;
   @media only screen and (max-width: 767px) {
     font-size: 12px;
   }
