@@ -5,22 +5,62 @@
   padding: rem(28px) rem(36px) rem(20px);
   text-align: center;
   max-width: 281px;
+  @media only screen and (max-width: $md) {
+    position: inherit;
+    max-width: none;
+    display: flex;
+
+    margin-top: rem(20px);
+  }
+  @media only screen and (max-width: $sm) {
+    border: none;
+    padding-bottom: 50px;
+    margin-top: 0px;
+  }
+  &__values {
+    @media only screen and (max-width: $md) {
+      display: flex;
+      justify-content: space-between;
+      margin-left: rem(50px);
+    }
+  }
+  &__description {
+    margin-left: rem(50px);
+    text-align: left;
+    h4 {
+      margin-top: rem(10px) !important;
+    }
+    p {
+      @media only screen and (max-width: $md) {
+        margin-top: 0px !important;
+      }
+    }
+  }
   h5 {
     font-family: 'Lato-Bold';
     font-size: rem(21px);
     color: value($color-basic, dark);
     margin-top: rem(27px);
+    @media only screen and (max-width: $md) {
+      margin-top: rem(27px);
+    }
   }
   h4 {
     font-family: 'Lato-Bold';
     font-size: rem(16px);
     color: value($color-basic, dark);
     margin-top: rem(20px);
+    @media only screen and (max-width: $md) {
+      margin-top: rem(27px);
+    }
   }
   p {
     font-family: 'Lato-Regular';
     font-size: rem(16px);
     color: value($color-basic, dark);
     margin-top: rem(20px);
+    @media only screen and (max-width: $md) {
+      margin-top: rem(27px);
+    }
   }
 }

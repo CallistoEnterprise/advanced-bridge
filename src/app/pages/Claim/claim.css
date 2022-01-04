@@ -1,18 +1,41 @@
 .claim {
-  min-height: rem(755px);
   margin-top: rem(50px);
   &__content {
     position: relative;
     display: flex;
     align-items: flex-start;
     justify-content: space-around;
+    &--blockbox {
+      display: flex;
+      @media only screen and (max-width: $sm) {
+        margin-top: rem(130px);
+        display: flex;
+        align-items: flex-end;
+      }
+    }
+    &--text {
+      @media only screen and (max-width: $sm) {
+        margin-left: rem(50px);
+      }
+    }
+    @media only screen and (max-width: $sm) {
+      display: flex;
+      flex-direction: column-reverse;
+    }
     &__animal {
       margin-top: rem(300px);
       width: rem(300px);
+      @media only screen and (max-width: $sm) {
+        margin-top: rem(0px);
+      }
     }
+
     &__block {
       margin-top: rem(450px);
       width: rem(150px);
+      @media only screen and (max-width: $sm) {
+        margin-top: rem(0px);
+      }
     }
     h4 {
       font-family: 'Lato-Bold';

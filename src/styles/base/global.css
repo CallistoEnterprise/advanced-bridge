@@ -44,16 +44,16 @@ hr.solid {
   overflow-x: hidden;
   position: relative;
   /* min-height: 150vh; */
-  background: url('~/assets/images/sub-bg.svg'), url('~/assets/images/main-bg.svg');
+  /* background: url('~/assets/images/main-bg.svg');
   background-repeat: no-repeat;
-  background-position: 0% 45%, 0% 100%;
+  background-position: 0% 100%; */
   /* background-size: contain; */
-  @media only screen and (max-width: $md) {
-    background-position: 0% 25%, 0% 100%;
+  /* @media only screen and (max-width: $md) {
+    background-position: 0% 100%;
   }
   @media only screen and (max-width: $sm) {
-    background-position: 0% 25%, 0% 125%;
-  }
+    background-position: 0% 125%;
+  } */
 }
 
 .previous_btn {
@@ -64,4 +64,13 @@ hr.solid {
   font-size: rem(18px);
   padding: rem(11px) rem(27px);
   margin-right: rem(20px);
+  @media only screen and (max-width: $md) {
+    position: absolute;
+    bottom: -50px;
+  }
+
+  @media only screen and (max-width: $sm) {
+    left: rem(20px);
+    bottom: -20px;
+  }
 }

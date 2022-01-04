@@ -30,6 +30,9 @@
     align-content: space-between;
     max-height: rem(300px);
     overflow-y: auto;
+    @media only screen and (max-width: $sm) {
+      max-height: rem(500px);
+    }
     &::-webkit-scrollbar {
       width: rem(10px);
     }

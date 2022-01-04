@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
 import BorderContainer from '~/app/components/common/BorderContainer';
 import CustomButton from '~/app/components/common/CustomButton';
@@ -9,6 +10,11 @@ import WalletInfo from '~/app/components/WalletInfo';
 import previousIcon from '~/assets/images/previous.svg';
 import './swap.css';
 import SwapForm from './SwapForm';
+
+const Default = ({ children }: any) => {
+  const isNotMobile = useMediaQuery({ minWidth: 991 });
+  return isNotMobile ? children : null;
+};
 
 const Swap = () => {
   const [t] = useTranslation();
@@ -31,17 +37,21 @@ const Swap = () => {
             {t('Previous')}
           </div>
         </CustomButton>
-        <GuidePet />
-        <WalletInfo />
-        <div className="swap__content__steps">
-          <BorderContainer className="swap__content__bordercontainer">
-            <div>
-              <p className="swap__content--row">
-                <strong>{t('Step 4:')}</strong> {t('Swap')}
-              </p>
-              <SwapForm submit={onSubmit} />
-            </div>
-          </BorderContainer>
+        <Default>
+          <GuidePet />
+        </Default>
+        <div className="swap__content--mainboard">
+          <WalletInfo />
+          <div className="swap__content__steps">
+            <BorderContainer className="swap__content__bordercontainer">
+              <div>
+                <p className="swap__content--row">
+                  <strong>{t('Step 4:')}</strong> {t('Swap')}
+                </p>
+                <SwapForm submit={onSubmit} />
+              </div>
+            </BorderContainer>
+          </div>
         </div>
         <Notice />
       </div>

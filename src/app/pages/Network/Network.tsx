@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
 import CustomButton from '~/app/components/common/CustomButton';
 import GuidePet from '~/app/components/common/GuidePet';
@@ -41,6 +42,11 @@ const options = [
   }
 ];
 
+const Default = ({ children }: any) => {
+  const isNotMobile = useMediaQuery({ minWidth: 768 });
+  return isNotMobile ? children : null;
+};
+
 export default function Network() {
   const [t] = useTranslation();
   const navigate = useNavigate();
@@ -80,7 +86,9 @@ export default function Network() {
             Previous
           </div>
         </CustomButton>
-        <GuidePet />
+        <Default>
+          <GuidePet />
+        </Default>
         <WalletInfo />
         <div className="network__content__steps">
           <p>

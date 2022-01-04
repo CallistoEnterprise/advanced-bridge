@@ -1,16 +1,40 @@
 .previousclaim {
-  min-height: rem(950px);
+  /* min-height: rem(950px); */
   margin-top: rem(20px);
+  margin-bottom: rem(80px);
+  @media only screen and (max-width: $sm) {
+    margin-bottom: rem(120px);
+  }
   &__content {
     position: relative;
     display: flex;
     align-items: flex-start;
+    .bordercontainer {
+      @media only screen and (max-width: $sm) {
+        border: none;
+      }
+    }
+    .previous_btn {
+      margin-bottom: 0px;
+      @media only screen and (max-width: $sm) {
+        margin-bottom: -40px;
+      }
+    }
+    @media only screen and (max-width: $sm) {
+      display: block;
+    }
     &__steps {
       flex: 1;
       padding: rem(100px) rem(50px);
       padding-top: rem(0px);
       padding-right: rem(0px);
-      margin-bottom: rem(150px);
+      /* margin-bottom: rem(150px); */
+      @media only screen and (max-width: $sm) {
+        margin-bottom: rem(0px);
+        padding-bottom: rem(20px);
+        padding-left: rem(20px);
+        padding-right: rem(20px);
+      }
       h5 {
         font-family: 'Lato-Regular';
         font-size: rem(26px);
@@ -33,12 +57,17 @@
   &__claiminfo {
     margin-top: rem(100px);
     padding: rem(40px) rem(0px) rem(0px);
+    text-align: center;
+    @media only screen and (max-width: $sm) {
+      margin-top: rem(20px);
+    }
     p {
       padding: rem(0px) rem(35px);
       font-family: 'Lato-Bold';
       font-size: rem(18px);
       color: value($color-basic, dark);
       letter-spacing: 0.5px;
+      text-align: left;
     }
     h6 {
       padding: rem(0px) rem(35px);
@@ -46,6 +75,7 @@
       font-family: 'Lato-Regular';
       font-size: rem(16px);
       color: value($color-basic, dark);
+      text-align: left;
     }
     hr {
       margin: rem(20px) rem(35px);
@@ -62,6 +92,12 @@
       font-family: 'Lato-Bold';
       font-size: rem(20px);
       color: value($color-basic, brightest);
+      @media only screen and (max-width: $sm) {
+        text-align: center;
+        display: inline-block;
+        width: 80%;
+        border-radius: rem(15px);
+      }
     }
   }
   .tokenitem {

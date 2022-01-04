@@ -2,6 +2,9 @@
   &__balance {
     padding: rem(38px) rem(44px);
     text-align: center;
+    p {
+      font-size: 15px;
+    }
     &--title {
       margin-top: rem(45px);
       font-family: 'Lato-Bold';

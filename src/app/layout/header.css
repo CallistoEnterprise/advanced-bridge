@@ -16,4 +16,11 @@
   .dropdown-item {
     color: value($color-primary, normal);
   }
+  &__right {
+    display: flex;
+    @media only screen and (max-width: $md) {
+      padding-top: rem(20px);
+      padding-bottom: rem(20px);
+    }
+  }
 }

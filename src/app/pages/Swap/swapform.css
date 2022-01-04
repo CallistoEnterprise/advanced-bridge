@@ -1,20 +1,33 @@
 .swapform {
+  @media only screen and (max-width: $sm) {
+    text-align: center;
+  }
   label {
     font-family: 'Lato-Bold';
     font-size: rem(18px);
     color: value($color-basic, dark);
     margin-bottom: rem(10px);
+    @media only screen and (max-width: $sm) {
+      display: inherit;
+      text-align: left;
+    }
   }
   &__subtext {
     font-family: 'Lato-Regular';
     font-size: rem(14px) !important;
     color: value($color-basic, dark);
     margin-top: rem(-10px);
+    @media only screen and (max-width: $sm) {
+      text-align: left;
+    }
   }
   &__description {
     font-family: 'Lato-Regular';
     font-size: rem(14px) !important;
     color: value($color-basic, dark);
+    @media only screen and (max-width: $sm) {
+      text-align: left;
+    }
   }
   &__destinationinput {
     font-size: rem(16px) !important;
@@ -31,6 +44,13 @@
     font-size: rem(20px);
     color: value($color-basic, brightest);
     letter-spacing: 1px;
+    @media only screen and (max-width: $sm) {
+      width: 80%;
+      border-bottom-left-radius: rem(15px);
+      border-bottom-right-radius: rem(15px);
+      border-top-left-radius: rem(15px);
+      border-top-right-radius: rem(15px);
+    }
   }
   &__row {
     padding: rem(0px) rem(44px);

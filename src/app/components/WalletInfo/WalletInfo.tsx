@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive';
 import BorderContainer from '~/app/components/common/BorderContainer';
 import cloIcon from '~/assets/images/clo.svg';
 import copyIcon from '~/assets/images/copy.svg';
@@ -54,23 +55,42 @@ const TokenItem = (item: tokenType, index: number) => {
 
 export default function WalletInfo() {
   const [t] = useTranslation();
+  const isMobile = useMediaQuery({ maxWidth: 767 });
   return (
-    <BorderContainer className="walletinfo__balance">
-      <div>
-        <img src={metamaskIcon} alt="metamaskIcon" />
-        <div className="d-flex">
-          <p className="me-1">0x2Ac321c20w...A211</p>
-          <img src={copyIcon} alt="copyIcon" />
+    <>
+      {!isMobile ? (
+        <BorderContainer className="walletinfo__balance">
+          <div>
+            <img src={metamaskIcon} alt="metamaskIcon" />
+            <div className="d-flex">
+              <p className="me-1">0x2Ac321c20w...A211</p>
+              <img src={copyIcon} alt="copyIcon" />
+            </div>
+            <p className="walletinfo__balance--title">{t('Balance')}</p>
+            <ul>
+              {dumyData.map((item, index) => {
+                return TokenItem(item, index);
+              })}
+            </ul>
+            <hr className="solid mt-5"></hr>
+            <p className="walletinfo__balance--disconnect">{t('Disconnect')}</p>
+          </div>
+        </BorderContainer>
+      ) : (
+        <div className="walletinfo__balance d-flex align-items-center justify-content-center">
+          <div>
+            <img src={metamaskIcon} alt="metamaskIcon" />
+          </div>
+          <div className="ms-4">
+            <div className="d-flex">
+              <p className="me-1">0x2Ac321c20w...A211</p>
+              <img src={copyIcon} alt="copyIcon" />
+            </div>
+            <hr className="solid"></hr>
+            <p className="walletinfo__balance--disconnect">{t('Disconnect')}</p>
+          </div>
         </div>
-        <p className="walletinfo__balance--title">{t('Balance')}</p>
-        <ul>
-          {dumyData.map((item, index) => {
-            return TokenItem(item, index);
-          })}
-        </ul>
-        <hr className="solid mt-5"></hr>
-        <p className="walletinfo__balance--disconnect">{t('Disconnect')}</p>
-      </div>
-    </BorderContainer>
+      )}
+    </>
   );
 }

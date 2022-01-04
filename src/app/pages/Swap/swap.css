@@ -1,10 +1,30 @@
 .swap {
-  min-height: rem(900px);
+  min-height: rem(700px);
   margin-top: rem(50px);
+  @media only screen and (max-width: $md) {
+    min-height: rem(1000px);
+  }
+  @media only screen and (max-width: $sm) {
+    min-height: rem(1250px);
+  }
   &__content {
     position: relative;
     display: flex;
     align-items: flex-end;
+    @media only screen and (max-width: $md) {
+      display: block;
+      align-items: flex-start;
+    }
+    @media only screen and (max-width: $sm) {
+      display: block;
+    }
+    &--mainboard {
+      display: flex;
+      align-items: flex-start;
+      @media only screen and (max-width: $sm) {
+        display: block;
+      }
+    }
     &__steps {
       flex: 1;
       display: flex;
@@ -13,6 +33,9 @@
       padding-top: rem(0px);
       padding-bottom: rem(0px);
       padding-right: rem(300px);
+      @media only screen and (max-width: $sm) {
+        display: initial;
+      }
       /* margin-bottom: rem(150px); */
       p {
         font-family: 'Lato-Regular';
@@ -32,10 +55,17 @@
     &--row {
       padding-left: rem(44px);
       padding-right: rem(44px);
+      @media only screen and (max-width: $sm) {
+        text-align: center;
+      }
     }
     &__bordercontainer {
       width: rem(420px);
       padding-top: rem(47px);
+      @media only screen and (max-width: $sm) {
+        width: auto;
+        border: none;
+      }
     }
   }
   .tokenitem {

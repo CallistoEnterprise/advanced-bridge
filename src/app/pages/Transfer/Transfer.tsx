@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
 import ClaimPet from '~/app/components/common/ClaimPet';
 import CustomButton from '~/app/components/common/CustomButton';
@@ -55,6 +56,16 @@ const options = [
   }
 ];
 
+const Default = ({ children }: any) => {
+  const isNotMobile = useMediaQuery({ minWidth: 768 });
+  return isNotMobile ? children : null;
+};
+
+const Mobile = ({ children }: any) => {
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  return isMobile ? children : null;
+};
+
 export default function Transfer() {
   const [t] = useTranslation();
   const navigate = useNavigate();
@@ -79,13 +90,26 @@ export default function Transfer() {
             {t('Previous')}
           </div>
         </CustomButton>
-        <ClaimPet />
+        <Default>
+          <ClaimPet />
+        </Default>
+
         <div className="transfer__content__steps">
           <h4>{t('Transfert complete!')}</h4>
           <h6 className="mt-5">{t('You don’t see your tokens?')}</h6>
           <h6 className="mt-3">{t('Just add your asset to your wallet by clicking on its icon!')}</h6>
           <TokenSelection options={options} onChange={onChangeNetworkOne} className="transfer__selection" />
         </div>
+        <Mobile>
+          <div className="transfer__mobile">
+            <p>Lagging transaction?</p>
+            <p>Stay zen and click here!</p>
+            <button type="submit" color="success" className="transfer__mobile__submit">
+              {t('SWAP')}
+              {/* {isPending(state) ? 'Wait...' : 'Submit'} */}
+            </button>
+          </div>
+        </Mobile>
       </div>
     </div>
   );

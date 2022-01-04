@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
 import CustomButton from '~/app/components/common/CustomButton';
 import GuidePet from '~/app/components/common/GuidePet';
@@ -26,10 +27,16 @@ interface network {
   name: string;
   value: string;
 }
+
+const Default = ({ children }: any) => {
+  const isNotMobile = useMediaQuery({ minWidth: 768 });
+  return isNotMobile ? children : null;
+};
+
 // https://sdk.raydium.io/icons/2FPyTwcZLUg1MDrwsyoP4D6s1tM7hAkHYRjkNb5w6Pxk.png
 const options = [
   {
-    icon: ethIcon,
+    icon: cloIcon,
     name: 'CLO',
     value: 'clo'
   },
@@ -39,12 +46,12 @@ const options = [
     value: 'bnb'
   },
   {
-    icon: etcIcon,
+    icon: ethIcon,
     name: 'ETH',
     value: 'eth'
   },
   {
-    icon: cloIcon,
+    icon: etcIcon,
     name: 'ETC',
     value: 'etc'
   },
@@ -130,7 +137,9 @@ export default function TokenList() {
             {t('Previous')}
           </div>
         </CustomButton>
-        <GuidePet />
+        <Default>
+          <GuidePet />
+        </Default>
         <WalletInfo />
         <div className="tokenlist__content__steps">
           <p>

@@ -1,7 +1,10 @@
 .home {
-  min-height: rem(900px);
+  min-height: rem(750px);
   @media only screen and (max-width: $md) {
-    min-height: rem(950px);
+    min-height: rem(750px);
+  }
+  @media only screen and (max-width: $sm) {
+    min-height: rem(900px);
   }
   &__title {
     margin-top: rem(20px);
@@ -19,8 +22,8 @@
     padding-right: rem(100px);
     padding-bottom: rem(40px);
     @media only screen and (max-width: $sm) {
-      padding-left: rem(40px);
-      padding-right: rem(40px);
+      padding-left: rem(20px);
+      padding-right: rem(20px);
     }
   }
   &__wallets {
@@ -79,6 +82,11 @@
     font-size: rem(14px);
     padding-top: rem(10px);
     padding-bottom: rem(10px);
+    @media only screen and (max-width: $sm) {
+      font-size: rem(16px);
+      padding-top: rem(15px);
+      padding-bottom: rem(15px);
+    }
   }
   &__animal {
     flex: 1;

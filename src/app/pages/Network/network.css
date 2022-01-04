@@ -1,28 +1,55 @@
 .network {
-  min-height: rem(900px);
+  min-height: rem(750px);
   margin-top: rem(50px);
+  @media only screen and (max-width: $md) {
+    min-height: rem(850px);
+  }
+  @media only screen and (max-width: $sm) {
+    min-height: rem(900px);
+  }
   &__content {
     position: relative;
     display: flex;
     align-items: flex-end;
+    @media only screen and (max-width: $md) {
+      align-items: flex-start;
+    }
+    @media only screen and (max-width: $sm) {
+      display: block;
+    }
     &__steps {
       flex: 1;
       padding: rem(100px) rem(80px);
       padding-top: rem(0px);
       margin-bottom: rem(150px);
+      @media only screen and (max-width: $sm) {
+        padding: rem(100px) rem(20px);
+        padding-top: rem(0px);
+        margin-bottom: rem(0px);
+      }
       p {
         font-family: 'Lato-Regular';
         font-size: rem(23px);
         color: value($color-basic, dark);
         letter-spacing: 0.5px;
+        @media only screen and (max-width: $sm) {
+          text-align: center;
+        }
         strong {
           font-family: 'Lato-Bold';
+          @media only screen and (max-width: $sm) {
+            display: block;
+          }
         }
       }
       h6 {
         font-family: 'Lato-Regular';
         font-size: rem(14px);
         color: value($color-basic, dark);
+        @media only screen and (max-width: $sm) {
+          text-align: center;
+          font-size: rem(14px);
+        }
       }
     }
   }

@@ -1,10 +1,22 @@
 .transfer {
-  min-height: rem(900px);
+  /* min-height: rem(900px); */
+  margin-bottom: rem(50px);
   margin-top: rem(50px);
+  @media only screen and (max-width: $md) {
+    min-height: rem(1050px);
+  }
   &__content {
     position: relative;
     display: flex;
     align-items: flex-end;
+    .previous_btn {
+      @media only screen and (max-width: $sm) {
+        bottom: -60px;
+      }
+    }
+    @media only screen and (max-width: $sm) {
+      display: block;
+    }
     &__steps {
       flex: 1;
       padding: rem(100px) rem(80px);
@@ -12,6 +24,11 @@
       margin-bottom: rem(80px);
       padding-left: 0px;
       text-align: center;
+      @media only screen and (max-width: $sm) {
+        padding-left: rem(0px);
+        padding-right: rem(0px);
+        padding-bottom: rem(0px);
+      }
       h4 {
         display: inline-block;
         font-family: 'Lato-Bold';
@@ -37,6 +54,31 @@
       }
     }
   }
+  &__mobile {
+    text-align: center;
+    p {
+      font-family: 'Lato-Bold';
+      font-size: 17px;
+      line-height: 22px;
+      text-align: center;
+      color: #6b184e;
+    }
+    &__submit {
+      margin-top: rem(35px);
+      width: 60%;
+      padding: rem(15px) rem(0px);
+      border: none;
+      border-radius: rem(15px);
+      background-color: value($color-primary, normal);
+      font-family: 'Lato-Bold';
+      font-size: rem(20px);
+      color: value($color-basic, brightest);
+      letter-spacing: 1px;
+      display: inline-block;
+      text-align: center;
+    }
+  }
+
   &__selection {
     justify-content: center !important;
     .tokenselection-option {
