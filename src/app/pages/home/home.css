@@ -35,8 +35,8 @@
     }
     &__block {
       cursor: pointer;
-      width: rem(170px);
-      height: rem(170px);
+      width: 13rem;
+      height: 13rem;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -51,7 +51,7 @@
       }
       p {
         font-family: 'Lato-Regular';
-        font-size: rem(14px);
+        font-size: calc(12px + 0.2vmin);
         text-transform: uppercase;
         @media only screen and (max-width: $sm) {
           font-size: rem(16px);
