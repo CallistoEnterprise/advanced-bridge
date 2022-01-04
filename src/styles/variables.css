@@ -1,3 +1,20 @@
+html,
+body {
+  color: value($color-basic, darkest);
+  font-family: 'Lato-Regular';
+  font-size: calc($default-font-size * 0.65);
+  height: 100%;
+  width: 100%;
+
+  @media screen and (min-width: 768px) {
+    font-size: 12px;
+  }
+
+  @media screen and (min-width: 991px) {
+    font-size: 16px;
+  }
+}
+
 $default-font-size: 16px;
 
 $color-basic: (
