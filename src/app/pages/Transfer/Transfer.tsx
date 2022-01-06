@@ -5,11 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import ClaimPet from '~/app/components/common/ClaimPet';
 import CustomButton from '~/app/components/common/CustomButton';
 import TokenSelection from '~/app/components/TokenSelection';
-import bnbIcon from '~/assets/images/bnb.svg';
-import cloIcon from '~/assets/images/clo.svg';
-import etcIcon from '~/assets/images/etc.svg';
-import ethIcon from '~/assets/images/eth.svg';
 import previousIcon from '~/assets/images/previous.svg';
+import ccBNBIcon from '~/assets/images/tokens/ccBNB.svg';
+import ccBUSDTIcon from '~/assets/images/tokens/ccBUSDT.svg';
+import ccCLOIcon from '~/assets/images/tokens/ccCLO.svg';
+import ccETCIcon from '~/assets/images/tokens/ccETC.svg';
+import ccETHIcon from '~/assets/images/tokens/ccETH.svg';
 import './transfer.css';
 
 interface network {
@@ -20,37 +21,37 @@ interface network {
 // https://sdk.raydium.io/icons/2FPyTwcZLUg1MDrwsyoP4D6s1tM7hAkHYRjkNb5w6Pxk.png
 const options = [
   {
-    icon: ethIcon,
+    icon: ccCLOIcon,
     name: 'ccCLO in Ethereum',
     value: 'eth'
   },
   {
-    icon: bnbIcon,
+    icon: ccCLOIcon,
     name: 'ccCLO in BSC',
     value: 'bnb'
   },
   {
-    icon: etcIcon,
+    icon: ccCLOIcon,
     name: 'ccCLO in ETC',
     value: 'etc'
   },
   {
-    icon: cloIcon,
+    icon: ccBNBIcon,
     name: 'ccBNB in Callisto',
     value: 'clo'
   },
   {
-    icon: etcIcon,
+    icon: ccETHIcon,
     name: 'ccETH in Callisto',
     value: 'etc'
   },
   {
-    icon: etcIcon,
+    icon: ccETCIcon,
     name: 'ccETC in Callisto',
     value: 'etc'
   },
   {
-    icon: etcIcon,
+    icon: ccBUSDTIcon,
     name: 'BUSDT in Callisto',
     value: 'etc'
   }

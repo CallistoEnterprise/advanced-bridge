@@ -10,18 +10,35 @@
   &__content {
     position: relative;
     display: flex;
-    align-items: flex-end;
+    align-items: flex-start;
     @media only screen and (max-width: $md) {
       align-items: flex-start;
     }
     @media only screen and (max-width: $sm) {
       display: block;
     }
+    .form-control {
+      margin-top: rem(10px);
+      border: none;
+      border-bottom: 2px solid value($color-basic, bright);
+      background: transparent;
+      font-family: 'Lato-Regular';
+      font-size: rem(20px);
+      border-radius: 0px;
+      padding-left: 0px;
+      &:focus {
+        box-shadow: none;
+      }
+    }
+    .previous_btn {
+      display: flex;
+      align-self: end;
+    }
     &__steps {
       flex: 1;
       padding: rem(100px) rem(80px);
       padding-top: rem(0px);
-      margin-bottom: rem(150px);
+      margin-bottom: rem(50px);
       @media only screen and (max-width: $sm) {
         padding: rem(100px) rem(20px);
         padding-top: rem(0px);

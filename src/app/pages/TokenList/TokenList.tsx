@@ -107,12 +107,7 @@ export default function TokenList() {
   const navigate = useNavigate();
 
   const [token, setToken] = useState(null);
-
-  // useEffect(() => {
-  //   if (token !== null) {
-  //     navigate('/swap');
-  //   }
-  // }, [navigate, token]);
+  const [value, setValue] = useState('');
 
   const onChangeToken = (option: network) => {
     setToken(option.value);
@@ -145,7 +140,25 @@ export default function TokenList() {
           <p>
             <strong>{t('Step 3:')}</strong> {t('Select the token to swap')}
           </p>
-          <TokenSelection options={options} onChange={onChangeToken} />
+          <input
+            className="form-control tokenlist__content__filter"
+            value={value}
+            onChange={(e) => setValue(e.target.value.toUpperCase())}
+            placeholder="Search token"
+          />
+          <TokenSelection
+            options={options.filter((item) => {
+              if (!value) return true;
+              if (
+                item.name.toLowerCase().includes(value.toLowerCase()) ||
+                item.name.toLowerCase().includes(value.toLowerCase())
+              ) {
+                return true;
+              }
+              return false;
+            })}
+            onChange={onChangeToken}
+          />
           <CustomButton className="mt-5" onClick={onNext}>
             {t('Next')}
           </CustomButton>

@@ -17,6 +17,7 @@
     @media only screen and (max-width: $sm) {
       display: block;
     }
+
     &__steps {
       flex: 1;
       padding: rem(100px) rem(80px);
@@ -80,6 +81,7 @@
   }
 
   &__selection {
+    min-height: rem(100px);
     justify-content: center !important;
     .tokenselection-option {
       opacity: 1;
