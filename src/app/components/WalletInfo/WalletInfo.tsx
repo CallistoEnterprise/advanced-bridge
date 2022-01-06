@@ -5,6 +5,10 @@ import BorderContainer from '~/app/components/common/BorderContainer';
 import cloIcon from '~/assets/images/clo.svg';
 import copyIcon from '~/assets/images/copy.svg';
 import metamaskIcon from '~/assets/images/metamask.svg';
+import busdtIcon from '~/assets/images/tokens/busdt.svg';
+import ccETHIcon from '~/assets/images/tokens/ccETH.svg';
+import cloeIcon from '~/assets/images/tokens/cloe.svg';
+import soyIcon from '~/assets/images/tokens/soy.svg';
 import './walletinfo.css';
 
 interface tokenType {
@@ -17,36 +21,36 @@ const dumyData: Array<tokenType> = [
   {
     icon: cloIcon,
     name: 'CLO',
-    balance: '320.000'
+    balance: '0.000'
   },
   {
-    icon: cloIcon,
-    name: 'CLO',
-    balance: '320.000'
+    icon: busdtIcon,
+    name: 'BUSDT',
+    balance: '0.000'
   },
   {
-    icon: cloIcon,
-    name: 'CLO',
-    balance: '320.000'
+    icon: cloeIcon,
+    name: 'CLOE',
+    balance: '0.000'
   },
   {
-    icon: cloIcon,
-    name: 'CLO',
-    balance: '320.000'
+    icon: ccETHIcon,
+    name: 'ETH',
+    balance: '0.000'
   },
   {
-    icon: cloIcon,
-    name: 'CLO',
-    balance: '320.000'
+    icon: soyIcon,
+    name: 'SOY',
+    balance: '0.000'
   }
 ];
 
 const TokenItem = (item: tokenType, index: number) => {
   return (
     <li className="tokenitem" key={index}>
-      <div className="d-flex">
+      <div className="d-flex align-items-center">
         <img className="me-2" src={item.icon} alt="icon" />
-        <p>{item.balance}</p>
+        <p className="ms-2">{item.balance}</p>
       </div>
       <p>{item.name}</p>
     </li>

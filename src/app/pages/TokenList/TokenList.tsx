@@ -159,7 +159,7 @@ export default function TokenList() {
             })}
             onChange={onChangeToken}
           />
-          <CustomButton className="mt-5" onClick={onNext}>
+          <CustomButton className="mt-5" onClick={onNext} disabled={token === null}>
             {t('Next')}
           </CustomButton>
         </div>
