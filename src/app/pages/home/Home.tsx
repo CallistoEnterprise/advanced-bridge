@@ -1,8 +1,13 @@
-import React from 'react';
+import { ConnectorNames } from '@soy-libs/uikit';
+import { useWeb3React } from '@web3-react/core';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import BorderContainer from '~/app/components/common/BorderContainer';
 import CustomButton from '~/app/components/common/CustomButton';
+import { Networks } from '~/app/constants/strings';
+import useAuth from '~/app/hooks/useAuth';
+import { setupEthereumNetwork, setupNetwork } from '~/app/utils/wallet';
 import animal from '~/assets/images/animal.png';
 import helpIcon from '~/assets/images/help.svg';
 import metamaskIcon from '~/assets/images/metamask.svg';
@@ -14,6 +19,14 @@ import './home.css';
 export default function Home() {
   const [t] = useTranslation();
   const navigate = useNavigate();
+  const [step, setStep] = useState(0);
+
+  const { account } = useWeb3React();
+  const { login } = useAuth();
+
+  // const injected = new InjectedConnector({
+  //   supportedChainIds: [1, 3, 4, 5, 42, 56, 61, 820]
+  // });
 
   const onClaim = () => {
     navigate('/network');
@@ -21,6 +34,20 @@ export default function Home() {
 
   const onPreviousClaim = () => {
     navigate('/previousclaim');
+  };
+
+  const onClickMetamask = async () => {
+    console.log(ConnectorNames.Injected, Networks[0]);
+    login(ConnectorNames.Injected, Networks[0]);
+    const network = step === 2 ? Networks[1] : Networks[0];
+    console.log(network);
+    if (network.symbol === 'ETH') {
+      await setupEthereumNetwork(network);
+      navigate('/network');
+    } else {
+      await setupNetwork(network);
+      navigate('/network');
+    }
   };
 
   return (
@@ -34,7 +61,7 @@ export default function Home() {
             <p>Help</p>
           </div>
           <div className="mt-5">
-            <BorderContainer className="home__wallets__block" onClick={onClaim}>
+            <BorderContainer className="home__wallets__block" onClick={onClickMetamask}>
               <div>
                 <img src={metamaskIcon} alt="metamaskIcon" />
                 <p className="home__wallets__block--more">Metamask</p>
