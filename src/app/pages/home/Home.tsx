@@ -1,6 +1,5 @@
 import { ConnectorNames } from '@soy-libs/uikit';
-import { useWeb3React } from '@web3-react/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import BorderContainer from '~/app/components/common/BorderContainer';
@@ -21,8 +20,12 @@ export default function Home() {
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
 
-  const { account } = useWeb3React();
+  // const { account } = useWeb3React();
   const { login } = useAuth();
+
+  useEffect(() => {
+    setStep(0);
+  }, []);
 
   // const injected = new InjectedConnector({
   //   supportedChainIds: [1, 3, 4, 5, 42, 56, 61, 820]
