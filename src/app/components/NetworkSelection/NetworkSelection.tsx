@@ -1,20 +1,16 @@
 import classNames from 'classnames';
 import React from 'react';
 import { Radio, RadioGroup } from 'react-custom-radio-buttons';
+import { INetwork } from '~/app/constants/interface';
 import './networkselection.css';
 
-interface network {
-  icon: string;
-  name: string;
-  value: string;
-}
-
 type props = {
-  options: Array<network>;
-  onChange?: (option: network) => void;
+  options: Array<INetwork>;
+  selected?: string;
+  onChange?: (option: INetwork) => void;
 };
 
-export default function NetworkSelection({ options, onChange }: props) {
+export default function NetworkSelection({ options, selected, onChange }: props) {
   return (
     <div className="networkselection">
       <RadioGroup containerStyle={classNames('networkselection-container')} onChange={onChange}>
@@ -29,11 +25,12 @@ export default function NetworkSelection({ options, onChange }: props) {
                 })}
               >
                 <div>
-                  <img src={option.icon} alt="icon" />
-                  {option.name}
+                  <img src={option.img} alt="icon" />
+                  {option.symbol}
                 </div>
               </button>
             )}
+            isDisabled={option.symbol === selected}
           />
         ))}
       </RadioGroup>

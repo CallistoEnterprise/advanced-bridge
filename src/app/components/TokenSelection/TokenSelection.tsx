@@ -3,15 +3,32 @@ import React from 'react';
 import { Radio, RadioGroup } from 'react-custom-radio-buttons';
 import './tokenselection.css';
 
-interface network {
-  icon: string;
+interface token {
   name: string;
-  value: string;
+  symbol: string;
+  icon: string;
+  decimals: {
+    CLO: number;
+    BNB: number;
+    ETH: number;
+    ETC: number;
+  };
+  addresses: {
+    CLO: string;
+    BNB: string;
+    ETH: string;
+    ETC: string;
+  };
+  addressesTest?: {
+    CLO: string;
+    BNB: string;
+    ETH: string;
+  };
 }
 
 type props = {
-  options: Array<network>;
-  onChange?: (option: network) => void;
+  options: Array<token>;
+  onChange?: (option: token) => void;
   className?: string;
 };
 

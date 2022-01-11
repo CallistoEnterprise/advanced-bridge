@@ -1,6 +1,13 @@
 // import t from '../components/Header/types';
 // import { Assets } from './images';
 
+import bnbIcon from '~/assets/images/bnb.svg';
+import cloIcon from '~/assets/images/clo.svg';
+import etcIcon from '~/assets/images/etc.svg';
+import ethIcon from '~/assets/images/eth.svg';
+import cakeIcon from '~/assets/images/tokens/cake.png';
+import usdtIcon from '~/assets/images/tokens/usdt.png';
+
 // export const links = [
 //   {
 //     type: t.DROPDOWN,
@@ -115,6 +122,7 @@ export const tokenList = [
   {
     name: 'CLO',
     symbol: 'CLO',
+    icon: cloIcon,
     decimals: {
       CLO: 18,
       BNB: 18,
@@ -136,6 +144,7 @@ export const tokenList = [
   {
     name: 'BNB',
     symbol: 'BNB',
+    icon: bnbIcon,
     decimals: {
       CLO: 18,
       BNB: 18,
@@ -152,6 +161,7 @@ export const tokenList = [
   {
     name: 'ETH',
     symbol: 'ETH',
+    icon: ethIcon,
     decimals: {
       CLO: 18,
       BNB: 18,
@@ -168,6 +178,7 @@ export const tokenList = [
   {
     name: 'ETC',
     symbol: 'ETC',
+    icon: etcIcon,
     decimals: {
       CLO: 18,
       BNB: 18,
@@ -184,6 +195,7 @@ export const tokenList = [
   {
     name: 'USDT',
     symbol: 'USDT',
+    icon: usdtIcon,
     decimals: {
       CLO: 18,
       BNB: 18,
@@ -200,6 +212,7 @@ export const tokenList = [
   {
     name: 'CAKE',
     symbol: 'CAKE',
+    icon: cakeIcon,
     decimals: {
       CLO: 18,
       BNB: 18,
@@ -220,7 +233,7 @@ export const Networks = [
     name: 'Callisto Network',
     symbol: 'CLO',
     devNet: 'mainnet',
-    img: 'Assets.cloLogo',
+    img: cloIcon,
     chainId: '820',
     rpcs: ['https://clo-geth.0xinfra.com/'],
     explorer: 'https://explorer.callisto.network/'
@@ -229,7 +242,7 @@ export const Networks = [
     name: 'Binance Smart Chain',
     symbol: 'BNB',
     devNet: 'mainnet',
-    img: '/images/bnb.png',
+    img: bnbIcon,
     chainId: '56',
     rpcs: [
       'https://bsc-dataseed.binance.org/',
@@ -242,7 +255,7 @@ export const Networks = [
     name: 'Ethereum Network',
     symbol: 'ETH',
     devNet: 'mainnet',
-    img: '/images/eth.png',
+    img: ethIcon,
     chainId: '1',
     rpcs: ['https://mainnet.infura.io/v3/d819f1add1a34a60adab4df578e0e741'],
     explorer: 'https://etherscan.io/'
@@ -251,7 +264,7 @@ export const Networks = [
     name: 'Ethereum Classic',
     symbol: 'ETC',
     devNet: 'mainnet',
-    img: '/images/etc.png',
+    img: etcIcon,
     chainId: '61',
     rpcs: ['https://www.ethercluster.com/etc'],
     explorer: 'https://blockscout.com/etc/mainnet/'

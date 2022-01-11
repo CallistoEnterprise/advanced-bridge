@@ -1,11 +1,14 @@
 import { ConnectorNames } from '@soy-libs/uikit';
+import { useWeb3React } from '@web3-react/core';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import BorderContainer from '~/app/components/common/BorderContainer';
 import CustomButton from '~/app/components/common/CustomButton';
 import { Networks } from '~/app/constants/strings';
 import useAuth from '~/app/hooks/useAuth';
+import { setFromNetwork } from '~/app/modules/wallet/action';
 import { setupEthereumNetwork, setupNetwork } from '~/app/utils/wallet';
 import animal from '~/assets/images/animal.png';
 import helpIcon from '~/assets/images/help.svg';
@@ -16,23 +19,30 @@ import walletConnect from '~/assets/images/wallet-connect.svg';
 import './home.css';
 
 export default function Home() {
+  const dispatch = useDispatch();
   const [t] = useTranslation();
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
 
-  // const { account } = useWeb3React();
+  const { active } = useWeb3React();
   const { login } = useAuth();
 
   useEffect(() => {
     setStep(0);
   }, []);
 
+  useEffect(() => {
+    if (active) {
+      navigate('/network');
+    }
+  }, [active, navigate]);
+
   // const injected = new InjectedConnector({
   //   supportedChainIds: [1, 3, 4, 5, 42, 56, 61, 820]
   // });
 
   const onClaim = () => {
-    navigate('/network');
+    // navigate('/network');
   };
 
   const onPreviousClaim = () => {
@@ -44,12 +54,11 @@ export default function Home() {
     login(ConnectorNames.Injected, Networks[0]);
     const network = step === 2 ? Networks[1] : Networks[0];
     console.log(network);
+    dispatch(setFromNetwork(network));
     if (network.symbol === 'ETH') {
       await setupEthereumNetwork(network);
-      navigate('/network');
     } else {
       await setupNetwork(network);
-      navigate('/network');
     }
   };
 

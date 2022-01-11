@@ -4,7 +4,6 @@ import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
 import ClaimPet from '~/app/components/common/ClaimPet';
 import CustomButton from '~/app/components/common/CustomButton';
-import TokenSelection from '~/app/components/TokenSelection';
 import previousIcon from '~/assets/images/previous.svg';
 import ccBNBIcon from '~/assets/images/tokens/ccBNB.svg';
 import ccBUSDTIcon from '~/assets/images/tokens/ccBUSDT.svg';
@@ -73,10 +72,10 @@ export default function Transfer() {
 
   // const [networkOne, setNetworkOne] = useState(null);
 
-  const onChangeNetworkOne = (option: network) => {
-    console.log(option.value);
-    // setNetworkOne(option.value);
-  };
+  // const onChangeNetworkOne = (option: network) => {
+  //   console.log(option.value);
+  //   // setNetworkOne(option.value);
+  // };
 
   const onPrevious = () => {
     navigate('/');
@@ -99,7 +98,7 @@ export default function Transfer() {
           <h4>{t('Transfert complete!')}</h4>
           <h6 className="mt-5">{t('You don’t see your tokens?')}</h6>
           <h6 className="mt-3">{t('Just add your asset to your wallet by clicking on its icon!')}</h6>
-          <TokenSelection options={options} onChange={onChangeNetworkOne} className="transfer__selection" />
+          {/* <TokenSelection options={options} onChange={onChangeNetworkOne} className="transfer__selection" /> */}
         </div>
         <Mobile>
           <div className="transfer__mobile">

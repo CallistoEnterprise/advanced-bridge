@@ -6,6 +6,8 @@ import CustomButton from '~/app/components/common/CustomButton';
 import GuidePet from '~/app/components/common/GuidePet';
 import TokenSelection from '~/app/components/TokenSelection';
 import WalletInfo from '~/app/components/WalletInfo';
+import { IToken } from '~/app/constants/interface';
+import { tokenList } from '~/app/constants/strings';
 import previousIcon from '~/assets/images/previous.svg';
 import bakeIcon from '~/assets/images/tokens/bake.png';
 import bnbIcon from '~/assets/images/tokens/bnb.png';
@@ -21,12 +23,6 @@ import twtIcon from '~/assets/images/tokens/twt.png';
 import usdtIcon from '~/assets/images/tokens/usdt.png';
 import wsgIcon from '~/assets/images/tokens/wsg.png';
 import './tokenlist.css';
-
-interface network {
-  icon: string;
-  name: string;
-  value: string;
-}
 
 const Default = ({ children }: any) => {
   const isNotMobile = useMediaQuery({ minWidth: 768 });
@@ -109,8 +105,8 @@ export default function TokenList() {
   const [token, setToken] = useState(null);
   const [value, setValue] = useState('');
 
-  const onChangeToken = (option: network) => {
-    setToken(option.value);
+  const onChangeToken = (option: IToken) => {
+    setToken(option.symbol);
   };
 
   const onPrevious = () => {
@@ -147,7 +143,7 @@ export default function TokenList() {
             placeholder="Search token"
           />
           <TokenSelection
-            options={options.filter((item) => {
+            options={tokenList.filter((item) => {
               if (!value) return true;
               if (
                 item.name.toLowerCase().includes(value.toLowerCase()) ||

@@ -1,46 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
 import CustomButton from '~/app/components/common/CustomButton';
 import GuidePet from '~/app/components/common/GuidePet';
 import NetworkSelection from '~/app/components/NetworkSelection';
 import WalletInfo from '~/app/components/WalletInfo';
-import bnbIcon from '~/assets/images/bnb.svg';
-import cloIcon from '~/assets/images/clo.svg';
-import etcIcon from '~/assets/images/etc.svg';
-import ethIcon from '~/assets/images/eth.svg';
+import { INetwork } from '~/app/constants/interface';
+import { Networks } from '~/app/constants/strings';
+import { setFromNetwork, setToNetwork } from '~/app/modules/wallet/action';
 import previousIcon from '~/assets/images/previous.svg';
 import './network.css';
-
-interface network {
-  icon: string;
-  name: string;
-  value: string;
-}
-// https://sdk.raydium.io/icons/2FPyTwcZLUg1MDrwsyoP4D6s1tM7hAkHYRjkNb5w6Pxk.png
-const options = [
-  {
-    icon: ethIcon,
-    name: 'ETH',
-    value: 'eth'
-  },
-  {
-    icon: bnbIcon,
-    name: 'BNB',
-    value: 'bnb'
-  },
-  {
-    icon: etcIcon,
-    name: 'ETC',
-    value: 'etc'
-  },
-  {
-    icon: cloIcon,
-    name: 'CLO',
-    value: 'clo'
-  }
-];
 
 const Default = ({ children }: any) => {
   const isNotMobile = useMediaQuery({ minWidth: 768 });
@@ -48,9 +19,10 @@ const Default = ({ children }: any) => {
 };
 
 export default function Network() {
+  const dispatch = useDispatch();
   const [t] = useTranslation();
   const navigate = useNavigate();
-  const [networkOne, setNetworkOne] = useState(null);
+  const [networkOne, setNetworkOne] = useState(Networks[0].symbol);
   const [networkTwo, setNetworkTwo] = useState(null);
 
   // useEffect(() => {
@@ -59,12 +31,20 @@ export default function Network() {
   //   }
   // }, [navigate, networkOne, networkTwo]);
 
-  const onChangeNetworkOne = (option: network) => {
-    setNetworkOne(option.value);
+  useEffect(() => {
+    if (networkOne === networkTwo) {
+      setNetworkTwo(null);
+    }
+  }, [networkOne, networkTwo]);
+
+  const onChangeNetworkOne = (option: INetwork) => {
+    setNetworkOne(option.symbol);
+    dispatch(setFromNetwork(option));
   };
 
-  const onChangeNetworkTwo = (option: network) => {
-    setNetworkTwo(option.value);
+  const onChangeNetworkTwo = (option: INetwork) => {
+    setNetworkTwo(option.symbol);
+    dispatch(setToNetwork(option));
   };
 
   const onPrevious = () => {
@@ -95,13 +75,13 @@ export default function Network() {
             <strong>{t('Step 1:')}</strong> {t('Select the origin network')}
           </p>
           <h6>{t('The network from which you want to send your assets.')}</h6>
-          <NetworkSelection options={options} onChange={onChangeNetworkOne} />
+          <NetworkSelection options={Networks} onChange={onChangeNetworkOne} />
 
           <p className="mt-5">
             <strong>{t('Step 2:')}</strong> {t('Select the destination network')}
           </p>
           <h6>{t('The network to which you want to send your assets.')}</h6>
-          <NetworkSelection options={options} onChange={onChangeNetworkTwo} />
+          <NetworkSelection options={Networks} selected={networkOne} onChange={onChangeNetworkTwo} />
           <CustomButton className="mt-5" onClick={onNext} disabled={networkOne === null || networkTwo === null}>
             {t('Next')}
           </CustomButton>
