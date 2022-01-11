@@ -9,19 +9,6 @@ import WalletInfo from '~/app/components/WalletInfo';
 import { IToken } from '~/app/constants/interface';
 import { tokenList } from '~/app/constants/strings';
 import previousIcon from '~/assets/images/previous.svg';
-import bakeIcon from '~/assets/images/tokens/bake.png';
-import bnbIcon from '~/assets/images/tokens/bnb.png';
-import cakeIcon from '~/assets/images/tokens/cake.png';
-import cloIcon from '~/assets/images/tokens/clo.png';
-import etcIcon from '~/assets/images/tokens/etc.png';
-import ethIcon from '~/assets/images/tokens/eth.png';
-import linaIcon from '~/assets/images/tokens/lina.png';
-import racaIcon from '~/assets/images/tokens/raca.png';
-import reffIcon from '~/assets/images/tokens/reff.png';
-import shibIcon from '~/assets/images/tokens/shib.png';
-import twtIcon from '~/assets/images/tokens/twt.png';
-import usdtIcon from '~/assets/images/tokens/usdt.png';
-import wsgIcon from '~/assets/images/tokens/wsg.png';
 import './tokenlist.css';
 
 const Default = ({ children }: any) => {
@@ -30,73 +17,73 @@ const Default = ({ children }: any) => {
 };
 
 // https://sdk.raydium.io/icons/2FPyTwcZLUg1MDrwsyoP4D6s1tM7hAkHYRjkNb5w6Pxk.png
-const options = [
-  {
-    icon: cloIcon,
-    name: 'CLO',
-    value: 'clo'
-  },
-  {
-    icon: bnbIcon,
-    name: 'BNB',
-    value: 'bnb'
-  },
-  {
-    icon: ethIcon,
-    name: 'ETH',
-    value: 'eth'
-  },
-  {
-    icon: etcIcon,
-    name: 'ETC',
-    value: 'etc'
-  },
-  {
-    icon: usdtIcon,
-    name: 'USDT',
-    value: 'usdt'
-  },
-  {
-    icon: cakeIcon,
-    name: 'CAKE',
-    value: 'cake'
-  },
-  {
-    icon: twtIcon,
-    name: 'TWT',
-    value: 'twt'
-  },
-  {
-    icon: wsgIcon,
-    name: 'WSG',
-    value: 'wsg'
-  },
-  {
-    icon: reffIcon,
-    name: 'REFF',
-    value: 'reff'
-  },
-  {
-    icon: bakeIcon,
-    name: 'BAKE',
-    value: 'bake'
-  },
-  {
-    icon: shibIcon,
-    name: 'SHIB',
-    value: 'shib'
-  },
-  {
-    icon: racaIcon,
-    name: 'RACA',
-    value: 'raca'
-  },
-  {
-    icon: linaIcon,
-    name: 'LINA',
-    value: 'lina'
-  }
-];
+// const options = [
+//   {
+//     icon: cloIcon,
+//     name: 'CLO',
+//     value: 'clo'
+//   },
+//   {
+//     icon: bnbIcon,
+//     name: 'BNB',
+//     value: 'bnb'
+//   },
+//   {
+//     icon: ethIcon,
+//     name: 'ETH',
+//     value: 'eth'
+//   },
+//   {
+//     icon: etcIcon,
+//     name: 'ETC',
+//     value: 'etc'
+//   },
+//   {
+//     icon: usdtIcon,
+//     name: 'USDT',
+//     value: 'usdt'
+//   },
+//   {
+//     icon: cakeIcon,
+//     name: 'CAKE',
+//     value: 'cake'
+//   },
+//   {
+//     icon: twtIcon,
+//     name: 'TWT',
+//     value: 'twt'
+//   },
+//   {
+//     icon: wsgIcon,
+//     name: 'WSG',
+//     value: 'wsg'
+//   },
+//   {
+//     icon: reffIcon,
+//     name: 'REFF',
+//     value: 'reff'
+//   },
+//   {
+//     icon: bakeIcon,
+//     name: 'BAKE',
+//     value: 'bake'
+//   },
+//   {
+//     icon: shibIcon,
+//     name: 'SHIB',
+//     value: 'shib'
+//   },
+//   {
+//     icon: racaIcon,
+//     name: 'RACA',
+//     value: 'raca'
+//   },
+//   {
+//     icon: linaIcon,
+//     name: 'LINA',
+//     value: 'lina'
+//   }
+// ];
 
 export default function TokenList() {
   const [t] = useTranslation();

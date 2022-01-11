@@ -5,56 +5,46 @@ import { useNavigate } from 'react-router-dom';
 import ClaimPet from '~/app/components/common/ClaimPet';
 import CustomButton from '~/app/components/common/CustomButton';
 import previousIcon from '~/assets/images/previous.svg';
-import ccBNBIcon from '~/assets/images/tokens/ccBNB.svg';
-import ccBUSDTIcon from '~/assets/images/tokens/ccBUSDT.svg';
-import ccCLOIcon from '~/assets/images/tokens/ccCLO.svg';
-import ccETCIcon from '~/assets/images/tokens/ccETC.svg';
-import ccETHIcon from '~/assets/images/tokens/ccETH.svg';
 import './transfer.css';
 
-interface network {
-  icon: string;
-  name: string;
-  value: string;
-}
 // https://sdk.raydium.io/icons/2FPyTwcZLUg1MDrwsyoP4D6s1tM7hAkHYRjkNb5w6Pxk.png
-const options = [
-  {
-    icon: ccCLOIcon,
-    name: 'ccCLO in Ethereum',
-    value: 'eth'
-  },
-  {
-    icon: ccCLOIcon,
-    name: 'ccCLO in BSC',
-    value: 'bnb'
-  },
-  {
-    icon: ccCLOIcon,
-    name: 'ccCLO in ETC',
-    value: 'etc'
-  },
-  {
-    icon: ccBNBIcon,
-    name: 'ccBNB in Callisto',
-    value: 'clo'
-  },
-  {
-    icon: ccETHIcon,
-    name: 'ccETH in Callisto',
-    value: 'etc'
-  },
-  {
-    icon: ccETCIcon,
-    name: 'ccETC in Callisto',
-    value: 'etc'
-  },
-  {
-    icon: ccBUSDTIcon,
-    name: 'BUSDT in Callisto',
-    value: 'etc'
-  }
-];
+// const options = [
+//   {
+//     icon: ccCLOIcon,
+//     name: 'ccCLO in Ethereum',
+//     value: 'eth'
+//   },
+//   {
+//     icon: ccCLOIcon,
+//     name: 'ccCLO in BSC',
+//     value: 'bnb'
+//   },
+//   {
+//     icon: ccCLOIcon,
+//     name: 'ccCLO in ETC',
+//     value: 'etc'
+//   },
+//   {
+//     icon: ccBNBIcon,
+//     name: 'ccBNB in Callisto',
+//     value: 'clo'
+//   },
+//   {
+//     icon: ccETHIcon,
+//     name: 'ccETH in Callisto',
+//     value: 'etc'
+//   },
+//   {
+//     icon: ccETCIcon,
+//     name: 'ccETC in Callisto',
+//     value: 'etc'
+//   },
+//   {
+//     icon: ccBUSDTIcon,
+//     name: 'BUSDT in Callisto',
+//     value: 'etc'
+//   }
+// ];
 
 const Default = ({ children }: any) => {
   const isNotMobile = useMediaQuery({ minWidth: 768 });
