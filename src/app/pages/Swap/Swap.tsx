@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useMediaQuery } from 'react-responsive';
+// import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
 import BorderContainer from '~/app/components/common/BorderContainer';
 import CustomButton from '~/app/components/common/CustomButton';
@@ -10,10 +10,10 @@ import previousIcon from '~/assets/images/previous.svg';
 import './swap.css';
 import SwapForm from './SwapForm';
 
-const Default = ({ children }: any) => {
-  const isNotMobile = useMediaQuery({ minWidth: 991 });
-  return isNotMobile ? children : null;
-};
+// const Default = ({ children }: any) => {
+//   const isNotMobile = useMediaQuery({ minWidth: 991 });
+//   return isNotMobile ? children : null;
+// };
 
 const Swap = () => {
   const [t] = useTranslation();
