@@ -29,6 +29,7 @@ const useAuth = () => {
           } else {
             window.localStorage.removeItem(connectorLocalStorageKey);
             if (error instanceof NoEthereumProviderError) {
+              console.log('Provider Error', 'No provider was found');
               // toastError('Provider Error', 'No provider was found');
             } else if (
               error instanceof UserRejectedRequestErrorInjected ||
@@ -38,13 +39,16 @@ const useAuth = () => {
                 const walletConnector = connector as WalletConnectConnector;
                 walletConnector.walletConnectProvider = null;
               }
+              console.log('Authorization Error', 'Please authorize to access your account');
               // toastError('Authorization Error', 'Please authorize to access your account');
             } else {
+              console.log(error.name, error.message);
               // toastError(error.name, error.message);
             }
           }
         });
       } else {
+        console.log('Unable to find connector', 'The connector config is wrong');
         // toastError('Unable to find connector', 'The connector config is wrong');
       }
     },

@@ -75,13 +75,13 @@ export default function Network() {
             <strong>{t('Step 1:')}</strong> {t('Select the origin network')}
           </p>
           <h6>{t('The network from which you want to send your assets.')}</h6>
-          <NetworkSelection options={Networks} onChange={onChangeNetworkOne} />
+          <NetworkSelection options={Networks} selected={networkOne} onChange={onChangeNetworkOne} />
 
           <p className="mt-5">
             <strong>{t('Step 2:')}</strong> {t('Select the destination network')}
           </p>
           <h6>{t('The network to which you want to send your assets.')}</h6>
-          <NetworkSelection options={Networks} selected={networkOne} onChange={onChangeNetworkTwo} />
+          <NetworkSelection options={Networks} disabled={networkOne} onChange={onChangeNetworkTwo} />
           <CustomButton className="mt-5" onClick={onNext} disabled={networkOne === null || networkTwo === null}>
             {t('Next')}
           </CustomButton>

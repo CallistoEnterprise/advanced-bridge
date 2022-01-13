@@ -62,6 +62,8 @@ export default function Home() {
     }
   };
 
+  console.log(active);
+
   return (
     <div className="home container">
       <p className="home__title">{t('Soy Finance Bridge')}</p>

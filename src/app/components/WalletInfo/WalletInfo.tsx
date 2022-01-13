@@ -5,14 +5,13 @@ import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
 import BorderContainer from '~/app/components/common/BorderContainer';
+import { tokenList } from '~/app/constants/strings';
+import useActiveWeb3React from '~/app/hooks/useActiveWeb3';
 import useAuth from '~/app/hooks/useAuth';
+import { useNativeCoinBalance } from '~/app/hooks/wallet';
 import cloIcon from '~/assets/images/clo.svg';
 import copyIcon from '~/assets/images/copy.svg';
 import metamaskIcon from '~/assets/images/metamask.svg';
-import busdtIcon from '~/assets/images/tokens/busdt.svg';
-import ccETHIcon from '~/assets/images/tokens/ccETH.svg';
-import cloeIcon from '~/assets/images/tokens/cloe.svg';
-import soyIcon from '~/assets/images/tokens/soy.svg';
 import './walletinfo.css';
 
 interface tokenType {
@@ -26,45 +25,46 @@ const dumyData: Array<tokenType> = [
     icon: cloIcon,
     name: 'CLO',
     balance: '0.000'
-  },
-  {
-    icon: busdtIcon,
-    name: 'BUSDT',
-    balance: '0.000'
-  },
-  {
-    icon: cloeIcon,
-    name: 'CLOE',
-    balance: '0.000'
-  },
-  {
-    icon: ccETHIcon,
-    name: 'ETH',
-    balance: '0.000'
-  },
-  {
-    icon: soyIcon,
-    name: 'SOY',
-    balance: '0.000'
   }
+  // {
+  //   icon: busdtIcon,
+  //   name: 'BUSDT',
+  //   balance: '0.000'
+  // },
+  // {
+  //   icon: cloeIcon,
+  //   name: 'CLOE',
+  //   balance: '0.000'
+  // },
+  // {
+  //   icon: ccETHIcon,
+  //   name: 'ETH',
+  //   balance: '0.000'
+  // },
+  // {
+  //   icon: soyIcon,
+  //   name: 'SOY',
+  //   balance: '0.000'
+  // }
 ];
 
 const TokenItem = (item: tokenType, fromNetwork: any, index: number) => {
-  // const { chainId } = useActiveWeb3React();
-  // const currAsset = tokenList.find((o: any) => o.name === item.name);
-  // let balances: any, validBalance: any;
-  // if (currAsset) {
-  //   // eslint-disable-next-line react-hooks/rules-of-hooks
-  //   balances = useNativeCoinBalance(fromNetwork, currAsset);
-  //   validBalance = parseInt(fromNetwork.chainId) === chainId ? balances : '0.00';
-  // }
+  // console.log('123');
+  const { chainId } = useActiveWeb3React();
+  const currAsset = tokenList.find((o: any) => o.name === item.name);
+  let balances: any, validBalance: any;
+  if (currAsset) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    balances = useNativeCoinBalance(fromNetwork, currAsset);
+    validBalance = parseInt(fromNetwork.chainId) === chainId ? balances : '0.00';
+  }
 
   // const validBalance = parseInt(fromNetwork.chainId) === chainId ? balances : '0.00';
   return (
     <li className="tokenitem" key={index}>
       <div className="d-flex align-items-center">
         <img className="me-2" src={item.icon} alt="icon" />
-        <p className="ms-2">{'0.00'}</p>
+        <p className="ms-2">{validBalance}</p>
       </div>
       <p>{item.name}</p>
     </li>

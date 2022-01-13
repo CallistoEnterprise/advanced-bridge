@@ -4,7 +4,6 @@ import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
 import BorderContainer from '~/app/components/common/BorderContainer';
 import CustomButton from '~/app/components/common/CustomButton';
-import GuidePet from '~/app/components/common/GuidePet';
 import Notice from '~/app/components/Notice';
 import WalletInfo from '~/app/components/WalletInfo';
 import previousIcon from '~/assets/images/previous.svg';
@@ -37,9 +36,9 @@ const Swap = () => {
             {t('Previous')}
           </div>
         </CustomButton>
-        <Default>
+        {/* <Default>
           <GuidePet />
-        </Default>
+        </Default> */}
         <div className="swap__content--mainboard">
           <WalletInfo />
           <div className="swap__content__steps">

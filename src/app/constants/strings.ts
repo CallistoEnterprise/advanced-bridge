@@ -6,6 +6,7 @@ import cloIcon from '~/assets/images/clo.svg';
 import etcIcon from '~/assets/images/etc.svg';
 import ethIcon from '~/assets/images/eth.svg';
 import cakeIcon from '~/assets/images/tokens/cake.png';
+import soyIcon from '~/assets/images/tokens/soy.svg';
 import usdtIcon from '~/assets/images/tokens/usdt.png';
 
 // export const links = [
@@ -142,6 +143,24 @@ export const tokenList = [
     }
   },
   {
+    name: 'SOY',
+    symbol: 'SOY',
+    icon: soyIcon,
+    decimals: {
+      CLO: 18,
+      BNB: 18,
+      ETH: 18,
+      ETC: 18
+    },
+    addresses: {
+      CLO: '0xCC2D45F7fE1b8864a13F5D552345eB3f5a005FEd',
+      BNB: '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82',
+      ETH: '',
+      ETC: '',
+      SOY: ''
+    }
+  },
+  {
     name: 'BNB',
     symbol: 'BNB',
     icon: bnbIcon,
@@ -169,7 +188,7 @@ export const tokenList = [
       ETC: 18
     },
     addresses: {
-      CLO: '0xcC208c32Cc6919af5d8026dAB7A3eC7A57CD1796',
+      CLO: '0x9FaE2529863bD691B4A7171bDfCf33C7ebB10a65',
       BNB: '',
       ETH: '0x0000000000000000000000000000000000000006',
       ETC: ''
@@ -230,26 +249,22 @@ export const tokenList = [
 // ETC in BSC : 0x3d6545b08693daE087E957cb1180ee38B9e3c25E
 export const Networks = [
   {
-    name: 'Callisto Network',
+    name: 'CLO testnet',
     symbol: 'CLO',
     devNet: 'mainnet',
     img: cloIcon,
-    chainId: '820',
-    rpcs: ['https://clo-geth.0xinfra.com/'],
-    explorer: 'https://explorer.callisto.network/'
+    chainId: '20729',
+    rpcs: ['https://testnet-rpc.callisto.network'],
+    explorer: 'https://testnet-explorer.callisto.network'
   },
   {
-    name: 'Binance Smart Chain',
+    name: 'Smart Chain',
     symbol: 'BNB',
     devNet: 'mainnet',
     img: bnbIcon,
-    chainId: '56',
-    rpcs: [
-      'https://bsc-dataseed.binance.org/',
-      'https://bsc-dataseed1.defibit.io/',
-      'https://bsc-dataseed1.ninicoin.io/'
-    ],
-    explorer: 'https://bscscan.com/'
+    chainId: '97',
+    rpcs: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
+    explorer: 'https://testnet.bscscan.com'
   },
   {
     name: 'Ethereum Network',

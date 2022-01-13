@@ -1,6 +1,7 @@
 import { Field, Formik } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import CustomCheckbox from '~/app/components/common/CustomCheckbox';
 import FormInput from '~/app/components/common/FormInput';
@@ -28,6 +29,15 @@ const registerSchema = Yup.object().shape({
 
 export default function SwapForm({ submit, state, initialData }: props) {
   const [t] = useTranslation();
+
+  const [destination, setDestination] = useState(true);
+
+  const selectedToken = useSelector((state: any) => state.wallet.selectedToken);
+
+  const onChangeDestination = (status: boolean) => {
+    setDestination(status);
+  };
+
   const onSubmit = (values: any) => {
     console.log(values);
     submit(values);
@@ -56,7 +66,7 @@ export default function SwapForm({ submit, state, initialData }: props) {
                   <div className="row mt-3 swapform__row">
                     <div className="col">
                       <label htmlFor="swap_amount">{t('Amount to swap')} </label>
-                      <Field name="swap_amount" type={'text'} groupname="BNB" component={FormInput} />
+                      <Field name="swap_amount" type={'text'} groupname={selectedToken.name} component={FormInput} />
                       <div className="d-flex justify-content-between">
                         <p className="swapform__subtext">{t('Amount')}</p>
                       </div>
@@ -94,18 +104,24 @@ export default function SwapForm({ submit, state, initialData }: props) {
 
                   <div className="row mt-5 swapform__row">
                     <div className="col">
-                      <CustomCheckbox label={t('Specific destination wallet')} />
+                      <CustomCheckbox
+                        label={t('Specific destination wallet')}
+                        checked={destination}
+                        onChangeCheckbox={onChangeDestination}
+                      />
                     </div>
                   </div>
 
                   <div className="row mt-3 swapform__row">
                     <div className="col">
-                      <Field
-                        name="destination_wallet"
-                        className="form-control swapform__destinationinput"
-                        type={'text'}
-                        component={FormInput}
-                      />
+                      {destination && (
+                        <Field
+                          name="destination_wallet"
+                          className="form-control swapform__destinationinput"
+                          type={'text'}
+                          component={FormInput}
+                        />
+                      )}
                     </div>
                   </div>
 

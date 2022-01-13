@@ -7,10 +7,11 @@ import './networkselection.css';
 type props = {
   options: Array<INetwork>;
   selected?: string;
+  disabled?: string;
   onChange?: (option: INetwork) => void;
 };
 
-export default function NetworkSelection({ options, selected, onChange }: props) {
+export default function NetworkSelection({ options, selected, disabled, onChange }: props) {
   return (
     <div className="networkselection">
       <RadioGroup containerStyle={classNames('networkselection-container')} onChange={onChange}>
@@ -21,7 +22,7 @@ export default function NetworkSelection({ options, selected, onChange }: props)
             render={({ isSelected }: any) => (
               <button
                 className={classNames('networkselection-option', {
-                  'networkselection-selected': isSelected
+                  'networkselection-selected': isSelected || option.symbol === selected
                 })}
               >
                 <div>
@@ -30,7 +31,7 @@ export default function NetworkSelection({ options, selected, onChange }: props)
                 </div>
               </button>
             )}
-            isDisabled={option.symbol === selected}
+            isDisabled={option.symbol === disabled}
           />
         ))}
       </RadioGroup>

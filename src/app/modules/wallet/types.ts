@@ -10,4 +10,9 @@ interface setToNetworkAction {
   payload: any;
 }
 
-export type walletActionTypes = setFromNetworkAction | setToNetworkAction;
+interface SetSelectedTokenAction {
+  type: typeof actionTypes.SET_SELECTED_TOKEN;
+  payload: any;
+}
+
+export type walletActionTypes = setFromNetworkAction | setToNetworkAction | SetSelectedTokenAction;

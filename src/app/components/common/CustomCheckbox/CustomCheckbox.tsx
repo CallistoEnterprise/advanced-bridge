@@ -5,14 +5,20 @@ import './customcheckbox.css';
 type props = {
   label: string;
   className?: string;
+  onChangeCheckbox?: (status: boolean) => void;
+  checked?: boolean;
 };
 
-export default function CustomCheckbox({ label, className }: props) {
+export default function CustomCheckbox({ label, className, checked = true, onChangeCheckbox }: props) {
   return (
     <div className={classNames('customcheckbox', className)}>
       <label className="container">
         {label}
-        <input type="checkbox" checked />
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={(e) => onChangeCheckbox && onChangeCheckbox(e.target.checked)}
+        />
         <span className="checkmark"></span>
       </label>
     </div>

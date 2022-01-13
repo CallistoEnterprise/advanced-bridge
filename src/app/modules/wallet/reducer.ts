@@ -4,11 +4,13 @@ import { walletActionTypes } from './types';
 export interface walletState {
   fromNetwork: any;
   toNetwork: any;
+  selectedToken: any;
 }
 
 export const initialState: walletState = {
   fromNetwork: {},
-  toNetwork: {}
+  toNetwork: {},
+  selectedToken: {}
 };
 
 function reducer(state = initialState, action: walletActionTypes) {
@@ -22,6 +24,11 @@ function reducer(state = initialState, action: walletActionTypes) {
       return {
         ...state,
         toNetwork: action.payload
+      };
+    case actionTypes.SET_SELECTED_TOKEN:
+      return {
+        ...state,
+        selectedToken: action.payload
       };
     default:
       return state;

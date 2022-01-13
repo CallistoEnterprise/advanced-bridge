@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
 import CustomButton from '~/app/components/common/CustomButton';
@@ -8,6 +9,7 @@ import TokenSelection from '~/app/components/TokenSelection';
 import WalletInfo from '~/app/components/WalletInfo';
 import { IToken } from '~/app/constants/interface';
 import { tokenList } from '~/app/constants/strings';
+import { setSelectedToken } from '~/app/modules/wallet/action';
 import previousIcon from '~/assets/images/previous.svg';
 import './tokenlist.css';
 
@@ -88,12 +90,14 @@ const Default = ({ children }: any) => {
 export default function TokenList() {
   const [t] = useTranslation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [token, setToken] = useState(null);
   const [value, setValue] = useState('');
 
   const onChangeToken = (option: IToken) => {
     setToken(option.symbol);
+    dispatch(setSelectedToken(option));
   };
 
   const onPrevious = () => {

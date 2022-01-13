@@ -35,9 +35,11 @@ export const useNativeCoinBalance = (fromNet: any, curAsset?: any) => {
     const getBalance = async () => {
       if (account && fromNet.symbol === curAsset.symbol && parseInt(fromNet.chainId) === chainId) {
         const amount = await RPC_URL.getBalance(account);
-        const bigAmt = new BigNumber(amount.toString());
-        const decimalBalance = parseInt(((parseInt(bigAmt.toString()) / 10 ** 18) * 1000000).toString());
-        setAmt((decimalBalance / 1000000).toString());
+        // const bigAmt = new BigNumber(amount.toString());
+        const bn = new BigNumber(amount + 'e-' + 18);
+        // console.log(bn.toFixed(2).toString());
+        // const decimalBalance = parseInt(((parseInt(bigAmt.toString()) / 10 ** 18) * 1000000).toString());
+        setAmt(bn.toFixed(2).toString());
       } else if (account && parseInt(fromNet.chainId) === chainId) {
         const balance: BigNumber = await tokenContract.balanceOf(account, { value: 0 });
         const strBalance = balance.toString();
