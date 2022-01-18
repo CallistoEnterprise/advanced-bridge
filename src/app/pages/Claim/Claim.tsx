@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import CustomButton from '~/app/components/common/CustomButton';
 import useActiveWeb3React from '~/app/hooks/useActiveWeb3';
 import { getBridgeContract } from '~/app/utils';
@@ -12,12 +12,12 @@ import './claim.css';
 
 export default function Claim() {
   const [t] = useTranslation();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [pending, setPending] = useState(false);
   const txHash = useSelector((state: any) => state.wallet.hash);
   const fromNetwork = useSelector((state: any) => state.wallet.fromNetwork);
   // const toNetwork = useSelector((state: any) => state.wallet.toNetwork);
-  const { chainId, account, library } = useActiveWeb3React();
+  const { account, library } = useActiveWeb3React();
 
   const onClaim = () => {
     handleClaim();
