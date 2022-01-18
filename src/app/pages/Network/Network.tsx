@@ -8,8 +8,10 @@ import GuidePet from '~/app/components/common/GuidePet';
 import NetworkSelection from '~/app/components/NetworkSelection';
 import WalletInfo from '~/app/components/WalletInfo';
 import { INetwork } from '~/app/constants/interface';
-import { Networks } from '~/app/constants/strings';
-import { setFromNetwork, setToNetwork } from '~/app/modules/wallet/action';
+import { Networks, walletTokens } from '~/app/constants/strings';
+import useActiveWeb3React from '~/app/hooks/useActiveWeb3';
+import { useNativeCoinBalance } from '~/app/hooks/wallet';
+import { setBalance, setFromNetwork, setToNetwork } from '~/app/modules/wallet/action';
 import previousIcon from '~/assets/images/previous.svg';
 import './network.css';
 
@@ -22,28 +24,34 @@ export default function Network() {
   const dispatch = useDispatch();
   const [t] = useTranslation();
   const navigate = useNavigate();
-  const [networkOne, setNetworkOne] = useState(Networks[0].symbol);
-  const [networkTwo, setNetworkTwo] = useState(null);
-
-  // useEffect(() => {
-  //   if (networkOne !== null && networkTwo !== null) {
-  //     navigate('/tokens');
-  //   }
-  // }, [navigate, networkOne, networkTwo]);
+  const [networkOne, setNetworkOne] = useState(Networks[0]);
+  const [networkTwo, setNetworkTwo] = useState<any>({});
+  const { chainId } = useActiveWeb3React();
+  const cloBalance = useNativeCoinBalance(networkOne, walletTokens[0]);
+  const soyBalance = useNativeCoinBalance(networkOne, walletTokens[1]);
 
   useEffect(() => {
-    if (networkOne === networkTwo) {
+    if (cloBalance && cloBalance !== null && soyBalance && soyBalance !== null) {
+      const cloValidBalance = parseInt(networkOne.chainId) === chainId ? cloBalance : '0.00';
+      const soyValidBalance = parseInt(networkOne.chainId) === chainId ? soyBalance : '0.00';
+      console.log(cloValidBalance, soyValidBalance);
+      dispatch(setBalance({ clo: cloValidBalance, soy: soyValidBalance }));
+    }
+  }, [cloBalance, soyBalance, networkOne, chainId, dispatch]);
+
+  useEffect(() => {
+    if (networkOne.symbol === networkTwo.symbol) {
       setNetworkTwo(null);
     }
   }, [networkOne, networkTwo]);
 
   const onChangeNetworkOne = (option: INetwork) => {
-    setNetworkOne(option.symbol);
+    setNetworkOne(option);
     dispatch(setFromNetwork(option));
   };
 
   const onChangeNetworkTwo = (option: INetwork) => {
-    setNetworkTwo(option.symbol);
+    setNetworkTwo(option);
     dispatch(setToNetwork(option));
   };
 
@@ -75,13 +83,13 @@ export default function Network() {
             <strong>{t('Step 1:')}</strong> {t('Select the origin network')}
           </p>
           <h6>{t('The network from which you want to send your assets.')}</h6>
-          <NetworkSelection options={Networks} selected={networkOne} onChange={onChangeNetworkOne} />
+          <NetworkSelection options={Networks} selected={networkOne.symbol} onChange={onChangeNetworkOne} />
 
           <p className="mt-5">
             <strong>{t('Step 2:')}</strong> {t('Select the destination network')}
           </p>
           <h6>{t('The network to which you want to send your assets.')}</h6>
-          <NetworkSelection options={Networks} disabled={networkOne} onChange={onChangeNetworkTwo} />
+          <NetworkSelection options={Networks} disabled={networkOne.symbol} onChange={onChangeNetworkTwo} />
           <CustomButton className="mt-5" onClick={onNext} disabled={networkOne === null || networkTwo === null}>
             {t('Next')}
           </CustomButton>

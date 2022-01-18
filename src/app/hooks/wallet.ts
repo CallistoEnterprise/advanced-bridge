@@ -29,6 +29,7 @@ const getNodeUrl = (nodes: any) => {
 export const useNativeCoinBalance = (fromNet: any, curAsset?: any) => {
   const { account, chainId } = useActiveWeb3React();
   const [amt, setAmt] = useState<number | string>(0);
+
   const RPC_URL = useRpcProvider(fromNet.rpcs);
   const tokenContract = getErc20Contract(curAsset.addresses[`${fromNet.symbol}`], RPC_URL);
   useEffect(() => {
@@ -39,13 +40,13 @@ export const useNativeCoinBalance = (fromNet: any, curAsset?: any) => {
         const bn = new BigNumber(amount + 'e-' + 18);
         // console.log(bn.toFixed(2).toString());
         // const decimalBalance = parseInt(((parseInt(bigAmt.toString()) / 10 ** 18) * 1000000).toString());
-        setAmt(bn.toFixed(2).toString());
+        setAmt(bn.toFixed(2));
       } else if (account && parseInt(fromNet.chainId) === chainId) {
         const balance: BigNumber = await tokenContract.balanceOf(account, { value: 0 });
         const strBalance = balance.toString();
         const decimal = curAsset.decimals[`${fromNet.symbol}`];
         const decimalBalance = parseInt(((parseInt(strBalance.toString()) / 10 ** decimal) * 1000000).toString());
-        setAmt((decimalBalance / 1000000).toString());
+        setAmt((decimalBalance / 1000000).toFixed(2));
       }
     };
     getBalance();
@@ -107,6 +108,7 @@ export const useRpcProvider = (rpcs: string[]) => {
 
 export const getErc20Contract = (address: string, signer?: ethers.Signer | ethers.providers.Provider) => {
   // const signerOrProvider = signer
+  if (!address) return null;
   return new ethers.Contract(address, WETH_ABI, signer);
 };
 

@@ -50,10 +50,8 @@ export default function Home() {
   };
 
   const onClickMetamask = async () => {
-    console.log(ConnectorNames.Injected, Networks[0]);
     login(ConnectorNames.Injected, Networks[0]);
     const network = step === 2 ? Networks[1] : Networks[0];
-    console.log(network);
     dispatch(setFromNetwork(network));
     if (network.symbol === 'ETH') {
       await setupEthereumNetwork(network);

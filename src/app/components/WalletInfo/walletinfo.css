@@ -2,6 +2,7 @@
   &__balance {
     padding: rem(38px) rem(44px);
     text-align: center;
+    min-width: rem(250px);
     p {
       font-size: 15px;
     }

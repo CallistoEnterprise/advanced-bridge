@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import CustomButton from '~/app/components/common/CustomButton';
+import useActiveWeb3React from '~/app/hooks/useActiveWeb3';
+import { getBridgeContract } from '~/app/utils';
+import getSignatures from '~/app/utils/getSignatures';
 import blockIcon from '~/assets/images/block3.png';
 import claimAnimal from '~/assets/images/claimanimal.png';
 import './claim.css';
@@ -9,10 +13,56 @@ import './claim.css';
 export default function Claim() {
   const [t] = useTranslation();
   const navigate = useNavigate();
+  const [pending, setPending] = useState(false);
+  const txHash = useSelector((state: any) => state.wallet.hash);
+  const fromNetwork = useSelector((state: any) => state.wallet.fromNetwork);
+  // const toNetwork = useSelector((state: any) => state.wallet.toNetwork);
+  const { chainId, account, library } = useActiveWeb3React();
 
   const onClaim = () => {
-    navigate('/transfer');
+    handleClaim();
+    // navigate('/transfer');
   };
+
+  async function handleClaim() {
+    if (txHash) {
+      setPending(true);
+    }
+
+    try {
+      const { signatures, respJSON } = await getSignatures(txHash, fromNetwork.chainId);
+      if (signatures.length !== 3) {
+        setPending(false);
+        console.log('Warning', 'Please check your network connection and try again.');
+        return;
+      }
+      const bridgeContract = await getBridgeContract(respJSON.bridge, library, account);
+      const tx = await bridgeContract.claim(
+        respJSON.token,
+        txHash,
+        respJSON.to,
+        respJSON.value,
+        fromNetwork.chainId,
+        signatures,
+        { value: 0 }
+      );
+      const receipt = await tx.wait();
+      if (receipt.status) {
+        window.localStorage.removeItem('prevData');
+        setPending(false);
+        // setStep(0);
+        // setAmt('');
+        // setTxHash('');
+        console.log('Success!', 'Claimed successfully.');
+      } else {
+        setPending(false);
+        console.log('Error!', 'Failed to claim. Please try again.');
+      }
+    } catch (err) {
+      console.log('Error!', 'Failed to claim. Please try again.');
+      setPending(false);
+    }
+  }
 
   return (
     <div className="claim container">
@@ -25,7 +75,7 @@ export default function Claim() {
           <h4>{t('Transfert in progress')}</h4>
           <p>{t('Please wait for 12 blocks confirmations to claim your transaction.')}</p>
           <CustomButton className="claim__claimbtn" onClick={onClaim}>
-            {t('Claim')}
+            {pending ? 'Wait...' : t('Claim')}
           </CustomButton>
         </div>
       </div>

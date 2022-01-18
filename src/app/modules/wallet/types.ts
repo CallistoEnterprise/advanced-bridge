@@ -15,4 +15,19 @@ interface SetSelectedTokenAction {
   payload: any;
 }
 
-export type walletActionTypes = setFromNetworkAction | setToNetworkAction | SetSelectedTokenAction;
+interface SetBalance {
+  type: typeof actionTypes.SET_BALANCE;
+  payload: any;
+}
+
+interface SetHash {
+  type: typeof actionTypes.SET_HASH;
+  payload: any;
+}
+
+export type walletActionTypes =
+  | setFromNetworkAction
+  | setToNetworkAction
+  | SetSelectedTokenAction
+  | SetBalance
+  | SetHash;

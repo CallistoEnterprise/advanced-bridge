@@ -5,15 +5,20 @@ export interface walletState {
   fromNetwork: any;
   toNetwork: any;
   selectedToken: any;
+  balance: any;
+  hash: string;
 }
 
 export const initialState: walletState = {
   fromNetwork: {},
   toNetwork: {},
-  selectedToken: {}
+  selectedToken: {},
+  balance: {},
+  hash: ''
 };
 
 function reducer(state = initialState, action: walletActionTypes) {
+  console.log(action.payload);
   switch (action.type) {
     case actionTypes.SET_FROM_NETWORK:
       return {
@@ -30,6 +35,18 @@ function reducer(state = initialState, action: walletActionTypes) {
         ...state,
         selectedToken: action.payload
       };
+    case actionTypes.SET_BALANCE:
+      return {
+        ...state,
+        balance: action.payload
+      };
+
+    case actionTypes.SET_HASH:
+      return {
+        ...state,
+        hash: action.payload
+      };
+
     default:
       return state;
   }

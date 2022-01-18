@@ -153,8 +153,8 @@ export const tokenList = [
       ETC: 18
     },
     addresses: {
-      CLO: '0xCC2D45F7fE1b8864a13F5D552345eB3f5a005FEd',
-      BNB: '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82',
+      CLO: '0x4c20231BCc5dB8D805DB9197C84c8BA8287CbA92',
+      BNB: '',
       ETH: '',
       ETC: '',
       SOY: ''
@@ -188,7 +188,7 @@ export const tokenList = [
       ETC: 18
     },
     addresses: {
-      CLO: '0x9FaE2529863bD691B4A7171bDfCf33C7ebB10a65',
+      CLO: '0xcC208c32Cc6919af5d8026dAB7A3eC7A57CD1796',
       BNB: '',
       ETH: '0x0000000000000000000000000000000000000006',
       ETC: ''
@@ -355,5 +355,48 @@ export const migrationTokens = [
       CLO: '0xcC00860947035a26Ffe24EcB1301ffAd3a89f910'
     },
     network: 'Callisto'
+  }
+];
+
+export const walletTokens: Array<any> = [
+  {
+    name: 'CLO',
+    symbol: 'CLO',
+    icon: cloIcon,
+    decimals: {
+      CLO: 18,
+      BNB: 18,
+      ETH: 18,
+      ETC: 18
+    },
+    addresses: {
+      CLO: '0x0000000000000000000000000000000000000001',
+      BNB: '0xCcbf1C9E8b4f2cDF3Bfba1098b8f56f97d219D53',
+      ETH: '0xCcbf1C9E8b4f2cDF3Bfba1098b8f56f97d219D53',
+      ETC: '0xCcbf1C9E8b4f2cDF3Bfba1098b8f56f97d219D53'
+    },
+    addressesTest: {
+      CLO: '0x0000000000000000000000000000000000000001',
+      BNB: '0xCCEA50dDA26F141Fcc41Ad7e94755936d8C57e28',
+      ETH: '0xCC48d2250b55b82696978184E75811F1c0eF383F'
+    }
+  },
+  {
+    name: 'SOY',
+    symbol: 'SOY',
+    icon: soyIcon,
+    decimals: {
+      CLO: 18,
+      BNB: 18,
+      ETH: 18,
+      ETC: 18
+    },
+    addresses: {
+      CLO: '0x4c20231BCc5dB8D805DB9197C84c8BA8287CbA92',
+      BNB: '',
+      ETH: '',
+      ETC: '',
+      SOY: ''
+    }
   }
 ];
