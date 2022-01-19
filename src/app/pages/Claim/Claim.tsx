@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -20,11 +20,11 @@ export default function Claim() {
   // const toNetwork = useSelector((state: any) => state.wallet.toNetwork);
   const { library } = useActiveWeb3React();
 
-  useEffect(() => {
-    if (txHash) {
-      handleClaim();
-    }
-  }, [txHash]);
+  // useEffect(() => {
+  //   if (txHash) {
+  //     handleClaim();
+  //   }
+  // }, [txHash]);
 
   const onClaim = () => {
     handleClaim();
