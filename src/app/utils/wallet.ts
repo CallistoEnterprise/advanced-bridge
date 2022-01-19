@@ -62,6 +62,7 @@ export const setupEthereumNetwork = async (curNet: any) => {
 };
 
 export const switchNetwork = async (curNet: any) => {
+  console.log(curNet);
   const provider = window.ethereum;
 
   if (provider) {
@@ -72,18 +73,18 @@ export const switchNetwork = async (curNet: any) => {
         method: 'wallet_switchEthereumChain',
         params: [
           {
-            chainId: `0x${chainId.toString(16)}`,
-            fallbackRpc: {
-              chainId: `0x${chainId.toString(16)}`,
-              chainName: `${curNet.name}`,
-              rpcUrl: curNet.rpcs[0],
-              nativeCurrency: {
-                name: `${curNet.name}`,
-                symbol: `${curNet.symbol}`,
-                decimals: parseInt(curNet.decimals)
-              },
-              blockExplorerUrl: `${curNet.explorer}`
-            }
+            chainId: `0x${chainId.toString(16)}`
+            // fallbackRpc: {
+            //   chainId: `0x${chainId.toString(16)}`,
+            //   chainName: `${curNet.name}`,
+            //   rpcUrl: curNet.rpcs[0],
+            //   nativeCurrency: {
+            //     name: `${curNet.name}`,
+            //     symbol: `${curNet.symbol}`,
+            //     decimals: parseInt(curNet.decimals)
+            //   },
+            //   blockExplorerUrl: `${curNet.explorer}`
+            // }
           }
         ]
       });

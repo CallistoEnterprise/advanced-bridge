@@ -22,7 +22,7 @@ export default function AppRouter() {
           <Route path="/network" element={<Network />} />
           <Route path="/tokens" element={<TokenList />} />
           <Route path="/swap" element={<Swap />} />
-          <Route path="/claim" element={<Claim />} />
+          <Route path="/claim/:address" element={<Claim />} />
           <Route path="/transfer" element={<Transfer />} />
           <Route path="/previousclaim" element={<PreviousClaim />} />
         </Routes>

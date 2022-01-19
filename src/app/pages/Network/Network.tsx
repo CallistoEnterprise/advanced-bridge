@@ -24,6 +24,7 @@ export default function Network() {
   const dispatch = useDispatch();
   const [t] = useTranslation();
   const navigate = useNavigate();
+  const [pendingBalance, setPendingBalance] = useState(false);
   const [networkOne, setNetworkOne] = useState(Networks[0]);
   const [networkTwo, setNetworkTwo] = useState<any>({});
   const { chainId } = useActiveWeb3React();
@@ -31,11 +32,12 @@ export default function Network() {
   const soyBalance = useNativeCoinBalance(networkOne, walletTokens[1]);
 
   useEffect(() => {
+    setPendingBalance(true);
     if (cloBalance && cloBalance !== null && soyBalance && soyBalance !== null) {
       const cloValidBalance = parseInt(networkOne.chainId) === chainId ? cloBalance : '0.00';
       const soyValidBalance = parseInt(networkOne.chainId) === chainId ? soyBalance : '0.00';
-      console.log(cloValidBalance, soyValidBalance);
       dispatch(setBalance({ clo: cloValidBalance, soy: soyValidBalance }));
+      setPendingBalance(false);
     }
   }, [cloBalance, soyBalance, networkOne, chainId, dispatch]);
 
@@ -77,7 +79,7 @@ export default function Network() {
         <Default>
           <GuidePet />
         </Default>
-        <WalletInfo />
+        <WalletInfo pending={pendingBalance} />
         <div className="network__content__steps">
           <p>
             <strong>{t('Step 1:')}</strong> {t('Select the origin network')}
@@ -90,7 +92,11 @@ export default function Network() {
           </p>
           <h6>{t('The network to which you want to send your assets.')}</h6>
           <NetworkSelection options={Networks} disabled={networkOne.symbol} onChange={onChangeNetworkTwo} />
-          <CustomButton className="mt-5" onClick={onNext} disabled={networkOne === null || networkTwo === null}>
+          <CustomButton
+            className="mt-5"
+            onClick={onNext}
+            disabled={networkOne === null || networkTwo === null || pendingBalance}
+          >
             {t('Next')}
           </CustomButton>
         </div>

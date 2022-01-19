@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
 import BorderContainer from '~/app/components/common/BorderContainer';
+import Spinner from '~/app/components/common/Spinner';
 import { walletTokens } from '~/app/constants/strings';
 import useAuth from '~/app/hooks/useAuth';
 import copyIcon from '~/assets/images/copy.svg';
@@ -29,7 +30,11 @@ const TokenItem = (item: tokenType, index: number, balance: any) => {
   );
 };
 
-export default function WalletInfo() {
+type walletInfoProps = {
+  pending?: boolean;
+};
+
+export default function WalletInfo({ pending }: walletInfoProps) {
   const [t] = useTranslation();
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ maxWidth: 767 });
@@ -62,11 +67,16 @@ export default function WalletInfo() {
               <img src={copyIcon} alt="copyIcon" />
             </div>
             <p className="walletinfo__balance--title">{t('Balance')}</p>
-            <ul>
-              {walletTokens.map((item, index) => {
-                return TokenItem(item, index, balance);
-              })}
-            </ul>
+            {pending ? (
+              <Spinner className="mt-5" />
+            ) : (
+              <ul>
+                {walletTokens.map((item, index) => {
+                  return TokenItem(item, index, balance);
+                })}
+              </ul>
+            )}
+
             <hr className="solid mt-5"></hr>
             <p className="walletinfo__balance--disconnect" onClick={onClickDisconnect}>
               {t('Disconnect')}

@@ -25,6 +25,7 @@
   },
   {
     "inputs": [
+      { "internalType": "address", "name": "receiver", "type": "address" },
       { "internalType": "address", "name": "token", "type": "address" },
       { "internalType": "uint256", "name": "value", "type": "uint256" },
       { "internalType": "uint256", "name": "toChainId", "type": "uint256" }

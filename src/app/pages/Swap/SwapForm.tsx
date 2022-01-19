@@ -58,7 +58,7 @@ export default function SwapForm({ submit, state, initialData, pending }: props)
             : {
                 swap_amount: '0',
                 buy_amount: '0',
-                destination_wallet: ''
+                destination_wallet: '1231231'
               }
         }
         validationSchema={registerSchema}

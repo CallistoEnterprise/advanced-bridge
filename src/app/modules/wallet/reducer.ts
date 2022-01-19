@@ -18,7 +18,6 @@ export const initialState: walletState = {
 };
 
 function reducer(state = initialState, action: walletActionTypes) {
-  console.log(action.payload);
   switch (action.type) {
     case actionTypes.SET_FROM_NETWORK:
       return {
