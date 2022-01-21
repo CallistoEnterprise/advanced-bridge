@@ -1,50 +1,85 @@
-import React from 'react';
+import { useWeb3React } from '@web3-react/core';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
-import ClaimPet from '~/app/components/common/ClaimPet';
 import CustomButton from '~/app/components/common/CustomButton';
+import TokenSelection from '~/app/components/TokenSelection';
+import { registerToken } from '~/app/utils/wallet';
 import previousIcon from '~/assets/images/previous.svg';
+import ccBNBIcon from '~/assets/images/tokens/ccBNB.svg';
+import ccBUSDTIcon from '~/assets/images/tokens/ccBUSDT.svg';
+import ccCLOIcon from '~/assets/images/tokens/ccCLO.svg';
+import ccETCIcon from '~/assets/images/tokens/ccETC.svg';
+import ccETHIcon from '~/assets/images/tokens/ccETH.svg';
 import './transfer.css';
 
 // https://sdk.raydium.io/icons/2FPyTwcZLUg1MDrwsyoP4D6s1tM7hAkHYRjkNb5w6Pxk.png
-// const options = [
-//   {
-//     icon: ccCLOIcon,
-//     name: 'ccCLO in Ethereum',
-//     value: 'eth'
-//   },
-//   {
-//     icon: ccCLOIcon,
-//     name: 'ccCLO in BSC',
-//     value: 'bnb'
-//   },
-//   {
-//     icon: ccCLOIcon,
-//     name: 'ccCLO in ETC',
-//     value: 'etc'
-//   },
-//   {
-//     icon: ccBNBIcon,
-//     name: 'ccBNB in Callisto',
-//     value: 'clo'
-//   },
-//   {
-//     icon: ccETHIcon,
-//     name: 'ccETH in Callisto',
-//     value: 'etc'
-//   },
-//   {
-//     icon: ccETCIcon,
-//     name: 'ccETC in Callisto',
-//     value: 'etc'
-//   },
-//   {
-//     icon: ccBUSDTIcon,
-//     name: 'BUSDT in Callisto',
-//     value: 'etc'
-//   }
-// ];
+const options = [
+  {
+    icon: ccCLOIcon,
+    name: 'ccCLO in Ethereum',
+    value: 'eth',
+    symbol: 'ccCLO',
+    chainId: 1,
+    address: '0xCcbf1C9E8b4f2cDF3Bfba1098b8f56f97d219D53',
+    network: 'Ethereum'
+  },
+  {
+    icon: ccCLOIcon,
+    name: 'ccCLO in BSC',
+    value: 'bnb',
+    symbol: 'ccCLO',
+    chainId: 97,
+    address: '0xCcbf1C9E8b4f2cDF3Bfba1098b8f56f97d219D53',
+    network: 'BSC'
+  },
+  {
+    icon: ccCLOIcon,
+    name: 'ccCLO in ETC',
+    value: 'etc',
+    symbol: 'ccCLO',
+    chainId: 61,
+    address: '0xCcbf1C9E8b4f2cDF3Bfba1098b8f56f97d219D53',
+    network: 'ETC'
+  },
+  {
+    icon: ccBNBIcon,
+    name: 'ccBNB in Callisto',
+    value: 'clo',
+    symbol: 'ccBNB',
+    chainId: 20729,
+    address: '0xcCDe29903E621Ca12DF33BB0aD9D1ADD7261Ace9',
+    network: 'Callisto'
+  },
+  {
+    icon: ccETHIcon,
+    name: 'ccETH in Callisto',
+    value: 'etc',
+    symbol: 'ccETH',
+    chainId: 20729,
+    address: '0xcC208c32Cc6919af5d8026dAB7A3eC7A57CD1796',
+    network: 'Callisto'
+  },
+  {
+    icon: ccETCIcon,
+    name: 'ccETC in Callisto',
+    value: 'etc',
+    symbol: 'ccETC',
+    chainId: 20729,
+    address: '0xCCc766f97629a4E14b3af8C91EC54f0b5664A69F',
+    network: 'Callisto'
+  },
+  {
+    icon: ccBUSDTIcon,
+    name: 'BUSDT in Callisto',
+    value: 'etc',
+    symbol: 'BUSDT',
+    chainId: 20729,
+    address: '0xbf6c50889d3a620eb42C0F188b65aDe90De958c4',
+    network: 'Callisto'
+  }
+];
 
 const Default = ({ children }: any) => {
   const isNotMobile = useMediaQuery({ minWidth: 768 });
@@ -59,13 +94,24 @@ const Mobile = ({ children }: any) => {
 export default function Transfer() {
   const [t] = useTranslation();
   const navigate = useNavigate();
-
+  const { account, chainId } = useWeb3React();
   // const [networkOne, setNetworkOne] = useState(null);
 
-  // const onChangeNetworkOne = (option: network) => {
-  //   console.log(option.value);
-  //   // setNetworkOne(option.value);
-  // };
+  useEffect(() => {
+    if (!account) {
+      navigate('/');
+    }
+  }, [account, navigate]);
+
+  const onSelectToken = (option: any) => {
+    // setNetworkOne(option.value);
+    if (option.chainId !== chainId) {
+      console.log('Wrong Network!', `Please switch network to ${option.network}`);
+      return;
+    }
+
+    registerToken(option.address, option.symbol, 18);
+  };
 
   const onPrevious = () => {
     navigate('/');
@@ -80,15 +126,15 @@ export default function Transfer() {
             {t('Previous')}
           </div>
         </CustomButton>
-        <Default>
+        {/* <Default>
           <ClaimPet />
-        </Default>
+        </Default> */}
 
         <div className="transfer__content__steps">
           <h4>{t('Transfert complete!')}</h4>
           <h6 className="mt-5">{t('You don’t see your tokens?')}</h6>
           <h6 className="mt-3">{t('Just add your asset to your wallet by clicking on its icon!')}</h6>
-          {/* <TokenSelection options={options} onChange={onChangeNetworkOne} className="transfer__selection" /> */}
+          <TokenSelection options={options} onChange={onSelectToken} className="transfer__selection" />
         </div>
         <Mobile>
           <div className="transfer__mobile">

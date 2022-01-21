@@ -3,32 +3,9 @@ import React from 'react';
 import { Radio, RadioGroup } from 'react-custom-radio-buttons';
 import './tokenselection.css';
 
-interface token {
-  name: string;
-  symbol: string;
-  icon: string;
-  decimals: {
-    CLO: number;
-    BNB: number;
-    ETH: number;
-    ETC: number;
-  };
-  addresses: {
-    CLO: string;
-    BNB: string;
-    ETH: string;
-    ETC: string;
-  };
-  addressesTest?: {
-    CLO: string;
-    BNB: string;
-    ETH: string;
-  };
-}
-
 type props = {
-  options: Array<token>;
-  onChange?: (option: token) => void;
+  options: Array<any>;
+  onChange?: (option: any) => void;
   className?: string;
 };
 

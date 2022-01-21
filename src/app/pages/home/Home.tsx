@@ -45,8 +45,17 @@ export default function Home() {
     // navigate('/network');
   };
 
-  const onPreviousClaim = () => {
-    navigate('/previousclaim');
+  const onPreviousClaim = async () => {
+    login(ConnectorNames.Injected, Networks[0]);
+    const network = step === 2 ? Networks[1] : Networks[0];
+    dispatch(setFromNetwork(network));
+    if (network.symbol === 'ETH') {
+      await setupEthereumNetwork(network);
+      navigate('/previousclaim');
+    } else {
+      await setupNetwork(network);
+      navigate('/previousclaim');
+    }
   };
 
   const onClickMetamask = async () => {

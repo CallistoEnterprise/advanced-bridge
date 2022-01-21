@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import CustomCheckbox from '~/app/components/common/CustomCheckbox';
 import FormInput from '~/app/components/common/FormInput';
+import Spinner from '~/app/components/common/Spinner';
 import './swapform.css';
 
 type props = {
@@ -65,7 +66,7 @@ export default function SwapForm({ submit, state, initialData, pending }: props)
         validateOnMount
         onSubmit={onSubmit}
       >
-        {({ handleSubmit, isValid }) => {
+        {({ handleSubmit, values }) => {
           return (
             <form onSubmit={handleSubmit} noValidate name="swapForm">
               <div className="row">
@@ -139,8 +140,20 @@ export default function SwapForm({ submit, state, initialData, pending }: props)
                     </div>
                   </div>
 
-                  <button type="submit" color="success" className="swapform__submit" disabled={!isValid}>
-                    {pending ? 'Wait...' : t('SWAP')}
+                  <button
+                    type="submit"
+                    color="success"
+                    className="swapform__submit"
+                    disabled={values.swap_amount === '0' || values.destination_wallet === ''}
+                  >
+                    {pending ? (
+                      <div>
+                        <Spinner className="me-2" />
+                        Wait...
+                      </div>
+                    ) : (
+                      t('SWAP')
+                    )}
                     {/* {isPending(state) ? 'Wait...' : 'Submit'} */}
                   </button>
                 </div>

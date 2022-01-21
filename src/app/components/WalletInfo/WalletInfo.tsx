@@ -1,5 +1,5 @@
 import { useWeb3React } from '@web3-react/core';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
@@ -46,14 +46,15 @@ export default function WalletInfo({ pending }: walletInfoProps) {
 
   const balance = useSelector((state: any) => state.wallet.balance);
 
-  useEffect(() => {
-    if (!active) {
-      navigate('/');
-    }
-  }, [active, navigate]);
+  // useEffect(() => {
+  //   if (!active) {
+  //     navigate('/');
+  //   }
+  // }, [active, navigate]);
 
   const onClickDisconnect = () => {
     logout();
+    navigate('/');
   };
 
   return (

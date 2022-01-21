@@ -51,6 +51,9 @@
       border-top-left-radius: rem(15px);
       border-top-right-radius: rem(15px);
     }
+    &:disabled {
+      opacity: 0.5;
+    }
   }
   &__row {
     padding: rem(0px) rem(44px);

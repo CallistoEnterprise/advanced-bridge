@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import CustomButton from '~/app/components/common/CustomButton';
+import Spinner from '~/app/components/common/Spinner';
 import useActiveWeb3React from '~/app/hooks/useActiveWeb3';
 import { getBridgeContract } from '~/app/utils';
 import getSignatures from '~/app/utils/getSignatures';
@@ -13,7 +14,7 @@ import './claim.css';
 export default function Claim() {
   const [t] = useTranslation();
   const { address } = useParams();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [pending, setPending] = useState(false);
   const txHash = useSelector((state: any) => state.wallet.hash);
   const fromNetwork = useSelector((state: any) => state.wallet.fromNetwork);
@@ -28,7 +29,6 @@ export default function Claim() {
 
   const onClaim = () => {
     handleClaim();
-    // navigate('/transfer');
   };
 
   async function handleClaim() {
@@ -60,6 +60,7 @@ export default function Claim() {
         // setStep(0);
         // setAmt('');
         // setTxHash('');
+        navigate('/transfer');
         console.log('Success!', 'Claimed successfully.');
       } else {
         setPending(false);
@@ -82,7 +83,14 @@ export default function Claim() {
           <h4>{t('Transfert in progress')}</h4>
           <p>{t('Please wait for 12 blocks confirmations to claim your transaction.')}</p>
           <CustomButton className="claim__claimbtn" onClick={onClaim}>
-            {pending ? 'Wait...' : t('Claim')}
+            {pending ? (
+              <div>
+                <Spinner className="me-2" />
+                Wait...
+              </div>
+            ) : (
+              t('Claim')
+            )}
           </CustomButton>
         </div>
       </div>

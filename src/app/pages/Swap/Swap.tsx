@@ -12,7 +12,7 @@ import Notice from '~/app/components/Notice';
 import WalletInfo from '~/app/components/WalletInfo';
 import useActiveWeb3React from '~/app/hooks/useActiveWeb3';
 import { setHash } from '~/app/modules/wallet/action';
-import { getBridgeContract, getTokenContract, isAddress } from '~/app/utils';
+import { getBridgeContract, getTokenContract } from '~/app/utils';
 import { getBridgeAddress } from '~/app/utils/decimal';
 import { switchNetwork } from '~/app/utils/wallet';
 import previousIcon from '~/assets/images/previous.svg';
@@ -48,7 +48,8 @@ const Swap = () => {
   };
 
   async function onClickSwap(amount: any, distinationAddress: string) {
-    const address: any = distinationAddress === '' ? account : isAddress(distinationAddress);
+    setPending(true);
+    const address: any = distinationAddress === '' ? account : distinationAddress;
     const swapTokenAddr = selectedToken.addresses[`${fromNetwork.symbol}`];
     if (swapTokenAddr === '') {
       console.log('Warning', 'Please select another asset. Current asset is not supported yet!');
@@ -77,17 +78,19 @@ const Swap = () => {
         'value=>',
         value
       );
-      const tx = await bridgeContract.depositTokens(address, swapTokenAddr, amount, toNetwork.chainId, { value });
-      setPending(true);
-
-      const receipt = await tx.wait();
-      if (receipt.status) {
-        console.log('Success!!!!');
-        await switchNetwork(toNetwork);
-        setPending(false);
-        dispatch(setHash(tx.hash));
-        navigate(`/claim/${address}`);
-      } else {
+      try {
+        const tx = await bridgeContract.depositTokens(address, swapTokenAddr, amount, toNetwork.chainId, { value });
+        const receipt = await tx.wait();
+        if (receipt.status) {
+          console.log('Success!!!!');
+          await switchNetwork(toNetwork);
+          setPending(false);
+          dispatch(setHash(tx.hash));
+          navigate(`/claim/${address}`);
+        } else {
+          setPending(false);
+        }
+      } catch (error) {
         setPending(false);
       }
     }
