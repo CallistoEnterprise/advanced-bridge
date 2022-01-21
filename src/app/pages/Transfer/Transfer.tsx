@@ -81,10 +81,10 @@ const options = [
   }
 ];
 
-const Default = ({ children }: any) => {
-  const isNotMobile = useMediaQuery({ minWidth: 768 });
-  return isNotMobile ? children : null;
-};
+// const Default = ({ children }: any) => {
+//   const isNotMobile = useMediaQuery({ minWidth: 768 });
+//   return isNotMobile ? children : null;
+// };
 
 const Mobile = ({ children }: any) => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
