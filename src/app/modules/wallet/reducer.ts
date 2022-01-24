@@ -7,6 +7,7 @@ export interface walletState {
   selectedToken: any;
   balance: any;
   hash: string;
+  destinationAddress: string;
 }
 
 export const initialState: walletState = {
@@ -14,7 +15,8 @@ export const initialState: walletState = {
   toNetwork: {},
   selectedToken: {},
   balance: {},
-  hash: ''
+  hash: '',
+  destinationAddress: ''
 };
 
 function reducer(state = initialState, action: walletActionTypes) {
@@ -44,6 +46,11 @@ function reducer(state = initialState, action: walletActionTypes) {
       return {
         ...state,
         hash: action.payload
+      };
+    case actionTypes.SET_DESTINATION_ADDRESS:
+      return {
+        ...state,
+        destinationAddress: action.payload
       };
 
     default:

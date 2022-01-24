@@ -3,7 +3,8 @@ export const actionTypes = {
   SET_TO_NETWORK: 'SET_TO_NETWORK',
   SET_SELECTED_TOKEN: 'SET_SELECTED_TOKEN',
   SET_BALANCE: 'SET_BALANCE',
-  SET_HASH: 'SET_HASH'
+  SET_HASH: 'SET_HASH',
+  SET_DESTINATION_ADDRESS: 'SET_DESTINATION_ADDRESS'
 };
 export function setFromNetwork(payload: any) {
   return { type: actionTypes.SET_FROM_NETWORK, payload };
@@ -23,4 +24,8 @@ export function setBalance(payload: any) {
 
 export function setHash(payload: any) {
   return { type: actionTypes.SET_HASH, payload: payload };
+}
+
+export function setDestinationAddress(payload: any) {
+  return { type: actionTypes.SET_DESTINATION_ADDRESS, payload: payload };
 }

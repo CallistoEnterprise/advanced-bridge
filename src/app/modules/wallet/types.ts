@@ -25,9 +25,15 @@ interface SetHash {
   payload: any;
 }
 
+interface SetDestinationAddressAction {
+  type: typeof actionTypes.SET_DESTINATION_ADDRESS;
+  payload: any;
+}
+
 export type walletActionTypes =
   | setFromNetworkAction
   | setToNetworkAction
   | SetSelectedTokenAction
   | SetBalance
-  | SetHash;
+  | SetHash
+  | SetDestinationAddressAction;

@@ -11,7 +11,7 @@ import CustomButton from '~/app/components/common/CustomButton';
 import Notice from '~/app/components/Notice';
 import WalletInfo from '~/app/components/WalletInfo';
 import useActiveWeb3React from '~/app/hooks/useActiveWeb3';
-import { setHash } from '~/app/modules/wallet/action';
+import { setDestinationAddress, setHash } from '~/app/modules/wallet/action';
 import { getBridgeContract, getTokenContract } from '~/app/utils';
 import { getBridgeAddress } from '~/app/utils/decimal';
 import { switchNetwork } from '~/app/utils/wallet';
@@ -86,6 +86,7 @@ const Swap = () => {
           await switchNetwork(toNetwork);
           setPending(false);
           dispatch(setHash(tx.hash));
+          dispatch(setDestinationAddress(address));
           navigate(`/claim/${address}`);
         } else {
           setPending(false);
