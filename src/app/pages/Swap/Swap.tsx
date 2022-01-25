@@ -3,8 +3,9 @@ import { ethers } from 'ethers';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-// import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+// import { useMediaQuery } from 'react-responsive';
 import Web3 from 'web3'; // const Default = ({ children }: any) => {
 import BorderContainer from '~/app/components/common/BorderContainer';
 import CustomButton from '~/app/components/common/CustomButton';
@@ -52,7 +53,7 @@ const Swap = () => {
     const address: any = distinationAddress === '' ? account : distinationAddress;
     const swapTokenAddr = selectedToken.addresses[`${fromNetwork.symbol}`];
     if (swapTokenAddr === '') {
-      console.log('Warning', 'Please select another asset. Current asset is not supported yet!');
+      toast.warning('Please select another asset. Current asset is not supported yet!');
     } else {
       const bridgeAddr = getBridgeAddress(chainId);
       let value = '0';
@@ -82,7 +83,6 @@ const Swap = () => {
         const tx = await bridgeContract.depositTokens(address, swapTokenAddr, amount, toNetwork.chainId, { value });
         const receipt = await tx.wait();
         if (receipt.status) {
-          console.log('Success!!!!');
           await switchNetwork(toNetwork);
           setPending(false);
           dispatch(setHash(tx.hash));

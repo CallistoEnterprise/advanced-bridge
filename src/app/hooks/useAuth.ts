@@ -9,6 +9,7 @@ import {
   WalletConnectConnector
 } from '@web3-react/walletconnect-connector';
 import { useCallback } from 'react';
+import { toast } from 'react-toastify';
 import { setupNetwork } from '~/app/utils/wallet';
 import { connectorsByName } from '~/app/utils/web3React';
 
@@ -29,8 +30,8 @@ const useAuth = () => {
           } else {
             window.localStorage.removeItem(connectorLocalStorageKey);
             if (error instanceof NoEthereumProviderError) {
-              console.log('Provider Error', 'No provider was found');
-              // toastError('Provider Error', 'No provider was found');
+              // console.log('Provider Error', 'No provider was found');
+              toast.error('No provider was found');
             } else if (
               error instanceof UserRejectedRequestErrorInjected ||
               error instanceof UserRejectedRequestErrorWalletConnect
@@ -39,16 +40,16 @@ const useAuth = () => {
                 const walletConnector = connector as WalletConnectConnector;
                 walletConnector.walletConnectProvider = null;
               }
-              console.log('Authorization Error', 'Please authorize to access your account');
+              toast.error('Please authorize to access your account');
               // toastError('Authorization Error', 'Please authorize to access your account');
             } else {
-              console.log(error.name, error.message);
+              toast.error(error.message);
               // toastError(error.name, error.message);
             }
           }
         });
       } else {
-        console.log('Unable to find connector', 'The connector config is wrong');
+        toast.warning('The connector config is wrong');
         // toastError('Unable to find connector', 'The connector config is wrong');
       }
     },

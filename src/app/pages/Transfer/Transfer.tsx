@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMediaQuery } from 'react-responsive';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import CustomButton from '~/app/components/common/CustomButton';
 import TokenSelection from '~/app/components/TokenSelection';
 import { registerToken } from '~/app/utils/wallet';
@@ -106,7 +107,7 @@ export default function Transfer() {
   const onSelectToken = (option: any) => {
     // setNetworkOne(option.value);
     if (option.chainId !== chainId) {
-      console.log('Wrong Network!', `Please switch network to ${option.network}`);
+      toast.warning(`Please switch network to ${option.network}`);
       return;
     }
 

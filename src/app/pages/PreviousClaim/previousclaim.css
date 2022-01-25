@@ -81,6 +81,22 @@
       margin: rem(20px) rem(35px);
       background-color: value($color-primary, normal);
     }
+    &__hashInput {
+      border: none;
+      border-bottom: 2px solid #adca46;
+      background: transparent;
+      font-family: 'Lato-Regular';
+      font-size: rem(16px);
+      border-radius: 0px;
+      padding-left: 0px;
+      padding-bottom: rem(10px);
+      width: 80%;
+      margin: 0rem 2.1875rem;
+      margin-top: rem(20px);
+      &:focus {
+        outline: none;
+      }
+    }
     &__button {
       margin-top: rem(15px);
       width: 100%;
@@ -92,6 +108,9 @@
       font-family: 'Lato-Bold';
       font-size: rem(20px);
       color: value($color-basic, brightest);
+      &:disabled {
+        opacity: 0.5;
+      }
       @media only screen and (max-width: $sm) {
         text-align: center;
         display: inline-block;

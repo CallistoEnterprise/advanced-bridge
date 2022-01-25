@@ -22,6 +22,7 @@ export default function Home() {
   const dispatch = useDispatch();
   const [t] = useTranslation();
   const navigate = useNavigate();
+  const [page, setPage] = useState<string>('');
   const [step, setStep] = useState(0);
 
   const { active } = useWeb3React();
@@ -33,9 +34,9 @@ export default function Home() {
 
   useEffect(() => {
     if (active) {
-      navigate('/network');
+      navigate(`/${page}`);
     }
-  }, [active, navigate]);
+  }, [active, page, navigate]);
 
   // const injected = new InjectedConnector({
   //   supportedChainIds: [1, 3, 4, 5, 42, 56, 61, 820]
@@ -46,19 +47,19 @@ export default function Home() {
   };
 
   const onPreviousClaim = async () => {
+    setPage('previousclaim');
     login(ConnectorNames.Injected, Networks[0]);
     const network = step === 2 ? Networks[1] : Networks[0];
     dispatch(setFromNetwork(network));
     if (network.symbol === 'ETH') {
       await setupEthereumNetwork(network);
-      navigate('/previousclaim');
     } else {
       await setupNetwork(network);
-      navigate('/previousclaim');
     }
   };
 
   const onClickMetamask = async () => {
+    setPage('network');
     login(ConnectorNames.Injected, Networks[0]);
     const network = step === 2 ? Networks[1] : Networks[0];
     dispatch(setFromNetwork(network));

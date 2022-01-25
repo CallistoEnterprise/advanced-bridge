@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import CustomButton from '~/app/components/common/CustomButton';
 import Spinner from '~/app/components/common/Spinner';
 import useActiveWeb3React from '~/app/hooks/useActiveWeb3';
@@ -40,7 +41,7 @@ export default function Claim() {
       const { signatures, respJSON } = await getSignatures(txHash, fromNetwork.chainId);
       if (signatures.length !== 3) {
         setPending(false);
-        console.log('Warning', 'Please check your network connection and try again.');
+        toast.warning('Please check your network connection and try again.');
         return;
       }
       const bridgeContract = await getBridgeContract(respJSON.bridge, library, address);
@@ -61,13 +62,13 @@ export default function Claim() {
         // setAmt('');
         // setTxHash('');
         navigate('/transfer');
-        console.log('Success!', 'Claimed successfully.');
+        toast.success('Claimed successfully.');
       } else {
         setPending(false);
-        console.log('Error!', 'Failed to claim. Please try again.');
+        toast.error('Failed to claim. Please try again.');
       }
     } catch (err) {
-      console.log('Error!', 'Failed to claim. Please try again.');
+      toast.error('Failed to claim. Please try again.');
       setPending(false);
     }
   }
