@@ -5,12 +5,12 @@ import { Provider } from 'react-redux';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { PersistGate } from 'redux-persist/integration/react';
-import '../styles/app.css';
 import './app.i18n';
 import AppRouter from './AppRouter';
 import configureStore from './core/store';
 // import { store } from './core/store';
 import { getLibrary } from './utils/web3React';
+
 const { persistor, store } = configureStore();
 
 toast.configure();
