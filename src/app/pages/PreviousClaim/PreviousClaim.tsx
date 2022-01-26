@@ -15,6 +15,7 @@ import { useNativeCoinBalance } from '~/app/hooks/wallet';
 import { setBalance, setFromNetwork } from '~/app/modules/wallet/action';
 import { getBridgeContract, shortAddress } from '~/app/utils';
 import getSignatures from '~/app/utils/getSignatures';
+import { switchNetwork } from '~/app/utils/wallet';
 import previousIcon from '~/assets/images/previous.svg';
 import './previousclaim.css';
 
@@ -67,6 +68,19 @@ export default function PreviousClaim() {
 
     try {
       const { signatures, respJSON } = await getSignatures(hash, fromNetwork.chainId);
+      console.log(chainId, respJSON);
+      if (respJSON.chainId !== chainId.toString()) {
+        const toNetwork = Networks.find((item) => item.chainId === respJSON.chainId);
+        try {
+          toast.info('Please change your network to claim this transaction');
+          await switchNetwork(toNetwork);
+          setPending(false);
+          return;
+        } catch (error) {
+          toast.warning('Please check your network connection and try again.');
+        }
+      }
+
       if (signatures.length !== 3) {
         setPending(false);
         toast.warning('Please check your network connection and try again.');
@@ -91,10 +105,10 @@ export default function PreviousClaim() {
         toast.success('Claimed successfully.');
       } else {
         setPending(false);
-        toast.error('Failed to claim. Please try again.');
+        toast.error('Failed to claim. Please try again1.');
       }
     } catch (err) {
-      toast.error('Failed to claim. Please try again.');
+      toast.error('Failed to claim. Please try again2.');
       setPending(false);
     }
   }
