@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import BorderContainer from '~/app/components/common/BorderContainer';
 import Spinner from '~/app/components/common/Spinner';
 import { walletTokens } from '~/app/constants/strings';
-import useActiveWeb3React from '~/app/hooks/useActiveWeb3';
 import useAuth from '~/app/hooks/useAuth';
 import copyIcon from '~/assets/images/copy.svg';
 import metamaskIcon from '~/assets/images/metamask.svg';
@@ -39,7 +38,6 @@ export default function WalletInfo({ pending }: walletInfoProps) {
   const [t] = useTranslation();
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ maxWidth: 767 });
-  const { chainId } = useActiveWeb3React();
 
   const { account, active } = useWeb3React();
 
