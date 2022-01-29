@@ -33,10 +33,6 @@ export default function Home() {
     }
   }, [active, page, navigate]);
 
-  // const injected = new InjectedConnector({
-  //   supportedChainIds: [1, 3, 4, 5, 42, 56, 61, 820]
-  // });
-
   const onClaim = () => {
     // navigate('/network');
   };

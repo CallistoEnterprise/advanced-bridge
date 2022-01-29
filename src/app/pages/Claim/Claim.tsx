@@ -7,7 +7,6 @@ import CustomButton from '~/app/components/common/CustomButton';
 import Spinner from '~/app/components/common/Spinner';
 import useActiveWeb3React from '~/app/hooks/useActiveWeb3';
 import { getBridgeContract } from '~/app/utils';
-import { getSoyRouterAddress } from '~/app/utils/decimal';
 import getSignatures from '~/app/utils/getSignatures';
 import blockIcon from '~/assets/images/block3.png';
 import claimAnimal from '~/assets/images/claimanimal.png';
@@ -19,17 +18,9 @@ export default function Claim() {
   const navigate = useNavigate();
   const [pending, setPending] = useState(false);
   const txHash = useSelector((state: any) => state.wallet.hash);
-  const byte_data = useSelector((state: any) => state.wallet.byte_data);
   const fromNetwork = useSelector((state: any) => state.wallet.fromNetwork);
-  const toNetwork = useSelector((state: any) => state.wallet.toNetwork);
   const swapType = useSelector((state: any) => state.wallet.swapType);
-  const { library, chainId } = useActiveWeb3React();
-
-  // useEffect(() => {
-  //   if (txHash) {
-  //     handleClaim();
-  //   }
-  // }, [txHash]);
+  const { library } = useActiveWeb3React();
 
   const onClaim = () => {
     if (swapType === 'swap') handleClaim();
@@ -41,10 +32,6 @@ export default function Claim() {
     if (txHash) {
       setPending(true);
     }
-
-    const soyRouterAddr = getSoyRouterAddress();
-
-    console.log(fromNetwork.chainId);
 
     try {
       const { signatures, respJSON } = await getSignatures(txHash, fromNetwork.chainId);
@@ -92,9 +79,6 @@ export default function Claim() {
         if (receipt.status) {
           window.localStorage.removeItem('prevData');
           setPending(false);
-          // setStep(0);
-          // setAmt('');
-          // setTxHash('');
           navigate('/transfer');
           toast.success('Claimed successfully.');
         } else {
@@ -136,9 +120,6 @@ export default function Claim() {
       if (receipt.status) {
         window.localStorage.removeItem('prevData');
         setPending(false);
-        // setStep(0);
-        // setAmt('');
-        // setTxHash('');
         navigate('/transfer');
         toast.success('Claimed successfully.');
       } else {
