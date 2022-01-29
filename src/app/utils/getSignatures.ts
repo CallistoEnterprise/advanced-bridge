@@ -30,7 +30,7 @@ const getFirstSig = async (hash: string, chainId: string) => {
   const respJSON = await resp.json();
 
   if (!respJSON.isSuccess) {
-    alert('ERROR - 1: Authorization failed!');
+    // alert('ERROR - 1: Authorization failed!');
     return null;
   }
   return respJSON.signature;
@@ -42,7 +42,7 @@ const getSecondSig = async (hash: string, chainId: string) => {
   const respJSON = await resp.json();
 
   if (!respJSON.isSuccess) {
-    alert('ERROR - 2: Authorization failed!');
+    // alert('ERROR - 2: Authorization failed!');
     return null;
   }
   return respJSON.signature;
@@ -53,7 +53,7 @@ const getThirdSig = async (hash: string, chainId: string) => {
   const respJSON = await resp.json();
 
   if (!respJSON.isSuccess) {
-    alert('ERROR - 3: Authorization failed!');
+    // alert('ERROR - 3: Authorization failed!');
     return { sig3: null, respJSON: null };
   }
   return { sig3: respJSON.signature, respJSON };

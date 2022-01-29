@@ -4,6 +4,7 @@ import { AddressZero } from '@ethersproject/constants';
 import { Contract } from '@ethersproject/contracts';
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers';
 import bridgeABI from '~/app/constants/abis/bridge.json';
+import soyRouterABI from '~/app/constants/abis/soyRouter.json';
 import tokenABI from '~/app/constants/abis/weth.json';
 
 // returns the checksummed address if the address is valid, otherwise returns false
@@ -57,6 +58,11 @@ export function getContract(address: string, ABI: any, library: Web3Provider, ac
 export function getBridgeContract(address: string, library: Web3Provider, account?: string): Contract {
   return getContract(address, bridgeABI, library, account);
 }
+
+export function getSoyRouterContract(address: string, library: Web3Provider, account?: string): Contract {
+  return getContract(address, soyRouterABI, library, account);
+}
+
 // account is optional
 export function getTokenContract(address: string, library: Web3Provider, account?: string): Contract {
   return getContract(address, tokenABI, library, account);

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -12,6 +13,7 @@ import { Networks, walletTokens } from '~/app/constants/strings';
 import useActiveWeb3React from '~/app/hooks/useActiveWeb3';
 import { useNativeCoinBalance } from '~/app/hooks/wallet';
 import { setBalance, setFromNetwork, setToNetwork } from '~/app/modules/wallet/action';
+import { switchNetwork } from '~/app/utils/wallet';
 import previousIcon from '~/assets/images/previous.svg';
 import './network.css';
 
@@ -28,18 +30,22 @@ export default function Network() {
   const [networkOne, setNetworkOne] = useState(Networks[0]);
   const [networkTwo, setNetworkTwo] = useState<any>({});
   const { chainId } = useActiveWeb3React();
+
   const cloBalance = useNativeCoinBalance(networkOne, walletTokens[0]);
-  const soyBalance = useNativeCoinBalance(networkOne, walletTokens[1]);
+  // const soyBalance = useNativeCoinBalance(networkOne, walletTokens[1]);
+  const bnbBalance = useNativeCoinBalance(networkOne, walletTokens[1]);
+
+  console.log(cloBalance, bnbBalance);
 
   useEffect(() => {
     setPendingBalance(true);
-    if (cloBalance && cloBalance !== null && soyBalance && soyBalance !== null) {
+    if (cloBalance && cloBalance !== null && bnbBalance && bnbBalance !== null) {
+      const bnbValidBalance = parseInt(networkOne.chainId) === chainId ? bnbBalance : '0.00';
       const cloValidBalance = parseInt(networkOne.chainId) === chainId ? cloBalance : '0.00';
-      const soyValidBalance = parseInt(networkOne.chainId) === chainId ? soyBalance : '0.00';
-      dispatch(setBalance({ clo: cloValidBalance, soy: soyValidBalance }));
-      setPendingBalance(false);
+      dispatch(setBalance({ bnb: bnbValidBalance, clo: cloValidBalance }));
+      if (parseInt(networkOne.chainId) === chainId) setPendingBalance(false);
     }
-  }, [cloBalance, soyBalance, networkOne, chainId, dispatch]);
+  }, [bnbBalance, cloBalance, networkOne, chainId, dispatch]);
 
   useEffect(() => {
     if (networkOne.symbol === networkTwo.symbol) {
@@ -47,8 +53,10 @@ export default function Network() {
     }
   }, [networkOne, networkTwo]);
 
-  const onChangeNetworkOne = (option: INetwork) => {
+  const onChangeNetworkOne = async (option: INetwork) => {
     setNetworkOne(option);
+    setPendingBalance(true);
+    await switchNetwork(option);
     dispatch(setFromNetwork(option));
   };
 

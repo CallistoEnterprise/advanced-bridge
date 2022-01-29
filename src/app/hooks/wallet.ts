@@ -29,7 +29,6 @@ const getNodeUrl = (nodes: any) => {
 export const useNativeCoinBalance = (fromNet: any, curAsset?: any) => {
   const { account, chainId } = useActiveWeb3React();
   const [amt, setAmt] = useState<number | string>(0);
-
   const RPC_URL = useRpcProvider(fromNet.rpcs);
   const tokenContract = getErc20Contract(curAsset.addresses[`${fromNet.symbol}`], RPC_URL);
   useEffect(() => {

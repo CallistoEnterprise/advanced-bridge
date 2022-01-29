@@ -7,6 +7,10 @@ export const getBridgeAddress = (chainId: number) => {
   return contracts.bridge[chainId];
 };
 
+export const getSoyRouterAddress = () => {
+  return contracts.soyRouter;
+};
+
 export const getDecimalAmount = (amount: BigNumber, decimals = 18) => {
   return new BigNumber(amount).times(BIG_TEN.pow(decimals));
 };

@@ -7,7 +7,8 @@ const contracts: any = {
     42: '0x9b5e4b10b405cD5cd4B056a1b57c1C653379DB3C',
     1: '0x9a1fc8C0369D49f3040bF49c1490E7006657ea56',
     61: '0x9a1fc8C0369D49f3040bF49c1490E7006657ea56'
-  }
+  },
+  soyRouter: '0xdbe46b17FFd35D6865b69F9398AC5454389BF38c'
 };
 
 export default contracts;

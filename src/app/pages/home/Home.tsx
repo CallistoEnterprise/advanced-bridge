@@ -23,14 +23,9 @@ export default function Home() {
   const [t] = useTranslation();
   const navigate = useNavigate();
   const [page, setPage] = useState<string>('');
-  const [step, setStep] = useState(0);
 
   const { active } = useWeb3React();
   const { login } = useAuth();
-
-  useEffect(() => {
-    setStep(0);
-  }, []);
 
   useEffect(() => {
     if (active) {
@@ -49,7 +44,7 @@ export default function Home() {
   const onPreviousClaim = async () => {
     setPage('previousclaim');
     login(ConnectorNames.Injected, Networks[0]);
-    const network = step === 2 ? Networks[1] : Networks[0];
+    const network = Networks[0];
     dispatch(setFromNetwork(network));
     if (network.symbol === 'ETH') {
       await setupEthereumNetwork(network);
@@ -61,7 +56,7 @@ export default function Home() {
   const onClickMetamask = async () => {
     setPage('network');
     login(ConnectorNames.Injected, Networks[0]);
-    const network = step === 2 ? Networks[1] : Networks[0];
+    const network = Networks[0];
     dispatch(setFromNetwork(network));
     if (network.symbol === 'ETH') {
       await setupEthereumNetwork(network);

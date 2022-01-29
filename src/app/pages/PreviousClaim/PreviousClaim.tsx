@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -7,12 +7,10 @@ import BorderContainer from '~/app/components/common/BorderContainer';
 import CustomButton from '~/app/components/common/CustomButton';
 import Spinner from '~/app/components/common/Spinner';
 import NetworkSelection from '~/app/components/NetworkSelection';
-import WalletInfo from '~/app/components/WalletInfo';
 import { INetwork } from '~/app/constants/interface';
-import { Networks, walletTokens } from '~/app/constants/strings';
+import { Networks } from '~/app/constants/strings';
 import useActiveWeb3React from '~/app/hooks/useActiveWeb3';
-import { useNativeCoinBalance } from '~/app/hooks/wallet';
-import { setBalance, setFromNetwork } from '~/app/modules/wallet/action';
+import { setFromNetwork, setToNetwork } from '~/app/modules/wallet/action';
 import { getBridgeContract, shortAddress } from '~/app/utils';
 import getSignatures from '~/app/utils/getSignatures';
 import { switchNetwork } from '~/app/utils/wallet';
@@ -34,19 +32,27 @@ export default function PreviousClaim() {
 
   const [pendingBalance, setPendingBalance] = useState(false);
   const [networkOne, setNetworkOne] = useState(Networks[0]);
+  const [networkTwo, setNetworkTwo] = useState<any>(Networks[1]);
   const { chainId } = useActiveWeb3React();
-  const cloBalance = useNativeCoinBalance(networkOne, walletTokens[0]);
-  const soyBalance = useNativeCoinBalance(networkOne, walletTokens[1]);
 
-  useEffect(() => {
-    setPendingBalance(true);
-    if (cloBalance && cloBalance !== null && soyBalance && soyBalance !== null) {
-      const cloValidBalance = parseInt(networkOne.chainId) === chainId ? cloBalance : '0.00';
-      const soyValidBalance = parseInt(networkOne.chainId) === chainId ? soyBalance : '0.00';
-      dispatch(setBalance({ clo: cloValidBalance, soy: soyValidBalance }));
-      setPendingBalance(false);
-    }
-  }, [cloBalance, soyBalance, networkOne, chainId, dispatch]);
+  // const cloBalance = useNativeCoinBalance(networkTwo, walletTokens[0]);
+  // const bnbBalance = useNativeCoinBalance(networkTwo, walletTokens[1]);
+
+  // useEffect(() => {
+  //   if (networkOne.symbol === networkTwo.symbol) {
+  //     setNetworkTwo(null);
+  //   }
+  // }, [networkOne, networkTwo]);
+
+  // useEffect(() => {
+  //   setPendingBalance(true);
+  //   if (bnbBalance && bnbBalance !== null && cloBalance && cloBalance !== null) {
+  //     const bnbValidBalance = parseInt(networkOne.chainId) === chainId ? bnbBalance : '0.00';
+  //     const cloValidBalance = parseInt(networkOne.chainId) === chainId ? cloBalance : '0.00';
+  //     dispatch(setBalance({ bnb: bnbValidBalance, clo: cloValidBalance }));
+  //     setPendingBalance(false);
+  //   }
+  // }, [bnbBalance, cloBalance, networkOne, chainId, dispatch]);
 
   const onPrevious = () => {
     navigate('/');
@@ -56,9 +62,15 @@ export default function PreviousClaim() {
     handleClaim();
   };
 
-  const onChangeNetworkOne = (option: INetwork) => {
+  const onChangeNetworkOne = async (option: INetwork) => {
     setNetworkOne(option);
     dispatch(setFromNetwork(option));
+  };
+
+  const onChangeNetworkTwo = async (option: INetwork) => {
+    setNetworkTwo(option);
+    await switchNetwork(option);
+    dispatch(setToNetwork(option));
   };
 
   async function handleClaim() {
@@ -68,44 +80,44 @@ export default function PreviousClaim() {
 
     try {
       const { signatures, respJSON } = await getSignatures(hash, fromNetwork.chainId);
-      console.log(chainId, respJSON);
+      console.log(signatures, chainId, respJSON);
+
       if (respJSON.chainId !== chainId.toString()) {
         const toNetwork = Networks.find((item) => item.chainId === respJSON.chainId);
         try {
           toast.info('Please change your network to claim this transaction');
           await switchNetwork(toNetwork);
-          setPending(false);
-          return;
         } catch (error) {
           toast.warning('Please check your network connection and try again.');
         }
-      }
-
-      if (signatures.length !== 3) {
-        setPending(false);
-        toast.warning('Please check your network connection and try again.');
-        return;
-      }
-      const bridgeContract = await getBridgeContract(respJSON.bridge, library, destinationAddress);
-      const tx = await bridgeContract.claim(
-        respJSON.token,
-        hash,
-        respJSON.to,
-        respJSON.value,
-        fromNetwork.chainId,
-        signatures,
-        { value: 0 }
-      );
-      const receipt = await tx.wait();
-      if (receipt.status) {
-        window.localStorage.removeItem('prevData');
-        setPending(false);
-        setHash('');
-        navigate('/transfer');
-        toast.success('Claimed successfully.');
       } else {
+        if (signatures.length === 0) {
+          setPending(false);
+          toast.warning('Please check your network connection and try again.');
+          return;
+        }
+        const bridgeContract = await getBridgeContract(respJSON.bridge, library, destinationAddress);
+        const tx = await bridgeContract.claim(
+          respJSON.token,
+          hash,
+          respJSON.to,
+          respJSON.value,
+          fromNetwork.chainId,
+          signatures,
+          { value: 0 }
+        );
+        const receipt = await tx.wait();
+        if (receipt.status) {
+          window.localStorage.removeItem('prevData');
+          setPending(false);
+          setHash('');
+          navigate('/transfer');
+          toast.success('Claimed successfully.');
+        } else {
+          setPending(false);
+          toast.error('Failed to claim. Please try again1.');
+        }
         setPending(false);
-        toast.error('Failed to claim. Please try again1.');
       }
     } catch (err) {
       toast.error('Failed to claim. Please try again2.');
@@ -117,7 +129,7 @@ export default function PreviousClaim() {
     <div className="previousclaim container">
       <div className="previousclaim__content">
         <div>
-          <WalletInfo pending={pendingBalance} />
+          {/* <WalletInfo pending={pendingBalance} /> */}
           <CustomButton className="previous_btn mt-4" onClick={onPrevious}>
             <div>
               <img src={previousIcon} alt="previousIcon" className="me-2" />
@@ -141,6 +153,13 @@ export default function PreviousClaim() {
           <p className="mt-5">{t('Select networks')}</p>
           <h6 className="mt-4">{t('From')}</h6>
           <NetworkSelection options={Networks} selected={networkOne.symbol} onChange={onChangeNetworkOne} />
+          {/* <h6 className="mt-4">{t('To')}</h6>
+          <NetworkSelection
+            options={Networks}
+            selected={networkTwo.symbol}
+            disabled={networkOne.symbol}
+            onChange={onChangeNetworkTwo}
+          /> */}
           {/* <h6 className="mt-4">{t('To')}</h6>
           <button
             className={classNames('previousclaim-option', {

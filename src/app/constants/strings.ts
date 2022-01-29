@@ -153,7 +153,7 @@ export const tokenList = [
       ETC: 18
     },
     addresses: {
-      CLO: '0x4c20231BCc5dB8D805DB9197C84c8BA8287CbA92',
+      CLO: '0x4c20231bcc5db8d805db9197c84c8ba8287cba92',
       BNB: '',
       ETH: '',
       ETC: '',
@@ -171,7 +171,7 @@ export const tokenList = [
       ETC: 18
     },
     addresses: {
-      CLO: '0xcCDe29903E621Ca12DF33BB0aD9D1ADD7261Ace9',
+      CLO: '0xcc0524d86ba37cb36b21a14b118723eaf609add8',
       BNB: '0x0000000000000000000000000000000000000007',
       ETH: '',
       ETC: ''
@@ -308,7 +308,7 @@ export const addTokenList = [
   {
     symbol: 'ccBNB',
     chainId: 820,
-    address: '0xcCDe29903E621Ca12DF33BB0aD9D1ADD7261Ace9',
+    address: '0xcc0524d86ba37cb36b21a14b118723eaf609add8',
     network: 'Callisto'
   },
   {
@@ -363,6 +363,7 @@ export const walletTokens: Array<any> = [
     name: 'CLO',
     symbol: 'CLO',
     icon: cloIcon,
+    chainId: '20729',
     decimals: {
       CLO: 18,
       BNB: 18,
@@ -370,21 +371,36 @@ export const walletTokens: Array<any> = [
       ETC: 18
     },
     addresses: {
-      CLO: '0x0000000000000000000000000000000000000001',
-      BNB: '0xCcbf1C9E8b4f2cDF3Bfba1098b8f56f97d219D53',
-      ETH: '0xCcbf1C9E8b4f2cDF3Bfba1098b8f56f97d219D53',
-      ETC: '0xCcbf1C9E8b4f2cDF3Bfba1098b8f56f97d219D53'
-    },
-    addressesTest: {
       CLO: '0x0000000000000000000000000000000000000001',
       BNB: '0xCCEA50dDA26F141Fcc41Ad7e94755936d8C57e28',
-      ETH: '0xCC48d2250b55b82696978184E75811F1c0eF383F'
+      ETH: '',
+      ETC: ''
     }
   },
+  // {
+  //   name: 'SOY',
+  //   symbol: 'SOY',
+  //   icon: soyIcon,
+  //   chainId: '20729',
+  //   decimals: {
+  //     CLO: 18,
+  //     BNB: 18,
+  //     ETH: 18,
+  //     ETC: 18
+  //   },
+  //   addresses: {
+  //     CLO: '0x4c20231bcc5db8d805db9197c84c8ba8287cba92',
+  //     BNB: '',
+  //     ETH: '',
+  //     ETC: '',
+  //     SOY: ''
+  //   }
+  // },
   {
-    name: 'SOY',
-    symbol: 'SOY',
-    icon: soyIcon,
+    name: 'BNB',
+    symbol: 'BNB',
+    icon: bnbIcon,
+    chainId: '97',
     decimals: {
       CLO: 18,
       BNB: 18,
@@ -392,11 +408,10 @@ export const walletTokens: Array<any> = [
       ETC: 18
     },
     addresses: {
-      CLO: '0x4c20231BCc5dB8D805DB9197C84c8BA8287CbA92',
-      BNB: '',
+      CLO: '0xCc0524d86Ba37Cb36B21a14B118723eAF609aDd8',
+      BNB: '0x0000000000000000000000000000000000000007',
       ETH: '',
-      ETC: '',
-      SOY: ''
+      ETC: ''
     }
   }
 ];

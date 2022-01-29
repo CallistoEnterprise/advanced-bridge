@@ -30,10 +30,22 @@ interface SetDestinationAddressAction {
   payload: any;
 }
 
+interface SetByteData {
+  type: typeof actionTypes.SET_DESTINATION_ADDRESS;
+  payload: any;
+}
+
+interface SetSwapType {
+  type: typeof actionTypes.SET_SWAP_TYPE;
+  payload: any;
+}
+
 export type walletActionTypes =
   | setFromNetworkAction
   | setToNetworkAction
   | SetSelectedTokenAction
   | SetBalance
   | SetHash
-  | SetDestinationAddressAction;
+  | SetDestinationAddressAction
+  | SetByteData
+  | SetSwapType;

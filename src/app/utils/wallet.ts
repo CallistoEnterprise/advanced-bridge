@@ -62,7 +62,6 @@ export const setupEthereumNetwork = async (curNet: any) => {
 };
 
 export const switchNetwork = async (curNet: any) => {
-  console.log(curNet);
   const provider = window.ethereum;
 
   if (provider) {
@@ -89,8 +88,29 @@ export const switchNetwork = async (curNet: any) => {
         ]
       });
       return true;
-    } catch (error) {
-      console.error('Failed to switch the network in Metamask:', error);
+    } catch (error: any) {
+      if (error.code === 4902) {
+        try {
+          await provider.request({
+            method: 'wallet_addEthereumChain',
+            params: [
+              {
+                chainId: `0x${chainId.toString(16)}`,
+                chainName: `${curNet.name}`,
+                rpcUrls: curNet.rpcs[0],
+                nativeCurrency: {
+                  name: `${curNet.name}`,
+                  symbol: `${curNet.symbol}`,
+                  decimals: parseInt(curNet.decimals)
+                },
+                blockExplorerUrls: `${curNet.explorer}`
+              }
+            ]
+          });
+        } catch (error: any) {
+          alert(error.message);
+        }
+      }
       return false;
     }
   } else {

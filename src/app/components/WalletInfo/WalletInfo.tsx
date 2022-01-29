@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import BorderContainer from '~/app/components/common/BorderContainer';
 import Spinner from '~/app/components/common/Spinner';
 import { walletTokens } from '~/app/constants/strings';
+import useActiveWeb3React from '~/app/hooks/useActiveWeb3';
 import useAuth from '~/app/hooks/useAuth';
 import copyIcon from '~/assets/images/copy.svg';
 import metamaskIcon from '~/assets/images/metamask.svg';
@@ -23,7 +24,7 @@ const TokenItem = (item: tokenType, index: number, balance: any) => {
     <li className="tokenitem" key={index}>
       <div className="d-flex align-items-center">
         <img className="me-2" src={item.icon} alt="icon" />
-        <p className="ms-2">{balance[item.name.toLowerCase()]}</p>
+        <p className="ms-2">{balance && balance[item.name.toLowerCase()]}</p>
       </div>
       <p>{item.name}</p>
     </li>
@@ -38,6 +39,7 @@ export default function WalletInfo({ pending }: walletInfoProps) {
   const [t] = useTranslation();
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ maxWidth: 767 });
+  const { chainId } = useActiveWeb3React();
 
   const { account, active } = useWeb3React();
 

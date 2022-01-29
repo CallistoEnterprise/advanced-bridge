@@ -13,6 +13,7 @@ type props = {
   state?: any;
   initialData?: any;
   pending: boolean;
+  canBuyCLO: boolean;
 };
 
 const registerSchema = Yup.object().shape({
@@ -29,10 +30,10 @@ const registerSchema = Yup.object().shape({
   //   .required('buy_amount is required')
 });
 
-export default function SwapForm({ submit, state, initialData, pending }: props) {
+export default function SwapForm({ submit, state, initialData, pending, canBuyCLO }: props) {
   const [t] = useTranslation();
 
-  const [destination, setDestination] = useState(true);
+  const [destination, setDestination] = useState(false);
 
   const selectedToken = useSelector((state: any) => state.wallet.selectedToken);
   const balance = useSelector((state: any) => state.wallet.balance);
@@ -80,15 +81,17 @@ export default function SwapForm({ submit, state, initialData, pending }: props)
                       </div>
                     </div>
                   </div>
-                  <div className="row mt-4 swapform__row">
-                    <div className="col">
-                      <CustomCheckbox
-                        label={t('Buy Callisto coins')}
-                        checked={buyCLO}
-                        onChangeCheckbox={onChangeBuyCLO}
-                      />
+                  {canBuyCLO && (
+                    <div className="row mt-4 swapform__row">
+                      <div className="col">
+                        <CustomCheckbox
+                          label={t('Buy Callisto coins')}
+                          checked={buyCLO}
+                          onChangeCheckbox={onChangeBuyCLO}
+                        />
+                      </div>
                     </div>
-                  </div>
+                  )}
                   {buyCLO && (
                     <>
                       <div className="row mt-3 swapform__row">
