@@ -12,7 +12,6 @@ import configureStore from './core/store';
 import { getLibrary } from './utils/web3React';
 
 const { persistor, store } = configureStore();
-
 toast.configure();
 
 export default function App() {
