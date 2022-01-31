@@ -1,3 +1,10 @@
+$xl: 1539px;
+$lg: 1280px;
+$md: 991px;
+$sm: 767px;
+$xs: 479px;
+$width: normal;
+
 .bordercontainer {
   position: relative;
   border: 2px solid rgba(value($color-basic, bright), 0.22);
