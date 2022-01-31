@@ -68,7 +68,7 @@ export default function WalletInfo({ pending }: walletInfoProps) {
             </div>
             <p className="walletinfo__balance--title">{t('Balance')}</p>
             {pending ? (
-              <Spinner className="mt-5" />
+              <Spinner className="mt-5" size="sm" />
             ) : (
               <ul>
                 {walletTokens.map((item, index) => {

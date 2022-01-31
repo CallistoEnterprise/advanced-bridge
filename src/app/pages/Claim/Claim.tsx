@@ -28,7 +28,7 @@ export default function Claim() {
   };
 
   async function handleAdvancedClaim() {
-    console.log(txHash);
+    // console.log(txHash);
     if (txHash) {
       setPending(true);
     }
@@ -41,26 +41,26 @@ export default function Claim() {
         return;
       }
       const bridgeContract = await getBridgeContract(respJSON.bridge, library, address);
-      console.log(
-        'token=>',
-        respJSON.token,
-        'txId=>',
-        txHash,
-        'to=>',
-        respJSON.to,
-        'value=>',
-        respJSON.value,
-        'chainId=>',
-        fromNetwork.chainId,
-        'toContract=>',
-        respJSON.toContract,
-        'data=>',
-        respJSON.data,
-        'signature=>',
-        signatures,
-        'value=>',
-        0
-      );
+      // console.log(
+      //   'token=>',
+      //   respJSON.token,
+      //   'txId=>',
+      //   txHash,
+      //   'to=>',
+      //   respJSON.to,
+      //   'value=>',
+      //   respJSON.value,
+      //   'chainId=>',
+      //   fromNetwork.chainId,
+      //   'toContract=>',
+      //   respJSON.toContract,
+      //   'data=>',
+      //   respJSON.data,
+      //   'signature=>',
+      //   signatures,
+      //   'value=>',
+      //   0
+      // );
 
       const tx = await bridgeContract.claimToContract(
         respJSON.token,
@@ -145,7 +145,7 @@ export default function Claim() {
           <CustomButton className="claim__claimbtn" onClick={onClaim}>
             {pending ? (
               <div>
-                <Spinner className="me-2" />
+                <Spinner className="me-2" size="sm" />
                 Wait...
               </div>
             ) : (

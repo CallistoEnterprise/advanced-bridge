@@ -35,8 +35,6 @@ export default function Network() {
   // const soyBalance = useNativeCoinBalance(networkOne, walletTokens[1]);
   const bnbBalance = useNativeCoinBalance(networkOne, walletTokens[1]);
 
-  console.log(cloBalance, bnbBalance);
-
   useEffect(() => {
     setPendingBalance(true);
     if (cloBalance && cloBalance !== null && bnbBalance && bnbBalance !== null) {

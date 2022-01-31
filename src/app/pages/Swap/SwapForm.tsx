@@ -151,7 +151,7 @@ export default function SwapForm({ submit, state, initialData, pending, canBuyCL
                   >
                     {pending ? (
                       <div>
-                        <Spinner className="me-2" />
+                        <Spinner className="me-2" size="sm" />
                         Wait...
                       </div>
                     ) : (
