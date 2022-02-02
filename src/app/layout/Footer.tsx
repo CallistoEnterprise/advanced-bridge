@@ -4,6 +4,7 @@ import Container from 'react-bootstrap/Container';
 import { useTranslation } from 'react-i18next';
 import { useMediaQuery } from 'react-responsive';
 import arrowDown from '~/assets/images/arrowdown.svg';
+import blockIcon from '~/assets/images/block3.png';
 import discord from '~/assets/images/discord.svg';
 import facebook from '~/assets/images/facebook.svg';
 import medium from '~/assets/images/medium.svg';
@@ -29,6 +30,7 @@ export default function Footer() {
 
   return (
     <div className="footer">
+      <img src={blockIcon} alt="blockIcon" className="footer__blockIcon" />
       <Container>
         <div className="footer__content">
           <div>

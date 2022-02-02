@@ -8,8 +8,7 @@ import Spinner from '~/app/components/common/Spinner';
 import useActiveWeb3React from '~/app/hooks/useActiveWeb3';
 import { getBridgeContract } from '~/app/utils';
 import getSignatures from '~/app/utils/getSignatures';
-import blockIcon from '~/assets/images/block3.png';
-import claimAnimal from '~/assets/images/claimanimal.png';
+import claimAnimal from '~/assets/images/animal.gif';
 import './claim.css';
 
 export default function Claim() {
@@ -137,7 +136,7 @@ export default function Claim() {
       <div className="claim__content">
         <div className="claim__content--blockbox">
           <img src={claimAnimal} className="claim__content__animal" alt="claimAnimal" />
-          <img src={blockIcon} className="claim__content__block" alt="blockIcon" />
+          {/* <img src={blockIcon} className="claim__content__block" alt="blockIcon" /> */}
         </div>
         <div className="claim__content--text">
           <h4>{t('Transfert in progress')}</h4>

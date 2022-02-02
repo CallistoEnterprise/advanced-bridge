@@ -1,8 +1,51 @@
+/* stylelint-disable property-no-vendor-prefix */
+/* stylelint-disable indentation */
+/* stylelint-disable prettier/prettier */
+/* stylelint-disable at-rule-no-vendor-prefix */
+@-webkit-keyframes backgroundScroll {
+  from {background-position: 0 0;}
+  to {background-position: rem(-1920px) 0; }
+  }
+
+  @-webkit-keyframes run {
+    0% {
+      left: 100%;
+    }
+    100% {
+      left: -10%;
+    }
+  }
+
 .footer {
+  margin-top: rem(-45px);
   background: url('../../assets/images/main-bg.svg');
-  background-repeat: no-repeat;
+  background-repeat: repeat-x;
   min-height: 480px;
   min-width: 100vw;
+  -webkit-animation: backgroundScroll 20s linear infinite;
+  animation: backgroundScroll 20s linear infinite;
+  position: relative;
+  &__blockIcon {
+    width: rem(180px);
+    position: absolute;
+    top: rem(-150px);
+    position: absolute;
+    -webkit-animation: linear infinite;
+    -webkit-animation-name: run;
+    -webkit-animation-duration: 22s;
+    @media only screen and (max-width: $xl) {
+      -webkit-animation-duration: 17s;
+    }
+    @media only screen and (max-width: $lg) {
+      -webkit-animation-duration: 16s;
+    }
+    @media only screen and (max-width: $md) {
+      -webkit-animation-duration: 12s;
+    }
+    @media only screen and (max-width: $sm) {
+      -webkit-animation-duration: 7s;
+    }
+  }
   &__content {
     display: flex;
     justify-content: space-between;
