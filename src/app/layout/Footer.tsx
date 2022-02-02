@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import { useTranslation } from 'react-i18next';
 import { useMediaQuery } from 'react-responsive';
+import { useLocation } from 'react-router-dom';
 import arrowDown from '~/assets/images/arrowdown.svg';
 import blockIcon from '~/assets/images/block3.png';
 import discord from '~/assets/images/discord.svg';
@@ -25,12 +26,15 @@ const Default = ({ children }: any) => {
 
 export default function Footer() {
   const [t] = useTranslation();
+  const location = useLocation();
   const [documentList, setDocumentList] = useState(false);
   const [resourceslist, setResourcesList] = useState(false);
 
+  const animate = location.pathname.split('/')[1] === 'claim';
+
   return (
-    <div className="footer">
-      <img src={blockIcon} alt="blockIcon" className="footer__blockIcon" />
+    <div className={classNames('footer', { footer__animation: animate })}>
+      {animate && <img src={blockIcon} alt="blockIcon" className="footer__blockIcon" />}
       <Container>
         <div className="footer__content">
           <div>

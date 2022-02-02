@@ -20,11 +20,15 @@
   margin-top: rem(-45px);
   background: url('../../assets/images/main-bg.svg');
   background-repeat: repeat-x;
-  min-height: 480px;
+  min-height: rem(480px);
   min-width: 100vw;
-  -webkit-animation: backgroundScroll 20s linear infinite;
-  animation: backgroundScroll 20s linear infinite;
-  position: relative;
+
+  &__animation {
+    -webkit-animation: backgroundScroll 20s linear infinite;
+    animation: backgroundScroll 20s linear infinite;
+    position: relative;
+  }
+
   &__blockIcon {
     width: rem(180px);
     position: absolute;
