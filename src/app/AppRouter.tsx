@@ -7,7 +7,6 @@ const Home = lazy(() => import('./pages/home'));
 const Network = lazy(() => import('./pages/Network'));
 const TokenList = lazy(() => import('./pages/TokenList'));
 const Swap = lazy(() => import('./pages/Swap'));
-const Claim = lazy(() => import('./pages/Claim'));
 const Transfer = lazy(() => import('./pages/Transfer'));
 const PreviousClaim = lazy(() => import('./pages/PreviousClaim'));
 
@@ -28,7 +27,6 @@ export default function AppRouter() {
           <Route path="/network" element={<Network />} />
           <Route path="/tokens" element={<TokenList />} />
           <Route path="/swap" element={<Swap />} />
-          <Route path="/claim/:address" element={<Claim />} />
           <Route path="/transfer" element={<Transfer />} />
           <Route path="/previousclaim" element={<PreviousClaim />} />
         </Routes>

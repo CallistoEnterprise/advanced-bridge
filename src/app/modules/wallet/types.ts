@@ -40,6 +40,11 @@ interface SetSwapType {
   payload: any;
 }
 
+interface SetStartSwapping {
+  type: typeof actionTypes.SET_START_SWAPPING;
+  payload: any;
+}
+
 export type walletActionTypes =
   | setFromNetworkAction
   | setToNetworkAction
@@ -48,4 +53,5 @@ export type walletActionTypes =
   | SetHash
   | SetDestinationAddressAction
   | SetByteData
-  | SetSwapType;
+  | SetSwapType
+  | SetStartSwapping;
