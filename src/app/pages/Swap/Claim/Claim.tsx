@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import CustomButton from '~/app/components/common/CustomButton';
 import Spinner from '~/app/components/common/Spinner';
@@ -11,11 +11,16 @@ import getSignatures from '~/app/utils/getSignatures';
 import claimAnimal from '~/assets/images/animal.gif';
 import './claim.css';
 
-export default function Claim() {
+type props = {
+  succeed: boolean;
+  address: string;
+};
+
+export default function Claim({ succeed, address }: props) {
   const [t] = useTranslation();
-  const { address } = useParams();
   const navigate = useNavigate();
   const [pending, setPending] = useState(false);
+
   const txHash = useSelector((state: any) => state.wallet.hash);
   const fromNetwork = useSelector((state: any) => state.wallet.fromNetwork);
   const swapType = useSelector((state: any) => state.wallet.swapType);
@@ -35,7 +40,7 @@ export default function Claim() {
 
       if (signatures.length !== 3) {
         setPending(false);
-        toast.warning('Please check your network connection and try again.');
+        toast.warning('Failed Signature');
         return;
       }
       const bridgeContract = await getBridgeContract(respJSON.bridge, library, address);
@@ -55,7 +60,6 @@ export default function Claim() {
       try {
         const receipt = await tx.wait();
         if (receipt.status) {
-          window.localStorage.removeItem('prevData');
           setPending(false);
           navigate('/transfer');
           toast.success('Claimed successfully.');
@@ -121,16 +125,18 @@ export default function Claim() {
         <div className="claim__content--text">
           <h4>{t('Transfert in progress')}</h4>
           <p>{t('Please wait for 12 blocks confirmations to claim your transaction.')}</p>
-          <CustomButton className="claim__claimbtn" onClick={onClaim}>
-            {pending ? (
-              <div>
-                <Spinner className="me-2" size="sm" />
-                Wait...
-              </div>
-            ) : (
-              t('Claim')
-            )}
-          </CustomButton>
+          {succeed && (
+            <CustomButton className="claim__claimbtn" onClick={onClaim}>
+              {pending ? (
+                <div>
+                  <Spinner className="me-2" size="sm" />
+                  Wait...
+                </div>
+              ) : (
+                t('Claim')
+              )}
+            </CustomButton>
+          )}
         </div>
       </div>
     </div>

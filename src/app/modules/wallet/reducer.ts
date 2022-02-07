@@ -10,6 +10,7 @@ export interface walletState {
   destinationAddress: string;
   byte_data: string;
   swapType: string;
+  start_swapping: boolean;
 }
 
 export const initialState: walletState = {
@@ -20,7 +21,8 @@ export const initialState: walletState = {
   hash: '',
   destinationAddress: '',
   byte_data: '',
-  swapType: 'swap'
+  swapType: 'swap',
+  start_swapping: false
 };
 
 function reducer(state = initialState, action: walletActionTypes) {
@@ -65,6 +67,11 @@ function reducer(state = initialState, action: walletActionTypes) {
       return {
         ...state,
         swapType: action.payload
+      };
+    case actionTypes.SET_START_SWAPPING:
+      return {
+        ...state,
+        start_swapping: action.payload
       };
     default:
       return state;

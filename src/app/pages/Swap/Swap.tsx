@@ -1,22 +1,29 @@
 import BigNumber from 'bignumber.js';
 import { ethers } from 'ethers';
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-// import { useMediaQuery } from 'react-responsive';
 import Web3 from 'web3'; // const Default = ({ children }: any) => {
 import BorderContainer from '~/app/components/common/BorderContainer';
 import CustomButton from '~/app/components/common/CustomButton';
 import Notice from '~/app/components/Notice';
 import WalletInfo from '~/app/components/WalletInfo';
 import useActiveWeb3React from '~/app/hooks/useActiveWeb3';
-import { setBytedata, setDestinationAddress, setHash, setSwapType } from '~/app/modules/wallet/action';
+import {
+  setBytedata,
+  setDestinationAddress,
+  setHash,
+  setStartSwapping,
+  setSwapType
+} from '~/app/modules/wallet/action';
 import { getBridgeContract, getTokenContract } from '~/app/utils';
 import { getBridgeAddress, getSoyRouterAddress } from '~/app/utils/decimal';
 import { switchNetwork } from '~/app/utils/wallet';
 import previousIcon from '~/assets/images/previous.svg';
+// import { useMediaQuery } from 'react-responsive';
+import Claim from './Claim';
 import './swap.css';
 import SwapForm from './SwapForm';
 //   const isNotMobile = useMediaQuery({ minWidth: 991 });
@@ -28,11 +35,14 @@ const Swap = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [pending, setPending] = useState(false);
+  const [succeed, setSucced] = useState(false);
   const [canBuyCLO, setCanBuyCLO] = useState(false);
   const balance = useSelector((state: any) => state.wallet.balance);
   const selectedToken = useSelector((state: any) => state.wallet.selectedToken);
   const fromNetwork = useSelector((state: any) => state.wallet.fromNetwork);
   const toNetwork = useSelector((state: any) => state.wallet.toNetwork);
+
+  const [claimAddress, setClaimAddress] = useState('');
   const { chainId, account, library } = useActiveWeb3React();
 
   const disable = fromNetwork?.symbol === 'CLO' || toNetwork?.symbol !== 'CLO';
@@ -40,6 +50,10 @@ const Swap = () => {
   const onPrevious = () => {
     navigate('/tokens');
   };
+
+  useEffect(() => {
+    dispatch(setStartSwapping(false));
+  }, [dispatch]);
 
   const onSubmit = (values: any) => {
     // navigate('/claim');
@@ -70,7 +84,9 @@ const Swap = () => {
 
   async function advancedSwap(amount: any, distinationAddress: string, buy_amount: any) {
     setPending(true);
+    dispatch(setStartSwapping(true));
     const address: any = distinationAddress === '' ? account : distinationAddress;
+    setClaimAddress(address);
     const bridgeAddr = getBridgeAddress(chainId);
     const swapTokenAddr = selectedToken.addresses[`${fromNetwork.symbol}`];
     const soyRouterAddr = getSoyRouterAddress();
@@ -142,20 +158,6 @@ const Swap = () => {
 
       const bridgeContract = getBridgeContract(bridgeAddr, library, address);
       try {
-        // console.log(
-        //   'address=>',
-        //   address,
-        //   'swapTokenAddr=>',
-        //   swapTokenAddr,
-        //   'amount=>',
-        //   amount,
-        //   'chainId',
-        //   toNetwork.chainId,
-        //   'soyRouterAddr=>',
-        //   soyRouterAddr,
-        //   'byte_data=>',
-        //   byte_data
-        // );
         const tx = await bridgeContract.bridgeToContract(
           address,
           swapTokenAddr,
@@ -168,13 +170,13 @@ const Swap = () => {
 
         const receipt = await tx.wait();
         if (receipt.status) {
+          setSucced(true);
           setPending(false);
+          dispatch(setStartSwapping(false));
           await switchNetwork(toNetwork);
-          setPending(false);
           dispatch(setBytedata(byte_data));
           dispatch(setHash(tx.hash));
           dispatch(setDestinationAddress(address));
-          navigate(`/claim/${address}`);
         } else {
           setPending(false);
         }
@@ -190,9 +192,10 @@ const Swap = () => {
 
   async function onClickSwap(amount: any, distinationAddress: string) {
     setPending(true);
-    const address: string = distinationAddress === '' ? account : distinationAddress;
-    const swapTokenAddr: string = selectedToken.addresses[`${fromNetwork.symbol}`];
-
+    dispatch(setStartSwapping(true));
+    const address: any = distinationAddress === '' ? account : distinationAddress;
+    setClaimAddress(address);
+    const swapTokenAddr = selectedToken.addresses[`${fromNetwork.symbol}`];
     if (swapTokenAddr === '') {
       toast.warning('Please select another asset. Current asset is not supported yet!');
     } else {
@@ -213,56 +216,69 @@ const Swap = () => {
         const tx = await bridgeContract.depositTokens(address, swapTokenAddr, amount, toNetwork.chainId, { value });
         const receipt = await tx.wait();
         if (receipt.status) {
+          setSucced(true);
           setPending(false);
+          dispatch(setStartSwapping(false));
           await switchNetwork(toNetwork);
           dispatch(setHash(tx.hash));
           dispatch(setDestinationAddress(address));
-          navigate(`/claim/${address}`);
         } else {
           setPending(false);
+          setSucced(false);
+          dispatch(setStartSwapping(false));
         }
       } catch (error) {
         console.log(error);
         setPending(false);
+        setSucced(false);
+        dispatch(setStartSwapping(false));
       }
     }
   }
 
+  const claim_address = useMemo(() => claimAddress, [claimAddress]);
+
   return (
-    <div className="swap container">
-      <div className="swap__content">
-        <CustomButton className="previous_btn" onClick={onPrevious}>
-          <div>
-            <img src={previousIcon} alt="previousIcon" className="me-2" />
-            {t('Previous')}
-          </div>
-        </CustomButton>
-        {/* <Default>
+    <>
+      {pending || succeed ? (
+        <Claim succeed={succeed} address={claim_address} />
+      ) : (
+        <div className="swap container">
+          <div className="swap__content">
+            <CustomButton className="previous_btn" onClick={onPrevious}>
+              <div>
+                <img src={previousIcon} alt="previousIcon" className="me-2" />
+                {t('Previous')}
+              </div>
+            </CustomButton>
+            {/* <Default>
           <GuidePet />
         </Default> */}
-        <div className="swap__content--mainboard">
-          <WalletInfo />
-          <div className="swap__content__steps">
-            <BorderContainer className="swap__content__bordercontainer">
-              <div>
-                <p className="swap__content--row">
-                  <strong>{t('Step 4:')}</strong> {t('Swap')}
-                </p>
-                <SwapForm
-                  submit={onSubmit}
-                  pending={pending}
-                  canBuyCLO={canBuyCLO}
-                  disable={disable}
-                  initialData={{ swap_amount: '0', buy_amount: '0', destination_wallet: account }}
-                  setBuyCLO={() => setCanBuyCLO(!canBuyCLO)}
-                />
+            <div className="swap__content--mainboard">
+              <WalletInfo />
+              <div className="swap__content__steps">
+                <BorderContainer className="swap__content__bordercontainer">
+                  <div>
+                    <p className="swap__content--row">
+                      <strong>{t('Step 4:')}</strong> {t('Swap')}
+                    </p>
+                    <SwapForm
+                      submit={onSubmit}
+                      pending={pending}
+                      disable={disable}
+                      canBuyCLO={canBuyCLO}
+                      initialData={{ swap_amount: '0', buy_amount: '0', destination_wallet: account }}
+                      setBuyCLO={() => setCanBuyCLO(!canBuyCLO)}
+                    />
+                  </div>
+                </BorderContainer>
               </div>
-            </BorderContainer>
+            </div>
+            {parseInt(balance.clo) === 0 && <Notice />}
           </div>
         </div>
-        {parseInt(balance.clo) === 0 && <Notice />}
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 
