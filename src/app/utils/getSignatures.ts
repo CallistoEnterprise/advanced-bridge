@@ -9,6 +9,7 @@ const sigs = [
 const getSignatures = async (hash: string, chainId: string) => {
   const signatures: any = [];
   const { sig3, respJSON } = await getThirdSig(hash, chainId);
+
   if (sig3) {
     signatures.push(sig3);
   } else {
@@ -22,6 +23,7 @@ const getSignatures = async (hash: string, chainId: string) => {
   if (sig1) {
     signatures.push(sig1);
   }
+
   return { signatures, respJSON };
 };
 const getFirstSig = async (hash: string, chainId: string) => {

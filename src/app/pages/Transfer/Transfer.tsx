@@ -32,7 +32,7 @@ const options = [
     value: 'bnb',
     symbol: 'ccCLO',
     chainId: 97,
-    address: '0xCcbf1C9E8b4f2cDF3Bfba1098b8f56f97d219D53',
+    address: '0xCCEA50dDA26F141Fcc41Ad7e94755936d8C57e28',
     network: 'BSC'
   },
   {
