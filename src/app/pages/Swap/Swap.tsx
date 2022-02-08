@@ -41,6 +41,7 @@ const Swap = () => {
   const selectedToken = useSelector((state: any) => state.wallet.selectedToken);
   const fromNetwork = useSelector((state: any) => state.wallet.fromNetwork);
   const toNetwork = useSelector((state: any) => state.wallet.toNetwork);
+  // const [minReceived, setMinReceived] = useState(0);
 
   const [claimAddress, setClaimAddress] = useState('');
   const { chainId, account, library } = useActiveWeb3React();

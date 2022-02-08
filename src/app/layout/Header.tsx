@@ -26,7 +26,7 @@ export default function Header() {
 
   return (
     <Navbar className="header" expand="lg">
-      <Navbar.Brand href="#home">
+      <Navbar.Brand href="/">
         <img src={logo} alt="logo" />
       </Navbar.Brand>
       <Navbar.Toggle />

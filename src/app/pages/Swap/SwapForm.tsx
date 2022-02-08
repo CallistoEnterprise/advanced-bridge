@@ -97,13 +97,13 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
                             <p className="swapform__subtext">
                               <strong>{t('Minimum received')}</strong>
                             </p>
-                            <p className="swapform__subtext">71440 CLO</p>
+                            <p className="swapform__subtext">{values.swap_amount} CLO</p>
                           </div>
                           <div className="d-flex justify-content-between mt-3">
                             <p className="swapform__subtext">
                               <strong>{t('Price impact')}</strong>
                             </p>
-                            <p className="swapform__subtext">0.36%</p>
+                            <p className="swapform__subtext">{`<0.1%`}</p>
                           </div>
                         </div>
                       </div>
