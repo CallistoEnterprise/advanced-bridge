@@ -1,5 +1,4 @@
 import { ConnectorNames } from '@soy-libs/uikit';
-import { useWeb3React } from '@web3-react/core';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
@@ -7,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import BorderContainer from '~/app/components/common/BorderContainer';
 import CustomButton from '~/app/components/common/CustomButton';
 import { Networks } from '~/app/constants/strings';
+import useActiveWeb3React from '~/app/hooks/useActiveWeb3';
 import useAuth from '~/app/hooks/useAuth';
 import { setFromNetwork } from '~/app/modules/wallet/action';
 import { setupEthereumNetwork, setupNetwork } from '~/app/utils/wallet';
@@ -24,7 +24,7 @@ export default function Home() {
   const navigate = useNavigate();
   const [page, setPage] = useState<string>('');
 
-  const { active } = useWeb3React();
+  const { active } = useActiveWeb3React();
   const { login } = useAuth();
 
   useEffect(() => {

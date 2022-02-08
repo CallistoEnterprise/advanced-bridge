@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import CustomButton from '~/app/components/common/CustomButton';
 import Spinner from '~/app/components/common/Spinner';
-import useActiveWeb3React from '~/app/hooks/useActiveWeb3';
-import { getBridgeContract } from '~/app/utils';
+import useClaim from '~/app/hooks/useClaim';
+import useGetWalletState from '~/app/modules/wallet/hooks';
 import getSignatures from '~/app/utils/getSignatures';
 import claimAnimal from '~/assets/images/animal.gif';
 import './claim.css';
@@ -21,10 +20,8 @@ export default function Claim({ succeed }: props) {
   const navigate = useNavigate();
   const [pending, setPending] = useState(false);
 
-  const txHash = useSelector((state: any) => state.wallet.hash);
-  const fromNetwork = useSelector((state: any) => state.wallet.fromNetwork);
-  const swapType = useSelector((state: any) => state.wallet.swapType);
-  const { library, account } = useActiveWeb3React();
+  const { hash, fromNetwork, swapType } = useGetWalletState();
+  const { onSimpleClaim, onAdvancedClaim } = useClaim();
 
   const onClaim = () => {
     if (swapType === 'swap') handleClaim();
@@ -32,74 +29,50 @@ export default function Claim({ succeed }: props) {
   };
 
   async function handleAdvancedClaim() {
-    if (txHash) {
+    if (hash) {
       setPending(true);
     }
     try {
-      const { signatures, respJSON } = await getSignatures(txHash, fromNetwork.chainId);
+      const { signatures, respJSON } = await getSignatures(hash, fromNetwork.chainId);
 
       if (signatures.length !== 3) {
         setPending(false);
         toast.warning('Failed Signature');
         return;
       }
-      const bridgeContract = await getBridgeContract(respJSON.bridge, library, account);
-
-      const tx = await bridgeContract.claimToContract(
-        respJSON.token,
-        txHash,
-        respJSON.to,
-        respJSON.value,
-        fromNetwork.chainId,
-        respJSON.toContract,
-        respJSON.data,
-        signatures,
-        { value: 0 }
-      );
-
       try {
-        const receipt = await tx.wait();
+        const receipt = await onAdvancedClaim(respJSON, hash, fromNetwork.chainId, signatures);
         if (receipt.status) {
           setPending(false);
           navigate('/transfer');
           toast.success('Claimed successfully.');
         } else {
           setPending(false);
-          toast.error('Failed to claim. Please try again.1');
+          toast.error('Failed to claim. Please try again.');
         }
       } catch (error) {
-        console.log(error);
+        setPending(false);
+        toast.error('Failed to claim. Please try again.');
       }
     } catch (err) {
-      console.log(err);
       setPending(false);
+      toast.error('Failed to get signature. Please try again.');
     }
   }
 
   async function handleClaim() {
-    if (txHash) {
+    if (hash) {
       setPending(true);
     }
 
     try {
-      const { signatures, respJSON } = await getSignatures(txHash, fromNetwork.chainId);
+      const { signatures, respJSON } = await getSignatures(hash, fromNetwork.chainId);
       if (signatures.length === 0) {
         setPending(false);
         toast.warning('Invalid signature.');
         return;
       }
-      const bridgeContract = await getBridgeContract(respJSON.bridge, library, account);
-      const tx = await bridgeContract.claim(
-        respJSON.token,
-        txHash,
-        respJSON.to,
-        respJSON.value,
-        fromNetwork.chainId,
-        signatures,
-        { value: 0 }
-      );
-
-      const receipt = await tx.wait();
+      const receipt = await onSimpleClaim(respJSON, hash, fromNetwork.chainId, signatures);
       if (receipt.status) {
         window.localStorage.removeItem('prevData');
         setPending(false);
@@ -110,7 +83,7 @@ export default function Claim({ succeed }: props) {
         toast.error('Failed to claim. Please try again.');
       }
     } catch (err) {
-      toast.error('Failed to claim. Please try again.');
+      toast.error('Failed to get signature. Please try again.');
       setPending(false);
     }
   }
@@ -120,13 +93,12 @@ export default function Claim({ succeed }: props) {
       <div className="claim__content">
         <div className="claim__content--blockbox">
           <img src={claimAnimal} className="claim__content__animal" alt="claimAnimal" />
-          {/* <img src={blockIcon} className="claim__content__block" alt="blockIcon" /> */}
         </div>
         <div className="claim__content--text">
           <h4>{t('Transfert in progress')}</h4>
           <p>{t('Please wait for 12 blocks confirmations to claim your transaction.')}</p>
           {succeed && (
-            <CustomButton className="claim__claimbtn" onClick={onClaim}>
+            <CustomButton className="claim__claimbtn" disabled={pending} onClick={onClaim}>
               {pending ? (
                 <div>
                   <Spinner className="me-2" size="sm" />

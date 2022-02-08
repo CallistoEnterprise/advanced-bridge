@@ -1,16 +1,17 @@
 import BigNumber from 'bignumber.js';
-import { ethers } from 'ethers';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Web3 from 'web3'; // const Default = ({ children }: any) => {
 import BorderContainer from '~/app/components/common/BorderContainer';
 import CustomButton from '~/app/components/common/CustomButton';
 import Notice from '~/app/components/Notice';
 import WalletInfo from '~/app/components/WalletInfo';
 import useActiveWeb3React from '~/app/hooks/useActiveWeb3';
+import useGetAllowance from '~/app/hooks/useGetAllowance';
+import useGetWeb3 from '~/app/hooks/useGetWeb3';
+import useSwap from '~/app/hooks/useSwap';
 import {
   setBytedata,
   setDestinationAddress,
@@ -18,17 +19,14 @@ import {
   setStartSwapping,
   setSwapType
 } from '~/app/modules/wallet/action';
-import { getBridgeContract, getTokenContract } from '~/app/utils';
-import { getBridgeAddress, getSoyRouterAddress } from '~/app/utils/addressHelpers';
+import useGetWalletState from '~/app/modules/wallet/hooks';
+import { getDecimalAmount } from '~/app/utils/decimal';
+import getEncodedData from '~/app/utils/getEncodedData';
 import { switchNetwork } from '~/app/utils/wallet';
 import previousIcon from '~/assets/images/previous.svg';
-// import { useMediaQuery } from 'react-responsive';
 import Claim from './Claim';
 import './swap.css';
 import SwapForm from './SwapForm';
-//   const isNotMobile = useMediaQuery({ minWidth: 991 });
-//   return isNotMobile ? children : null;
-// };
 
 const Swap = () => {
   const [t] = useTranslation();
@@ -37,14 +35,16 @@ const Swap = () => {
   const [pending, setPending] = useState(false);
   const [succeed, setSucced] = useState(false);
   const [canBuyCLO, setCanBuyCLO] = useState(false);
-  const balance = useSelector((state: any) => state.wallet.balance);
-  const selectedToken = useSelector((state: any) => state.wallet.selectedToken);
-  const fromNetwork = useSelector((state: any) => state.wallet.fromNetwork);
-  const toNetwork = useSelector((state: any) => state.wallet.toNetwork);
-  // const [minReceived, setMinReceived] = useState(0);
+
+  const { balance, selectedToken, fromNetwork, toNetwork } = useGetWalletState();
+  const swapTokenAddr = selectedToken?.addresses[`${fromNetwork.symbol}`];
+
+  const { onApprove, allowed } = useGetAllowance(swapTokenAddr);
+  const { onAdvancedSwap, onSimpleSwap } = useSwap();
+  const web3 = useGetWeb3(fromNetwork?.rpcs[0]);
 
   const [claimAddress, setClaimAddress] = useState('');
-  const { chainId, account, library } = useActiveWeb3React();
+  const { account } = useActiveWeb3React();
 
   const disable = fromNetwork?.symbol === 'CLO' || toNetwork?.symbol !== 'CLO';
 
@@ -57,28 +57,11 @@ const Swap = () => {
   }, [dispatch]);
 
   const onSubmit = (values: any) => {
-    // navigate('/claim');
-    const web3 = new Web3(new Web3.providers.HttpProvider(fromNetwork.rpcs[0]));
-    const amount =
-      selectedToken.symbol === 'USDT' && fromNetwork.symbol === 'ETH'
-        ? new BigNumber(values.swap_amount).times(new BigNumber(10).pow(6)).toString()
-        : web3.utils.toWei(`${values.swap_amount}`, 'ether');
-    const buy_amount =
-      selectedToken.symbol === 'USDT' && fromNetwork.symbol === 'ETH'
-        ? new BigNumber(values.swap_amount).times(new BigNumber(10).pow(6)).toString()
-        : web3.utils.toWei(`${values.swap_amount}`, 'ether');
-    // if (toNetwork.symbol === 'CLO' && values.buy_amount !== 0) {
-    //   advancedSwap(amount, values.destination_wallet, buy_amount);
-    //   dispatch(setSwapType('advanced-swap'));
-    // } else {
-    //   onClickSwap(amount, values.destination_wallet);
-    //   dispatch(setSwapType('swap'));
-    // }
     if (canBuyCLO) {
-      advancedSwap(amount, values.destination_wallet, buy_amount);
+      advancedSwap(values.swap_amount, values.destination_wallet, values.buy_amount);
       dispatch(setSwapType('advanced-swap'));
     } else {
-      onClickSwap(amount, values.destination_wallet);
+      onClickSwap(values.swap_amount, values.destination_wallet);
       dispatch(setSwapType('swap'));
     }
   };
@@ -88,89 +71,38 @@ const Swap = () => {
     dispatch(setStartSwapping(true));
     const address: any = distinationAddress === '' ? account : distinationAddress;
     setClaimAddress(address);
-    const bridgeAddr = getBridgeAddress(chainId);
-    const swapTokenAddr = selectedToken.addresses[`${fromNetwork.symbol}`];
-    const soyRouterAddr = getSoyRouterAddress();
+    // const swapTokenAddr = selectedToken.addresses[`${fromNetwork.symbol}`];
+
+    const bigAmount = getDecimalAmount(
+      new BigNumber(amount.toString()),
+      selectedToken.decimals[`${fromNetwork.symbol}`]
+    );
+    const buyBigAmount = getDecimalAmount(
+      new BigNumber(buy_amount.toString()),
+      selectedToken.decimals[`${toNetwork.symbol}`]
+    );
 
     let value = '0';
     if (swapTokenAddr.slice(0, -2) === '0x00000000000000000000000000000000000000') {
-      value = amount;
+      value = bigAmount.toString();
     } else {
-      const tkContract = getTokenContract(swapTokenAddr, library, account);
-      const allowed = await tkContract.allowance(account, soyRouterAddr, { value: 0 });
-      if (parseFloat(allowed.toString()) < parseFloat(amount)) {
-        await tkContract.approve(soyRouterAddr, ethers.constants.MaxUint256, { value: 0 });
+      // const allowed: boolean = await onGetAllowance(swapTokenAddr);
+      if (!allowed) {
+        await onApprove();
       }
     }
 
-    const today = new Date();
-    const deadline = today.setHours(today.getHours() + 1);
-
     try {
-      const web3 = new Web3(new Web3.providers.HttpProvider(fromNetwork.rpcs[0]));
-      const byte_data = await web3.eth.abi.encodeFunctionCall(
-        {
-          type: 'function',
-          stateMutability: 'nonpayable',
-          outputs: [
-            {
-              type: 'uint256[]',
-              name: 'amounts',
-              internalType: 'uint256[]'
-            }
-          ],
-          name: 'swapExactTokensForCLO',
-          inputs: [
-            {
-              type: 'uint256',
-              name: 'amountIn',
-              internalType: 'uint256'
-            },
-            {
-              type: 'uint256',
-              name: 'amountOutMin',
-              internalType: 'uint256'
-            },
-            {
-              type: 'address[]',
-              name: 'path',
-              internalType: 'address[]'
-            },
-            {
-              type: 'address',
-              name: 'to',
-              internalType: 'address'
-            },
-            {
-              type: 'uint256',
-              name: 'deadline',
-              internalType: 'uint256'
-            }
-          ]
-        },
-        [
-          amount,
-          buy_amount,
-          ['0xCc0524d86Ba37Cb36B21a14B118723eAF609aDd8', '0xbd2D3BCe975FD72E44A73cC8e834aD1B8441BdDa'],
-          distinationAddress,
-          deadline
-        ]
-      );
+      const byte_data = await getEncodedData(web3, [
+        bigAmount,
+        buyBigAmount,
+        ['0xCc0524d86Ba37Cb36B21a14B118723eAF609aDd8', '0xbd2D3BCe975FD72E44A73cC8e834aD1B8441BdDa'],
+        distinationAddress
+      ]);
 
-      const bridgeContract = getBridgeContract(bridgeAddr, library, account);
       try {
-        const tx = await bridgeContract.bridgeToContract(
-          address,
-          swapTokenAddr,
-          amount,
-          toNetwork.chainId,
-          soyRouterAddr,
-          byte_data,
-          { value }
-        );
-
-        const receipt = await tx.wait();
-        if (receipt.status) {
+        const tx = await onAdvancedSwap(address, swapTokenAddr, bigAmount, toNetwork.chainId, byte_data, value);
+        if (tx.status) {
           setSucced(true);
           setPending(false);
           dispatch(setStartSwapping(false));
@@ -182,11 +114,9 @@ const Swap = () => {
           setPending(false);
         }
       } catch (error) {
-        console.log('error===>', error);
         setPending(false);
       }
     } catch (error) {
-      console.log(error);
       setPending(false);
     }
   }
@@ -196,27 +126,29 @@ const Swap = () => {
     dispatch(setStartSwapping(true));
     const address: any = distinationAddress === '' ? account : distinationAddress;
     setClaimAddress(address);
-    const swapTokenAddr = selectedToken.addresses[`${fromNetwork.symbol}`];
+    // const swapTokenAddr = selectedToken.addresses[`${fromNetwork.symbol}`];
+
+    const bigAmount = getDecimalAmount(
+      new BigNumber(amount.toString()),
+      selectedToken.decimals[`${fromNetwork.symbol}`]
+    );
+
     if (swapTokenAddr === '') {
       toast.warning('Please select another asset. Current asset is not supported yet!');
     } else {
-      const bridgeAddr = await getBridgeAddress(chainId);
       let value = '0';
       if (swapTokenAddr.slice(0, -2) === '0x00000000000000000000000000000000000000') {
-        value = amount;
+        value = bigAmount.toString();
       } else {
-        const tkContract = await getTokenContract(swapTokenAddr, library, account);
-        const allowed = await tkContract.allowance(account, bridgeAddr);
-        if (parseFloat(allowed.toString()) < parseFloat(amount)) {
-          await tkContract.approve(bridgeAddr, ethers.constants.MaxUint256, { value: 0 });
+        // const allowed: boolean = await onGetAllowance(swapTokenAddr);
+        if (!allowed) {
+          await onApprove();
         }
       }
-      const bridgeContract = getBridgeContract(bridgeAddr, library, account);
 
       try {
-        const tx = await bridgeContract.depositTokens(address, swapTokenAddr, amount, toNetwork.chainId, { value });
-        const receipt = await tx.wait();
-        if (receipt.status) {
+        const tx = await onSimpleSwap(address, swapTokenAddr, bigAmount, toNetwork.chainId, value);
+        if (tx.status) {
           setSucced(true);
           setPending(false);
           dispatch(setStartSwapping(false));
@@ -229,7 +161,7 @@ const Swap = () => {
           dispatch(setStartSwapping(false));
         }
       } catch (error) {
-        console.log(error);
+        console.log('error ::', error);
         setPending(false);
         setSucced(false);
         dispatch(setStartSwapping(false));

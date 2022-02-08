@@ -1,11 +1,11 @@
 import { Field, Formik } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import CustomCheckbox from '~/app/components/common/CustomCheckbox';
 import FormInput from '~/app/components/common/FormInput';
 import Spinner from '~/app/components/common/Spinner';
+import useGetWalletState from '~/app/modules/wallet/hooks';
 import './swapform.css';
 
 type props = {
@@ -37,7 +37,7 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
 
   const [destination, setDestination] = useState(false);
 
-  const selectedToken = useSelector((state: any) => state.wallet.selectedToken);
+  const { selectedToken } = useGetWalletState();
   // const balance = useSelector((state: any) => state.wallet.balance);
 
   const onChangeDestination = (status: boolean) => {

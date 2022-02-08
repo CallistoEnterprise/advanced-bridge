@@ -659,16 +659,6 @@
   },
   {
     "inputs": [
-      { "internalType": "address", "name": "token", "type": "address" },
-      { "internalType": "uint", "name": "value", "type": "uint" }
-    ],
-    "name": "migrate",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
       { "internalType": "address", "name": "receiver", "type": "address" },
       { "internalType": "address", "name": "token", "type": "address" },
       { "internalType": "uint256", "name": "value", "type": "uint256" },
@@ -828,24 +818,6 @@
         "type": "bytes32",
         "name": "",
         "internalType": "bytes32"
-      }
-    ]
-  },
-  {
-    "type": "function",
-    "stateMutability": "nonpayable",
-    "outputs": [],
-    "name": "migrate",
-    "inputs": [
-      {
-        "type": "address",
-        "name": "token",
-        "internalType": "address"
-      },
-      {
-        "type": "uint256",
-        "name": "value",
-        "internalType": "uint256"
       }
     ]
   },

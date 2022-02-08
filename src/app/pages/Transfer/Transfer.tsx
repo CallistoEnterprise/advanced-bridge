@@ -1,4 +1,3 @@
-import { useWeb3React } from '@web3-react/core';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMediaQuery } from 'react-responsive';
@@ -6,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import CustomButton from '~/app/components/common/CustomButton';
 import TokenSelection from '~/app/components/TokenSelection';
+import useActiveWeb3React from '~/app/hooks/useActiveWeb3';
 import { registerToken } from '~/app/utils/wallet';
 import previousIcon from '~/assets/images/previous.svg';
 import ccBNBIcon from '~/assets/images/tokens/ccBNB.svg';
@@ -95,7 +95,7 @@ const Mobile = ({ children }: any) => {
 export default function Transfer() {
   const [t] = useTranslation();
   const navigate = useNavigate();
-  const { account, chainId } = useWeb3React();
+  const { account, chainId } = useActiveWeb3React();
   // const [networkOne, setNetworkOne] = useState(null);
 
   useEffect(() => {
@@ -110,7 +110,6 @@ export default function Transfer() {
       toast.warning(`Please switch network to ${option.network}`);
       return;
     }
-
     registerToken(option.address, option.symbol, 18);
   };
 

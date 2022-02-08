@@ -69,7 +69,6 @@ export default function PreviousClaim() {
 
     try {
       const { signatures, respJSON } = await getSignatures(hash, fromNetwork.chainId);
-      console.log(signatures, chainId, respJSON);
 
       if (respJSON.chainId !== chainId.toString()) {
         const toNetwork = Networks.find((item) => item.chainId === respJSON.chainId);
