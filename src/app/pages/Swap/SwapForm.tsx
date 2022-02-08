@@ -52,13 +52,11 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
     <div className="swapform">
       <Formik
         initialValues={
-          initialData
-            ? initialData
-            : {
-                swap_amount: '0',
-                buy_amount: '0',
-                destination_wallet: '1231231'
-              }
+          initialData ?? {
+            swap_amount: '0',
+            buy_amount: '0',
+            destination_wallet: '1231231'
+          }
         }
         validationSchema={registerSchema}
         validateOnMount
@@ -144,7 +142,7 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
                     type="submit"
                     color="success"
                     className="swapform__submit"
-                    disabled={values.swap_amount === '0' || values.destination_wallet === ''}
+                    disabled={values.swap_amount === '0' || values.destination_wallet === '' || pending}
                   >
                     {pending ? (
                       <div>
@@ -154,7 +152,6 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
                     ) : (
                       t('SWAP')
                     )}
-                    {/* {isPending(state) ? 'Wait...' : 'Submit'} */}
                   </button>
                 </div>
               </div>

@@ -19,7 +19,7 @@ import {
   setSwapType
 } from '~/app/modules/wallet/action';
 import { getBridgeContract, getTokenContract } from '~/app/utils';
-import { getBridgeAddress, getSoyRouterAddress } from '~/app/utils/decimal';
+import { getBridgeAddress, getSoyRouterAddress } from '~/app/utils/addressHelpers';
 import { switchNetwork } from '~/app/utils/wallet';
 import previousIcon from '~/assets/images/previous.svg';
 // import { useMediaQuery } from 'react-responsive';
