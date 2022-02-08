@@ -32,39 +32,18 @@ export default function Claim({ succeed, address }: props) {
   };
 
   async function handleAdvancedClaim() {
-    // console.log(txHash);
     if (txHash) {
       setPending(true);
     }
-
     try {
       const { signatures, respJSON } = await getSignatures(txHash, fromNetwork.chainId);
-      if (signatures.length === 0) {
+
+      if (signatures.length !== 3) {
         setPending(false);
         toast.warning('Failed Signature');
         return;
       }
       const bridgeContract = await getBridgeContract(respJSON.bridge, library, address);
-      // console.log(
-      //   'token=>',
-      //   respJSON.token,
-      //   'txId=>',
-      //   txHash,
-      //   'to=>',
-      //   respJSON.to,
-      //   'value=>',
-      //   respJSON.value,
-      //   'chainId=>',
-      //   fromNetwork.chainId,
-      //   'toContract=>',
-      //   respJSON.toContract,
-      //   'data=>',
-      //   respJSON.data,
-      //   'signature=>',
-      //   signatures,
-      //   'value=>',
-      //   0
-      // );
 
       const tx = await bridgeContract.claimToContract(
         respJSON.token,
@@ -104,9 +83,9 @@ export default function Claim({ succeed, address }: props) {
 
     try {
       const { signatures, respJSON } = await getSignatures(txHash, fromNetwork.chainId);
-      if (signatures.length !== 3) {
+      if (signatures.length === 0) {
         setPending(false);
-        toast.warning('Please check your network connection and try again.');
+        toast.warning('Invalid signature.');
         return;
       }
       const bridgeContract = await getBridgeContract(respJSON.bridge, library, address);
@@ -119,6 +98,7 @@ export default function Claim({ succeed, address }: props) {
         signatures,
         { value: 0 }
       );
+
       const receipt = await tx.wait();
       if (receipt.status) {
         window.localStorage.removeItem('prevData');

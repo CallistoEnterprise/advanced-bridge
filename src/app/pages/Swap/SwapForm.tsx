@@ -11,9 +11,11 @@ import './swapform.css';
 type props = {
   submit?: (data: any) => void;
   state?: any;
+  disable?: boolean;
   initialData?: any;
   pending: boolean;
   canBuyCLO: boolean;
+  setBuyCLO: () => void;
 };
 
 const registerSchema = Yup.object().shape({
@@ -30,21 +32,16 @@ const registerSchema = Yup.object().shape({
   //   .required('buy_amount is required')
 });
 
-export default function SwapForm({ submit, state, initialData, pending, canBuyCLO }: props) {
+export default function SwapForm({ submit, initialData, pending, canBuyCLO, setBuyCLO, disable }: props) {
   const [t] = useTranslation();
 
   const [destination, setDestination] = useState(false);
 
   const selectedToken = useSelector((state: any) => state.wallet.selectedToken);
-  const balance = useSelector((state: any) => state.wallet.balance);
-  const [buyCLO, setBuyCLO] = useState(parseInt(balance.clo) === 0);
+  // const balance = useSelector((state: any) => state.wallet.balance);
 
   const onChangeDestination = (status: boolean) => {
     setDestination(status);
-  };
-
-  const onChangeBuyCLO = () => {
-    setBuyCLO(!buyCLO);
   };
 
   const onSubmit = (values: any) => {
@@ -55,13 +52,11 @@ export default function SwapForm({ submit, state, initialData, pending, canBuyCL
     <div className="swapform">
       <Formik
         initialValues={
-          initialData
-            ? initialData
-            : {
-                swap_amount: '0',
-                buy_amount: '0',
-                destination_wallet: '1231231'
-              }
+          initialData ?? {
+            swap_amount: '0',
+            buy_amount: '0',
+            destination_wallet: '1231231'
+          }
         }
         validationSchema={registerSchema}
         validateOnMount
@@ -81,18 +76,18 @@ export default function SwapForm({ submit, state, initialData, pending, canBuyCL
                       </div>
                     </div>
                   </div>
-                  {canBuyCLO && (
+                  {!disable && (
                     <div className="row mt-4 swapform__row">
                       <div className="col">
                         <CustomCheckbox
                           label={t('Buy Callisto coins')}
-                          checked={buyCLO}
-                          onChangeCheckbox={onChangeBuyCLO}
+                          checked={canBuyCLO}
+                          onChangeCheckbox={setBuyCLO}
                         />
                       </div>
                     </div>
                   )}
-                  {buyCLO && (
+                  {canBuyCLO && (
                     <>
                       <div className="row mt-3 swapform__row">
                         <div className="col">
@@ -147,7 +142,7 @@ export default function SwapForm({ submit, state, initialData, pending, canBuyCL
                     type="submit"
                     color="success"
                     className="swapform__submit"
-                    disabled={values.swap_amount === '0' || values.destination_wallet === ''}
+                    disabled={values.swap_amount === '0' || values.destination_wallet === '' || pending}
                   >
                     {pending ? (
                       <div>
@@ -157,7 +152,6 @@ export default function SwapForm({ submit, state, initialData, pending, canBuyCL
                     ) : (
                       t('SWAP')
                     )}
-                    {/* {isPending(state) ? 'Wait...' : 'Submit'} */}
                   </button>
                 </div>
               </div>

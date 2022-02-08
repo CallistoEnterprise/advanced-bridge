@@ -19,7 +19,7 @@ import {
   setSwapType
 } from '~/app/modules/wallet/action';
 import { getBridgeContract, getTokenContract } from '~/app/utils';
-import { getBridgeAddress, getSoyRouterAddress } from '~/app/utils/decimal';
+import { getBridgeAddress, getSoyRouterAddress } from '~/app/utils/addressHelpers';
 import { switchNetwork } from '~/app/utils/wallet';
 import previousIcon from '~/assets/images/previous.svg';
 // import { useMediaQuery } from 'react-responsive';
@@ -36,6 +36,7 @@ const Swap = () => {
   const dispatch = useDispatch();
   const [pending, setPending] = useState(false);
   const [succeed, setSucced] = useState(false);
+  const [canBuyCLO, setCanBuyCLO] = useState(false);
   const balance = useSelector((state: any) => state.wallet.balance);
   const selectedToken = useSelector((state: any) => state.wallet.selectedToken);
   const fromNetwork = useSelector((state: any) => state.wallet.fromNetwork);
@@ -43,6 +44,8 @@ const Swap = () => {
 
   const [claimAddress, setClaimAddress] = useState('');
   const { chainId, account, library } = useActiveWeb3React();
+
+  const disable = fromNetwork?.symbol === 'CLO' || toNetwork?.symbol !== 'CLO';
 
   const onPrevious = () => {
     navigate('/tokens');
@@ -63,7 +66,14 @@ const Swap = () => {
       selectedToken.symbol === 'USDT' && fromNetwork.symbol === 'ETH'
         ? new BigNumber(values.swap_amount).times(new BigNumber(10).pow(6)).toString()
         : web3.utils.toWei(`${values.swap_amount}`, 'ether');
-    if (toNetwork.symbol === 'CLO' && values.buy_amount !== 0) {
+    // if (toNetwork.symbol === 'CLO' && values.buy_amount !== 0) {
+    //   advancedSwap(amount, values.destination_wallet, buy_amount);
+    //   dispatch(setSwapType('advanced-swap'));
+    // } else {
+    //   onClickSwap(amount, values.destination_wallet);
+    //   dispatch(setSwapType('swap'));
+    // }
+    if (canBuyCLO) {
       advancedSwap(amount, values.destination_wallet, buy_amount);
       dispatch(setSwapType('advanced-swap'));
     } else {
@@ -189,13 +199,13 @@ const Swap = () => {
     if (swapTokenAddr === '') {
       toast.warning('Please select another asset. Current asset is not supported yet!');
     } else {
-      const bridgeAddr = getBridgeAddress(chainId);
+      const bridgeAddr = await getBridgeAddress(chainId);
       let value = '0';
       if (swapTokenAddr.slice(0, -2) === '0x00000000000000000000000000000000000000') {
         value = amount;
       } else {
-        const tkContract = getTokenContract(swapTokenAddr, library, address);
-        const allowed = await tkContract.allowance(address, bridgeAddr, { value: 0 });
+        const tkContract = await getTokenContract(swapTokenAddr, library, address);
+        const allowed = await tkContract.allowance(address, bridgeAddr);
         if (parseFloat(allowed.toString()) < parseFloat(amount)) {
           await tkContract.approve(bridgeAddr, ethers.constants.MaxUint256, { value: 0 });
         }
@@ -255,8 +265,10 @@ const Swap = () => {
                     <SwapForm
                       submit={onSubmit}
                       pending={pending}
-                      canBuyCLO={toNetwork.symbol === 'CLO'}
+                      disable={disable}
+                      canBuyCLO={canBuyCLO}
                       initialData={{ swap_amount: '0', buy_amount: '0', destination_wallet: account }}
+                      setBuyCLO={() => setCanBuyCLO(!canBuyCLO)}
                     />
                   </div>
                 </BorderContainer>
