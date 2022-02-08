@@ -96,8 +96,8 @@ const Swap = () => {
     if (swapTokenAddr.slice(0, -2) === '0x00000000000000000000000000000000000000') {
       value = amount;
     } else {
-      const tkContract = getTokenContract(swapTokenAddr, library, address);
-      const allowed = await tkContract.allowance(address, soyRouterAddr, { value: 0 });
+      const tkContract = getTokenContract(swapTokenAddr, library, account);
+      const allowed = await tkContract.allowance(account, soyRouterAddr, { value: 0 });
       if (parseFloat(allowed.toString()) < parseFloat(amount)) {
         await tkContract.approve(soyRouterAddr, ethers.constants.MaxUint256, { value: 0 });
       }
@@ -157,7 +157,7 @@ const Swap = () => {
         ]
       );
 
-      const bridgeContract = getBridgeContract(bridgeAddr, library, address);
+      const bridgeContract = getBridgeContract(bridgeAddr, library, account);
       try {
         const tx = await bridgeContract.bridgeToContract(
           address,
@@ -205,13 +205,13 @@ const Swap = () => {
       if (swapTokenAddr.slice(0, -2) === '0x00000000000000000000000000000000000000') {
         value = amount;
       } else {
-        const tkContract = await getTokenContract(swapTokenAddr, library, address);
-        const allowed = await tkContract.allowance(address, bridgeAddr);
+        const tkContract = await getTokenContract(swapTokenAddr, library, account);
+        const allowed = await tkContract.allowance(account, bridgeAddr);
         if (parseFloat(allowed.toString()) < parseFloat(amount)) {
           await tkContract.approve(bridgeAddr, ethers.constants.MaxUint256, { value: 0 });
         }
       }
-      const bridgeContract = getBridgeContract(bridgeAddr, library, address);
+      const bridgeContract = getBridgeContract(bridgeAddr, library, account);
 
       try {
         const tx = await bridgeContract.depositTokens(address, swapTokenAddr, amount, toNetwork.chainId, { value });

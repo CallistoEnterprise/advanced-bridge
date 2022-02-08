@@ -13,10 +13,10 @@ import './claim.css';
 
 type props = {
   succeed: boolean;
-  address: string;
+  address?: string;
 };
 
-export default function Claim({ succeed, address }: props) {
+export default function Claim({ succeed }: props) {
   const [t] = useTranslation();
   const navigate = useNavigate();
   const [pending, setPending] = useState(false);
@@ -24,7 +24,7 @@ export default function Claim({ succeed, address }: props) {
   const txHash = useSelector((state: any) => state.wallet.hash);
   const fromNetwork = useSelector((state: any) => state.wallet.fromNetwork);
   const swapType = useSelector((state: any) => state.wallet.swapType);
-  const { library } = useActiveWeb3React();
+  const { library, account } = useActiveWeb3React();
 
   const onClaim = () => {
     if (swapType === 'swap') handleClaim();
@@ -43,7 +43,7 @@ export default function Claim({ succeed, address }: props) {
         toast.warning('Failed Signature');
         return;
       }
-      const bridgeContract = await getBridgeContract(respJSON.bridge, library, address);
+      const bridgeContract = await getBridgeContract(respJSON.bridge, library, account);
 
       const tx = await bridgeContract.claimToContract(
         respJSON.token,
@@ -88,7 +88,7 @@ export default function Claim({ succeed, address }: props) {
         toast.warning('Invalid signature.');
         return;
       }
-      const bridgeContract = await getBridgeContract(respJSON.bridge, library, address);
+      const bridgeContract = await getBridgeContract(respJSON.bridge, library, account);
       const tx = await bridgeContract.claim(
         respJSON.token,
         txHash,
