@@ -1,11 +1,11 @@
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
 import arrowDown from '~/assets/images/arrowdown.svg';
-import blockIcon from '~/assets/images/block3.png';
+import blockIcon from '~/assets/images/block.png';
 import discord from '~/assets/images/discord.svg';
 import facebook from '~/assets/images/facebook.svg';
 import medium from '~/assets/images/medium.svg';
@@ -29,11 +29,28 @@ export default function Footer() {
   const [documentList, setDocumentList] = useState(false);
   const [resourceslist, setResourcesList] = useState(false);
 
+  const [number, setNumber] = useState(0);
+
   const start_swapping = useSelector((state: any) => state.wallet.start_swapping);
+
+  useEffect(() => {
+    let interval: any;
+    if (start_swapping && number < 12) {
+      interval = setInterval(() => setNumber(number + 1), 1000);
+    }
+    return () => {
+      clearInterval(interval);
+    };
+  }, [number, start_swapping]);
 
   return (
     <div className={classNames('footer', { footer__animation: start_swapping })}>
-      {start_swapping && <img src={blockIcon} alt="blockIcon" className="footer__blockIcon" />}
+      {start_swapping && (
+        <div className="footer__blockContent">
+          <img src={blockIcon} alt="blockIcon" className="footer__blockIcon" />
+          <p className="footer__blockNumber">block {number}</p>
+        </div>
+      )}
       <Container>
         <div className="footer__content">
           <div>
