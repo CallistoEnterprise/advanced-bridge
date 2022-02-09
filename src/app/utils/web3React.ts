@@ -7,12 +7,12 @@ import getNodeUrl from './getRpcUrl';
 
 const POLLING_INTERVAL = 12000;
 const rpcUrl = getNodeUrl();
-// const chainId = parseInt(process.env.REACT_APP_CHAIN_ID, 10);
+const chainId = parseInt(process.env.REACT_APP_CHAIN_ID, 10);
 
 const injected = new InjectedConnector({ supportedChainIds: [1, 4, 56, 61, 820, 20729, 97] });
 
 const walletconnect = new WalletConnectConnector({
-  rpc: { 20729: rpcUrl },
+  rpc: { [chainId]: rpcUrl },
   bridge: 'https://bridge.walletconnect.org/',
   qrcode: true
   // pollingInterval: 12000
