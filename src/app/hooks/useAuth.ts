@@ -15,7 +15,6 @@ import { connectorsByName } from '~/app/utils/web3React';
 
 const useAuth = () => {
   const { activate, deactivate } = useWeb3React();
-  // const { toastError } = useToast();
 
   const login = useCallback(
     (connectorID: ConnectorNames, curNet) => {
@@ -24,6 +23,7 @@ const useAuth = () => {
         activate(connector, async (error: Error) => {
           if (error instanceof UnsupportedChainIdError) {
             const hasSetup = await setupNetwork(curNet);
+            console.log(connectorID, curNet, connector, hasSetup);
             if (hasSetup) {
               activate(connector);
             }
@@ -44,6 +44,7 @@ const useAuth = () => {
               // toastError('Authorization Error', 'Please authorize to access your account');
             } else {
               toast.error(error.message);
+              console.log(error.message);
               // toastError(error.name, error.message);
             }
           }

@@ -1,5 +1,6 @@
 import { ConnectorNames } from '@soy-libs/uikit';
 import React, { useEffect, useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -39,7 +40,7 @@ export default function Home() {
 
   const onPreviousClaim = async () => {
     setPage('previousclaim');
-    login(ConnectorNames.Injected, Networks[0]);
+    login(isMobile ? ConnectorNames.WalletConnect : ConnectorNames.Injected, Networks[0]);
     const network = Networks[0];
     dispatch(setFromNetwork(network));
     if (network.symbol === 'ETH') {
@@ -49,9 +50,10 @@ export default function Home() {
     }
   };
 
-  const onClickMetamask = async () => {
+  const onClickMetamask = async (connectorId: ConnectorNames) => {
     setPage('network');
-    login(ConnectorNames.Injected, Networks[0]);
+
+    login(connectorId, Networks[0]);
     const network = Networks[0];
     dispatch(setFromNetwork(network));
     if (network.symbol === 'ETH') {
@@ -72,24 +74,27 @@ export default function Home() {
             <p>Help</p>
           </div>
           <div className="mt-5">
-            <BorderContainer className="home__wallets__block" onClick={onClickMetamask}>
+            <BorderContainer className="home__wallets__block" onClick={() => onClickMetamask(ConnectorNames.Injected)}>
               <div>
                 <img src={metamaskIcon} alt="metamaskIcon" />
                 <p className="home__wallets__block--more">Metamask</p>
               </div>
             </BorderContainer>
-            <BorderContainer className="home__wallets__block" onClick={onClaim}>
+            <BorderContainer
+              className="home__wallets__block"
+              onClick={() => onClickMetamask(ConnectorNames.WalletConnect)}
+            >
               <div>
-                <img src={trustIcon} alt="trustIcon" />
-                <p className="home__wallets__block--more">trust wallet</p>
+                <img src={walletConnect} alt="walletConnect" />
+                <p className="home__wallets__block--more">wallet connect</p>
               </div>
             </BorderContainer>
           </div>
           <div className="mt-4">
             <BorderContainer className="home__wallets__block" onClick={onClaim}>
               <div>
-                <img src={walletConnect} alt="walletConnect" />
-                <p className="home__wallets__block--more">wallet connect</p>
+                <img src={trustIcon} alt="trustIcon" />
+                <p className="home__wallets__block--more">trust wallet</p>
               </div>
             </BorderContainer>
             <BorderContainer className="home__wallets__block" onClick={onClaim}>

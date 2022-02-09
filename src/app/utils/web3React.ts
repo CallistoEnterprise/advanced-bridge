@@ -7,18 +7,19 @@ import getNodeUrl from './getRpcUrl';
 
 const POLLING_INTERVAL = 12000;
 const rpcUrl = getNodeUrl();
-const chainId = parseInt(process.env.REACT_APP_CHAIN_ID, 10);
+// const chainId = parseInt(process.env.REACT_APP_CHAIN_ID, 10);
 
-const injected = new InjectedConnector({ supportedChainIds: [1, 56, 61, 820, 20729, 97] });
+const injected = new InjectedConnector({ supportedChainIds: [1, 4, 56, 61, 820, 20729, 97] });
 
 const walletconnect = new WalletConnectConnector({
-  rpc: { [chainId]: rpcUrl },
-  bridge: 'https://callistobridge.netlify.app/',
+  rpc: { 20729: rpcUrl },
+  bridge: 'https://bridge.walletconnect.org/',
   qrcode: true
-  // pollingInterval: POLLING_INTERVAL,
+  // pollingInterval: 12000
+  // supportedChainIds: [1, 4, 56, 61, 820, 20729, 97]
 });
 
-const bscConnector = new BscConnector({ supportedChainIds: [1, 56, 61, 820, 20729, 97] });
+const bscConnector = new BscConnector({ supportedChainIds: [1, 4, 56, 61, 820, 20729, 97] });
 
 export const connectorsByName: { [connectorName in ConnectorNames]: any } = {
   [ConnectorNames.Injected]: injected,
