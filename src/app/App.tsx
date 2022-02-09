@@ -1,4 +1,5 @@
 import { Web3ReactProvider } from '@web3-react/core';
+import BigNumber from 'bignumber.js';
 import React from 'react';
 import { Provider } from 'react-redux';
 // containerBuilder();
@@ -13,6 +14,11 @@ import { getLibrary } from './utils/web3React';
 
 const { persistor, store } = configureStore();
 toast.configure();
+
+BigNumber.config({
+  EXPONENTIAL_AT: 1000,
+  DECIMAL_PLACES: 80
+});
 
 export default function App() {
   return (
