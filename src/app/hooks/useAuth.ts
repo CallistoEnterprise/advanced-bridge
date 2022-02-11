@@ -23,14 +23,12 @@ const useAuth = () => {
         activate(connector, async (error: Error) => {
           if (error instanceof UnsupportedChainIdError) {
             const hasSetup = await setupNetwork(curNet);
-            console.log(connectorID, curNet, connector, hasSetup);
             if (hasSetup) {
               activate(connector);
             }
           } else {
             window.localStorage.removeItem(connectorLocalStorageKey);
             if (error instanceof NoEthereumProviderError) {
-              // console.log('Provider Error', 'No provider was found');
               toast.error('No provider was found');
             } else if (
               error instanceof UserRejectedRequestErrorInjected ||
@@ -41,11 +39,8 @@ const useAuth = () => {
                 walletConnector.walletConnectProvider = null;
               }
               toast.error('Please authorize to access your account');
-              // toastError('Authorization Error', 'Please authorize to access your account');
             } else {
               toast.error(error.message);
-              console.log(error.message);
-              // toastError(error.name, error.message);
             }
           }
         });
