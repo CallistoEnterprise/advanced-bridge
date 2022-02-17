@@ -13,7 +13,7 @@ const injected = new InjectedConnector({ supportedChainIds: [1, 4, 56, 61, 820, 
 
 const walletconnect = new WalletConnectConnector({
   rpc: { [chainId]: rpcUrl },
-  bridge: 'https://bridge.walletconnect.org/',
+  // bridge: 'https://bridge.walletconnect.org/',
   qrcode: true
   // pollingInterval: 12000
   // supportedChainIds: [1, 4, 56, 61, 820, 20729, 97]

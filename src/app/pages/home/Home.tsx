@@ -25,14 +25,14 @@ export default function Home() {
   const navigate = useNavigate();
   const [page, setPage] = useState<string>('');
 
-  const { active } = useActiveWeb3React();
+  const { account } = useActiveWeb3React();
   const { login } = useAuth();
 
   useEffect(() => {
-    if (active) {
+    if (account) {
       navigate(`/${page}`);
     }
-  }, [active, page, navigate]);
+  }, [account, navigate]);
 
   const onClaim = () => {
     // navigate('/network');
