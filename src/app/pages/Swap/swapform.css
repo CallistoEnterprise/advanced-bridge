@@ -59,3 +59,6 @@
     padding: rem(0px) rem(44px);
   }
 }
+.w-100 {
+  width: 100%;
+}

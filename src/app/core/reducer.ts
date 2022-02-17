@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
 import home from '~/app/modules/home/reducer';
+import swap from '~/app/modules/swap/reducer';
 import wallet from '~/app/modules/wallet/reducer';
-// import toasts from 'state/toasts';
+
 export default combineReducers({
   home,
-  wallet
-  // toasts
+  wallet,
+  swap
 });

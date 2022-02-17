@@ -5,7 +5,9 @@ import * as Yup from 'yup';
 import CustomCheckbox from '~/app/components/common/CustomCheckbox';
 import FormInput from '~/app/components/common/FormInput';
 import Spinner from '~/app/components/common/Spinner';
+import useSwapState from '~/app/modules/swap/hooks';
 import useGetWalletState from '~/app/modules/wallet/hooks';
+import SwapFooter from './SwapFooter';
 import './swapform.css';
 
 type props = {
@@ -32,20 +34,36 @@ const registerSchema = Yup.object().shape({
   //   .required('buy_amount is required')
 });
 
+export enum FieldInput {
+  INPUT = 'INPUT',
+  OUTPUT = 'OUTPUT'
+}
+
 export default function SwapForm({ submit, initialData, pending, canBuyCLO, setBuyCLO, disable }: props) {
   const [t] = useTranslation();
 
   const [destination, setDestination] = useState(false);
 
   const { selectedToken } = useGetWalletState();
-  // const balance = useSelector((state: any) => state.wallet.balance);
+  const [swap_amount, setSwapAmount] = useState('');
+  const [buy_amount, setBuyAmount] = useState('');
+  const { independentField, typedValue, recipient } = useSwapState();
 
+  console.log(independentField, typedValue, recipient, selectedToken, '<===== state variables ');
   const onChangeDestination = (status: boolean) => {
     setDestination(status);
   };
 
   const onSubmit = (values: any) => {
     submit(values);
+  };
+
+  const handleSwapAmount = (e: any) => {
+    setSwapAmount(e.target.value);
+  };
+
+  const handleBuyAmount = (e: any) => {
+    setBuyAmount(e.target.value);
   };
 
   return (
@@ -70,7 +88,14 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
                   <div className="row mt-3 swapform__row">
                     <div className="col">
                       <label htmlFor="swap_amount">{t('Amount to swap')} </label>
-                      <Field name="swap_amount" type={'text'} groupname={selectedToken.name} component={FormInput} />
+                      <Field
+                        name="swap_amount"
+                        type="text"
+                        groupname={selectedToken.name}
+                        component={FormInput}
+                        value={swap_amount}
+                        onChange={handleSwapAmount}
+                      />
                       <div className="d-flex justify-content-between">
                         <p className="swapform__subtext">{t('Amount')}</p>
                       </div>
@@ -92,19 +117,15 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
                       <div className="row mt-3 swapform__row">
                         <div className="col">
                           {/* <label htmlFor="buy_amount">Amount to swap </label> */}
-                          <Field name="buy_amount" type={'text'} groupname="CLO" component={FormInput} />
-                          <div className="d-flex justify-content-between">
-                            <p className="swapform__subtext">
-                              <strong>{t('Minimum received')}</strong>
-                            </p>
-                            <p className="swapform__subtext">{values.swap_amount} CLO</p>
-                          </div>
-                          <div className="d-flex justify-content-between mt-3">
-                            <p className="swapform__subtext">
-                              <strong>{t('Price impact')}</strong>
-                            </p>
-                            <p className="swapform__subtext">{`<0.1%`}</p>
-                          </div>
+                          <Field
+                            name="buy_amount"
+                            type={'text'}
+                            groupname="CLO"
+                            component={FormInput}
+                            value={buy_amount}
+                            onChange={handleBuyAmount}
+                          />
+                          <SwapFooter values={values} />
                         </div>
                       </div>
                       <div className="row mt-4 swapform__row">
