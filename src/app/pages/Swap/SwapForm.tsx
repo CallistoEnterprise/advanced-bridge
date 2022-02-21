@@ -1,13 +1,14 @@
+import { JSBI, Trade } from '@soy-libs/sdk2';
 import { Field, Formik } from 'formik';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import CustomCheckbox from '~/app/components/common/CustomCheckbox';
 import FormInput from '~/app/components/common/FormInput';
 import Spinner from '~/app/components/common/Spinner';
-import { switchCurrency } from '~/app/modules/swap/action';
-import useGetSwapState, { useDerivedSwapInfo } from '~/app/modules/swap/hooks';
+import { FieldInput, switchCurrency } from '~/app/modules/swap/action';
+import useGetSwapState, { useDerivedSwapInfo, useSwapActionHandlers } from '~/app/modules/swap/hooks';
 import useGetWalletState from '~/app/modules/wallet/hooks';
 import SwapFooter from './SwapFooter';
 import './swapform.css';
@@ -48,7 +49,65 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
   const { independentField, typedValue, recipient } = useGetSwapState();
   const { v2Trade, currencyBalances, parsedAmount, currencies, inputError: swapInputError } = useDerivedSwapInfo();
 
-  console.log(independentField, typedValue, recipient, '<===== state variables ');
+  console.log(v2Trade, currencyBalances, parsedAmount, currencies, swapInputError, '<===== state variables ');
+
+  const showWrap = false;
+  const trade = showWrap ? undefined : v2Trade;
+
+  const parsedAmounts: any = showWrap
+    ? {
+        [FieldInput.INPUT]: parsedAmount,
+        [FieldInput.OUTPUT]: parsedAmount
+      }
+    : {
+        [FieldInput.INPUT]: independentField === FieldInput.INPUT ? parsedAmount : trade?.inputAmount,
+        [FieldInput.OUTPUT]: independentField === FieldInput.OUTPUT ? parsedAmount : trade?.outputAmount
+      };
+
+  const { onUserInput } = useSwapActionHandlers();
+  const isValid = !swapInputError;
+  const dependentField: FieldInput = independentField === FieldInput.INPUT ? FieldInput.OUTPUT : FieldInput.INPUT;
+
+  const handleTypeInput = useCallback(
+    (value: string) => {
+      onUserInput(FieldInput.INPUT, value);
+    },
+    [onUserInput]
+  );
+  const handleTypeOutput = useCallback(
+    (value: string) => {
+      onUserInput(FieldInput.OUTPUT, value);
+    },
+    [onUserInput]
+  );
+
+  // modal and loading
+  const [{ tradeToConfirm, swapErrorMessage, attemptingTxn, txHash }, setSwapState] = useState<{
+    tradeToConfirm: Trade | undefined;
+    attemptingTxn: boolean;
+    swapErrorMessage: string | undefined;
+    txHash: string | undefined;
+  }>({
+    tradeToConfirm: undefined,
+    attemptingTxn: false,
+    swapErrorMessage: undefined,
+    txHash: undefined
+  });
+
+  const formattedAmounts = {
+    [independentField]: typedValue,
+    [dependentField]: showWrap
+      ? parsedAmounts[independentField]?.toExact() ?? ''
+      : parsedAmounts[dependentField]?.toSignificant(6) ?? ''
+  };
+
+  const route = trade?.route;
+  const userHasSpecifiedInputOutput = Boolean(
+    currencies[FieldInput.INPUT] &&
+      currencies[FieldInput.OUTPUT] &&
+      parsedAmounts[independentField]?.greaterThan(JSBI.BigInt(0))
+  );
+  const noRoute = !route;
 
   useEffect(() => {
     dispatch(switchCurrency('test'));
@@ -98,6 +157,13 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
                         groupname={selectedToken.name}
                         component={FormInput}
                         value={swap_amount}
+                        inputMode="decimal"
+                        autoComplete="off"
+                        autoCorrect="off"
+                        pattern="^[0-9]*[.,]?[0-9]*$"
+                        minLength={1}
+                        maxLength={79}
+                        spellCheck="false"
                         onChange={handleSwapAmount}
                       />
                       <div className="d-flex justify-content-between">

@@ -44,7 +44,7 @@ export default function WalletInfo({ pending }: walletInfoProps) {
   const { logout } = useAuth();
   const accountEllipsis = account ? `${account.substring(0, 8)}...${account.substring(account.length - 4)}` : null;
 
-  const balance = useSelector((state: any) => state.wallet.balance);
+  const balance = useSelector((state: any) => state.walletBridge.balance);
   useEffect(() => {
     if (!active) {
       navigate('/');

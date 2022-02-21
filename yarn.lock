@@ -3176,6 +3176,11 @@
   resolved "https://registry.yarnpkg.com/@uniswap/token-lists/-/token-lists-1.0.0-beta.27.tgz#8b02a979b0b0024cc96f60e694a3f6db6b2ccab2"
   integrity sha512-x5hmIniQ9TGqOBCRqfWcmZi/U5kB0qrHMDQ9igs3nMbK0wwmYLraL4owbIwXFGR/co6/lJYJC4K/Gjn4wZY5mQ==
 
+"@uniswap/v2-core@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@uniswap/v2-core/-/v2-core-1.0.1.tgz#af8f508bf183204779938969e2e54043e147d425"
+  integrity sha512-MtybtkUPSyysqLY2U210NBDeCHX+ltHt3oADGdjqoThZaFRDKwM6k1Nb3F0A3hk5hwuQvytFWhrWHOEq6nVJ8Q==
+
 "@walletconnect/browser-utils@^1.7.1":
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/@walletconnect/browser-utils/-/browser-utils-1.7.1.tgz#2a28846cd4d73166debbbf7d470e78ba25616f5e"
@@ -6854,11 +6859,12 @@ cpr@^3.0.1:
     mkdirp "~0.5.1"
     rimraf "^2.5.4"
 
-craco-style-resources-loader@CKGrafico/craco-style-resources-loader#patch-1:
-  version "1.0.1"
-  resolved "https://codeload.github.com/CKGrafico/craco-style-resources-loader/tar.gz/0617e0d84ca6412448251e659e07dd7a9e61afee"
+craco-style-resources-loader@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/craco-style-resources-loader/-/craco-style-resources-loader-1.1.2.tgz#a0af72591e7f0c6b038314118c15d57f92963c0a"
+  integrity sha512-qrGsFRHd2iuTHD/h5IZEUDgI3iEvMOZhT4RInCvi5XLS3ADr5SJgvRXf5kFkOTxV+3sNtCufLmB6uF2btGS0cg==
   dependencies:
-    style-resources-loader "^1.3.3"
+    style-resources-loader "^1.5.0"
 
 crc-32@^1.2.0:
   version "1.2.1"
@@ -19636,7 +19642,7 @@ style-loader@1.3.0:
     loader-utils "^2.0.0"
     schema-utils "^2.7.0"
 
-style-resources-loader@^1.3.3:
+style-resources-loader@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/style-resources-loader/-/style-resources-loader-1.5.0.tgz#6e0585ca475b9dac45387c308be90d74c814f41f"
   integrity sha512-fIfyvQ+uvXaCBGGAgfh+9v46ARQB1AWdaop2RpQw0PBVuROsTBqGvx8dj0kxwjGOAyq3vepe4AOK3M6+Q/q2jw==

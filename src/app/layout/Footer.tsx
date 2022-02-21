@@ -31,7 +31,7 @@ export default function Footer() {
 
   const [number, setNumber] = useState(0);
 
-  const start_swapping = useSelector((state: any) => state.wallet.start_swapping);
+  const start_swapping = useSelector((state: any) => state.walletBridge.start_swapping);
 
   useEffect(() => {
     let interval: any;

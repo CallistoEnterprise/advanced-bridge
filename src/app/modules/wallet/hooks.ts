@@ -9,7 +9,7 @@ import { isAddress } from '~/app/utils';
 import { useMultipleContractSingleData, useSingleContractMultipleData } from '../multicall/hooks';
 
 const useGetWalletState = () => {
-  return useSelector((state: any) => state.wallet);
+  return useSelector((state: any) => state.walletBridge);
 };
 
 export function useBNBBalances(uncheckedAddresses?: (string | undefined)[]): {

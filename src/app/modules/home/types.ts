@@ -11,4 +11,9 @@ interface getCoinPriceSuccessAction {
   payload: any;
 }
 
-export type homeActionTypes = getCoinPriceSuccessAction | any;
+interface updateBlockNumberAction {
+  type: typeof actionTypes.UPDATE_BLOCK_NUMBER;
+  payload: any;
+}
+
+export type homeActionTypes = getCoinPriceSuccessAction | updateBlockNumberAction | any;

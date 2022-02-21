@@ -97,7 +97,7 @@ export function useAllLists(): {
     readonly error: string | null;
   };
 } {
-  return useSelector<AppState, AppState['lists']['byUrl']>((state) => state.lists.byUrl);
+  return useSelector<AppState, AppState['listsBridge']['byUrl']>((state: any) => state.listsBridge.byUrl);
 }
 
 function combineMaps(map1: TokenAddressMap, map2: TokenAddressMap): TokenAddressMap {
@@ -136,9 +136,9 @@ function useCombinedTokenMapFromUrls(urls: string[] | undefined): TokenAddressMa
 
 // filter out unsupported lists
 export function useActiveListUrls(): string[] | undefined {
-  return useSelector<AppState, AppState['lists']['activeListUrls']>((state) => state.lists.activeListUrls)?.filter(
-    (url) => !UNSUPPORTED_LIST_URLS.includes(url)
-  );
+  return useSelector<AppState, AppState['listsBridge']['activeListUrls']>(
+    (state: any) => state.listsBridge.activeListUrls
+  )?.filter((url: any) => !UNSUPPORTED_LIST_URLS.includes(url));
 }
 
 export function useInactiveListUrls(): string[] {

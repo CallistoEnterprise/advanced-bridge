@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 // containerBuilder();
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import HomeUpdater from '~/app/modules/home/updater';
 import './app.i18n';
 import AppRouter from './AppRouter';
 import configureStore from './core/store';
@@ -23,6 +24,7 @@ export default function App() {
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
       <Provider store={configureStore}>
+        <HomeUpdater />
         {/* <PersistGate loading={null} persistor={persistor}> */}
         <div className="app">
           <AppRouter />

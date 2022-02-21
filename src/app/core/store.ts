@@ -53,17 +53,17 @@ import swap from '~/app/modules/swap/reducer';
 import wallet from '~/app/modules/wallet/reducer';
 import rootSaga from './rootSaga';
 
-const PERSISTED_KEYS: string[] = ['home', 'swap', 'wallet'];
+const PERSISTED_KEYS: string[] = ['homeBridge', 'swapBridge', 'walletBridge'];
 const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production',
   reducer: {
-    home,
-    wallet,
-    swap,
-    lists,
-    multicall
+    homeBridge: home,
+    walletBridge: wallet,
+    swapBridge: swap,
+    listsBridge: lists,
+    multicallBridge: multicall
   },
   middleware: [...getDefaultMiddleware({ thunk: true }), sagaMiddleware, save({ states: PERSISTED_KEYS })],
   preloadedState: load({ states: PERSISTED_KEYS })

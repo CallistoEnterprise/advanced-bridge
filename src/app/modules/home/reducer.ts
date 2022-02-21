@@ -32,6 +32,15 @@ function reducer(state = initialState, action: homeActionTypes) {
         ...state,
         ...{ coinPrice: action.payload }
       };
+    case actionTypes.UPDATE_BLOCK_NUMBER:
+      const bN =
+        typeof state.blockNumber[action.payload.chainId] !== 'number'
+          ? action.payload.blockNumber
+          : Math.max(action.payload.blockNumber, state.blockNumber[action.payload.chainId]);
+      return {
+        ...state,
+        blockNumber: bN
+      };
     default:
       return state;
   }

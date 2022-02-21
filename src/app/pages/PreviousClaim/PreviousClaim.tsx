@@ -29,7 +29,7 @@ export default function PreviousClaim() {
   const [hash, setHash] = useState<string>('');
 
   const fromNetwork = useSelector((state: any) => state.wallet.fromNetwork);
-  const destinationAddress = useSelector((state: any) => state.wallet.destinationAddress);
+  const destinationAddress = useSelector((state: any) => state.walletBridge.destinationAddress);
   const { library } = useActiveWeb3React();
 
   const [pendingBalance, setPendingBalance] = useState(false);

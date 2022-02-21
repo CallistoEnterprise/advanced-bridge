@@ -1,19 +1,35 @@
 import { parseUnits } from '@ethersproject/units';
 import { Currency, CurrencyAmount, JSBI, Token, TokenAmount, Trade } from '@soy-libs/sdk2';
 import { useWeb3React } from '@web3-react/core';
-import { useSelector } from 'react-redux';
-import { AppState } from '~/app/core/store';
+import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, AppState } from '~/app/core/store';
 import useENS from '~/app/hooks/ENS/useENS';
 import { useCurrency } from '~/app/hooks/Tokens';
 import { useTradeExactIn, useTradeExactOut } from '~/app/hooks/Trades';
 import { useCurrencyBalances } from '~/app/modules/wallet/hooks';
 import { isAddress } from '~/app/utils';
 import { computeSlippageAdjustedAmounts } from '~/app/utils/prices';
-import { FieldInput } from './action';
+import { FieldInput, typeInput } from './action';
 
 const useGetSwapState = () => {
-  return useSelector((state: AppState) => state.swap);
+  return useSelector((state: AppState) => state.swapBridge);
 };
+
+export function useSwapActionHandlers(): {
+  onUserInput: (field: FieldInput, typedValue: string) => void;
+} {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const onUserInput = useCallback(
+    (field: FieldInput, typedValue: string) => {
+      dispatch(typeInput({ field, typedValue }));
+    },
+    [dispatch]
+  );
+
+  return { onUserInput };
+}
 
 // try to parse a user entered amount for a given token
 export function tryParseAmount(value?: string, currency?: Currency): CurrencyAmount | undefined {
