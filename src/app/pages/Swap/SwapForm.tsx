@@ -1,11 +1,13 @@
 import { Field, Formik } from 'formik';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import CustomCheckbox from '~/app/components/common/CustomCheckbox';
 import FormInput from '~/app/components/common/FormInput';
 import Spinner from '~/app/components/common/Spinner';
-import useSwapState from '~/app/modules/swap/hooks';
+import { switchCurrency } from '~/app/modules/swap/action';
+import useGetSwapState, { useDerivedSwapInfo } from '~/app/modules/swap/hooks';
 import useGetWalletState from '~/app/modules/wallet/hooks';
 import SwapFooter from './SwapFooter';
 import './swapform.css';
@@ -34,22 +36,24 @@ const registerSchema = Yup.object().shape({
   //   .required('buy_amount is required')
 });
 
-export enum FieldInput {
-  INPUT = 'INPUT',
-  OUTPUT = 'OUTPUT'
-}
-
 export default function SwapForm({ submit, initialData, pending, canBuyCLO, setBuyCLO, disable }: props) {
   const [t] = useTranslation();
+  const dispatch = useDispatch();
 
   const [destination, setDestination] = useState(false);
 
   const { selectedToken } = useGetWalletState();
   const [swap_amount, setSwapAmount] = useState('');
   const [buy_amount, setBuyAmount] = useState('');
-  const { independentField, typedValue, recipient } = useSwapState();
+  const { independentField, typedValue, recipient } = useGetSwapState();
+  const { v2Trade, currencyBalances, parsedAmount, currencies, inputError: swapInputError } = useDerivedSwapInfo();
 
-  console.log(independentField, typedValue, recipient, selectedToken, '<===== state variables ');
+  console.log(independentField, typedValue, recipient, '<===== state variables ');
+
+  useEffect(() => {
+    dispatch(switchCurrency('test'));
+  }, [dispatch]);
+
   const onChangeDestination = (status: boolean) => {
     setDestination(status);
   };

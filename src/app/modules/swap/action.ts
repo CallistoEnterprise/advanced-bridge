@@ -4,6 +4,7 @@ export const actionTypes = {
   TYPEINPUT: 'SET_SELECTED_TOKEN',
   REPLACE_SWAP_STATE: 'REPLACE_SWAP_STATE'
 };
+
 export enum FieldInput {
   INPUT = 'INPUT',
   OUTPUT = 'OUTPUT'

@@ -3,6 +3,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { AddressZero } from '@ethersproject/constants';
 import { Contract } from '@ethersproject/contracts';
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers';
+import { JSBI, Percent } from '@soy-libs/sdk2';
 import bridgeABI from '~/app/constants/abis/bridge.json';
 import soyRouterABI from '~/app/constants/abis/soyRouter.json';
 import tokenABI from '~/app/constants/abis/weth.json';
@@ -16,6 +17,9 @@ export function isAddress(value: any): string | false {
   }
 }
 
+export function basisPointsToPercent(num: number): Percent {
+  return new Percent(JSBI.BigInt(num), JSBI.BigInt(10000));
+}
 // shorten the checksummed version of the input address to have 0x + 4 characters at start and end
 
 export function shortAddress(address: string, startChars = 8, endChars = 4): string {

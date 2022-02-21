@@ -54,4 +54,5 @@ export type walletActionTypes =
   | SetDestinationAddressAction
   | SetByteData
   | SetSwapType
-  | SetStartSwapping;
+  | SetStartSwapping
+  | any;

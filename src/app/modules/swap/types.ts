@@ -20,4 +20,9 @@ interface TypeInputAction {
   payload: any;
 }
 
-export type swapActionTypes = SelectCurrencyAction | SwitchCurrencyAction | ReplaceCurrencyAction | TypeInputAction;
+export type swapActionTypes =
+  | SelectCurrencyAction
+  | SwitchCurrencyAction
+  | ReplaceCurrencyAction
+  | TypeInputAction
+  | any;

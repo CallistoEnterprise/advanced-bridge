@@ -9,7 +9,7 @@ declare enum ChainId {
   ETHMAIN = 1
 }
 
-const MULTICALL_NETWORKS: { [chainId in ChainId]: string } = {
+const MULTICALL_NETWORKS: { [chainId in ChainId | any]: string | undefined } = {
   [ChainId.CLOTEST]: '0xDd2742Ba146A57F1F6e8F47235024ba1bd0cf568',
   [ChainId.CLOMAIN]: '0x8bA3D23241c7044bE703afAF2A728FdBc16f5F6f',
   [ChainId.BSCTEST]: '0x301907b5835a2d723Fe3e9E8C5Bc5375d5c1236A',

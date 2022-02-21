@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import '../styles/app.css';
 import Spinner from './components/common/Spinner';
 import { Footer, Header } from './layout';
+
 const Home = lazy(() => import('./pages/home'));
 const Network = lazy(() => import('./pages/Network'));
 const TokenList = lazy(() => import('./pages/TokenList'));

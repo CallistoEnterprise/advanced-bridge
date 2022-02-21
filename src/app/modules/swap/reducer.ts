@@ -59,7 +59,6 @@ function reducer(state = initialState, action: swapActionTypes) {
       };
     }
     case actionTypes.SWITCH_CURRENCY: {
-      const { currencyId, field } = action.payload;
       return {
         ...state,
         independentField: state.independentField === FieldInput.INPUT ? FieldInput.OUTPUT : FieldInput.INPUT,

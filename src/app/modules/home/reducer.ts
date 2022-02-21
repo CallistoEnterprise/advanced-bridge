@@ -11,6 +11,7 @@ export interface IPriceData {
 export interface HomeState {
   networkStatus: boolean | null;
   coinPrice: IPriceData;
+  readonly blockNumber: { readonly [chainId: number]: number };
 }
 
 export const initialState: HomeState = {
@@ -20,7 +21,8 @@ export const initialState: HomeState = {
     USD_MARKET_CAP: 0,
     USD_24H_VOL: 0,
     USD_24H_CHANGE: 0
-  }
+  },
+  blockNumber: {}
 };
 
 function reducer(state = initialState, action: homeActionTypes) {
