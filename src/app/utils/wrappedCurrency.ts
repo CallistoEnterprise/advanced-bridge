@@ -1,7 +1,7 @@
 import { ChainId, Currency, CurrencyAmount, ETHER, Token, TokenAmount, WETH } from '@soy-libs/sdk2';
 
 export function wrappedCurrency(currency: Currency | undefined, chainId: ChainId | undefined): Token | undefined {
-  return chainId && currency === ETHER ? WETH[chainId] : currency instanceof Token ? currency : undefined;
+  return chainId && currency === ETHER ? WETH[20729] : currency instanceof Token ? currency : undefined;
 }
 
 export function wrappedCurrencyAmount(

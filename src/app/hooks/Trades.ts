@@ -24,9 +24,9 @@ function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): Pair[] {
   const bases: Token[] = useMemo(() => {
     if (!chainId) return [];
 
-    const common = BASES_TO_CHECK_TRADES_AGAINST[chainId] ?? [];
-    const additionalA = tokenA ? ADDITIONAL_BASES[chainId]?.[tokenA.address] ?? [] : [];
-    const additionalB = tokenB ? ADDITIONAL_BASES[chainId]?.[tokenB.address] ?? [] : [];
+    const common = BASES_TO_CHECK_TRADES_AGAINST[20729] ?? [];
+    const additionalA = tokenA ? ADDITIONAL_BASES[20729]?.[tokenA.address] ?? [] : [];
+    const additionalB = tokenB ? ADDITIONAL_BASES[20729]?.[tokenB.address] ?? [] : [];
 
     return [...common, ...additionalA, ...additionalB];
   }, [chainId, tokenA, tokenB]);
@@ -53,7 +53,7 @@ function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): Pair[] {
             .filter(([t0, t1]) => t0.address !== t1.address)
             .filter(([tokenA_, tokenB_]) => {
               if (!chainId) return true;
-              const customBases = CUSTOM_BASES[chainId];
+              const customBases = CUSTOM_BASES[20729];
 
               const customBasesA: Token[] | undefined = customBases?.[tokenA_.address];
               const customBasesB: Token[] | undefined = customBases?.[tokenB_.address];
@@ -70,7 +70,7 @@ function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): Pair[] {
   );
 
   const allPairs = usePairs(allPairCombinations);
-
+  // console.log('allPairs ::', allPairs, allPairCombinations);
   // only pass along valid pairs, non-duplicated pairs
   return useMemo(
     () =>
@@ -98,7 +98,8 @@ const MAX_HOPS = 3;
 export function useTradeExactIn(currencyAmountIn?: CurrencyAmount, currencyOut?: Currency): Trade | null {
   const allowedPairs = useAllCommonPairs(currencyAmountIn?.currency, currencyOut);
 
-  const singleHopOnly = false; // useUserSingleHopOnly();
+  const singleHopOnly = true; // useUserSingleHopOnly();
+  // console.log('useTradeExactIn', allowedPairs, singleHopOnly);
 
   return useMemo(() => {
     if (currencyAmountIn && currencyOut && allowedPairs.length > 0) {

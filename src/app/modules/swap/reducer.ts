@@ -21,7 +21,7 @@ const initialState: SwapState = {
     currencyId: ''
   },
   [FieldInput.OUTPUT]: {
-    currencyId: ''
+    currencyId: 'CLO'
   },
   recipient: null
 };
@@ -30,19 +30,18 @@ function reducer(state = initialState, action: swapActionTypes) {
   switch (action.type) {
     case actionTypes.SELECT_CURRENCY: {
       const { currencyId, field } = action.payload;
-      const otherField = field === FieldInput.INPUT ? FieldInput.INPUT : FieldInput.OUTPUT;
-      if (currencyId === state[otherField].currencyId) {
-        return {
-          ...state,
-          independentField: state.independentField === FieldInput.INPUT ? FieldInput.OUTPUT : FieldInput.INPUT,
-          [field]: { currencyId },
-          [otherField]: { currencyId: state[FieldInput.INPUT].currencyId }
-        };
-      }
+      // const otherField = field === FieldInput.INPUT ? FieldInput.INPUT : FieldInput.OUTPUT;
+      // if (currencyId === state[otherField].currencyId) {
       return {
         ...state,
-        fromNetwork: action.payload
+        independentField: state.independentField === FieldInput.INPUT ? FieldInput.OUTPUT : FieldInput.INPUT,
+        [field]: { currencyId }
+        // [otherField]: { currencyId: state[FieldInput.INPUT].currencyId }
       };
+      // }
+      // return {
+      //   ...state
+      // };
     }
     case actionTypes.REPLACE_SWAP_STATE: {
       const { typedValue, recipient, field, inputCurrencyId, outputCurrencyId } = action.payload;

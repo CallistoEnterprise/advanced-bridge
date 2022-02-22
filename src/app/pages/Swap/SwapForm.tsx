@@ -1,15 +1,16 @@
-import { JSBI, Trade } from '@soy-libs/sdk2';
 import { Field, Formik } from 'formik';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import CustomCheckbox from '~/app/components/common/CustomCheckbox';
 import FormInput from '~/app/components/common/FormInput';
 import Spinner from '~/app/components/common/Spinner';
-import { FieldInput, switchCurrency } from '~/app/modules/swap/action';
-import useGetSwapState, { useDerivedSwapInfo, useSwapActionHandlers } from '~/app/modules/swap/hooks';
+// import { FieldInput } from '~/app/modules/swap/action';
+// import { useSwapActionHandlers } from '~/app/modules/swap/hooks';
+// import useGetSwapState, { useDerivedSwapInfo, useSwapActionHandlers } from '~/app/modules/swap/hooks';
 import useGetWalletState from '~/app/modules/wallet/hooks';
+import { escapeRegExp } from '~/app/utils';
 import SwapFooter from './SwapFooter';
 import './swapform.css';
 
@@ -37,92 +38,102 @@ const registerSchema = Yup.object().shape({
   //   .required('buy_amount is required')
 });
 
+const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`);
+
 export default function SwapForm({ submit, initialData, pending, canBuyCLO, setBuyCLO, disable }: props) {
   const [t] = useTranslation();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const [destination, setDestination] = useState(false);
 
   const { selectedToken } = useGetWalletState();
   const [swap_amount, setSwapAmount] = useState('');
   const [buy_amount, setBuyAmount] = useState('');
-  const { independentField, typedValue, recipient } = useGetSwapState();
-  const { v2Trade, currencyBalances, parsedAmount, currencies, inputError: swapInputError } = useDerivedSwapInfo();
+  // const { independentField, typedValue } = useGetSwapState();
+  // const { v2Trade, parsedAmount, currencies, inputError: swapInputError } = useDerivedSwapInfo();
 
-  console.log(v2Trade, currencyBalances, parsedAmount, currencies, swapInputError, '<===== state variables ');
+  // console.log(v2Trade, '<===== derived variables ');
 
-  const showWrap = false;
-  const trade = showWrap ? undefined : v2Trade;
+  // const showWrap = false;
+  // const trade = showWrap ? undefined : v2Trade;
 
-  const parsedAmounts: any = showWrap
-    ? {
-        [FieldInput.INPUT]: parsedAmount,
-        [FieldInput.OUTPUT]: parsedAmount
-      }
-    : {
-        [FieldInput.INPUT]: independentField === FieldInput.INPUT ? parsedAmount : trade?.inputAmount,
-        [FieldInput.OUTPUT]: independentField === FieldInput.OUTPUT ? parsedAmount : trade?.outputAmount
-      };
+  // const parsedAmounts: any = showWrap
+  //   ? {
+  //       [FieldInput.INPUT]: parsedAmount,
+  //       [FieldInput.OUTPUT]: parsedAmount
+  //     }
+  //   : {
+  //       [FieldInput.INPUT]: independentField === FieldInput.INPUT ? parsedAmount : trade?.inputAmount,
+  //       [FieldInput.OUTPUT]: independentField === FieldInput.OUTPUT ? parsedAmount : trade?.outputAmount
+  //     };
 
-  const { onUserInput } = useSwapActionHandlers();
-  const isValid = !swapInputError;
-  const dependentField: FieldInput = independentField === FieldInput.INPUT ? FieldInput.OUTPUT : FieldInput.INPUT;
+  // const { onUserInput } = useSwapActionHandlers();
+  // const isValid = !swapInputError;
+  // const dependentField: FieldInput = independentField === FieldInput.INPUT ? FieldInput.OUTPUT : FieldInput.INPUT;
 
-  const handleTypeInput = useCallback(
-    (value: string) => {
-      onUserInput(FieldInput.INPUT, value);
-    },
-    [onUserInput]
-  );
-  const handleTypeOutput = useCallback(
-    (value: string) => {
-      onUserInput(FieldInput.OUTPUT, value);
-    },
-    [onUserInput]
-  );
+  // const handleTypeInput = useCallback(
+  //   (value: string) => {
+  //     onUserInput(FieldInput.INPUT, value);
+  //   },
+  //   [onUserInput]
+  // );
+  // const handleTypeOutput = useCallback(
+  //   (value: string) => {
+  //     onUserInput(FieldInput.OUTPUT, value);
+  //   },
+  //   [onUserInput]
+  // );
 
-  // modal and loading
-  const [{ tradeToConfirm, swapErrorMessage, attemptingTxn, txHash }, setSwapState] = useState<{
-    tradeToConfirm: Trade | undefined;
-    attemptingTxn: boolean;
-    swapErrorMessage: string | undefined;
-    txHash: string | undefined;
-  }>({
-    tradeToConfirm: undefined,
-    attemptingTxn: false,
-    swapErrorMessage: undefined,
-    txHash: undefined
-  });
+  // // modal and loading
+  // const [{ tradeToConfirm, swapErrorMessage, attemptingTxn, txHash }, setSwapState] = useState<{
+  //   tradeToConfirm: Trade | undefined;
+  //   attemptingTxn: boolean;
+  //   swapErrorMessage: string | undefined;
+  //   txHash: string | undefined;
+  // }>({
+  //   tradeToConfirm: undefined,
+  //   attemptingTxn: false,
+  //   swapErrorMessage: undefined,
+  //   txHash: undefined
+  // });
 
-  const formattedAmounts = {
-    [independentField]: typedValue,
-    [dependentField]: showWrap
-      ? parsedAmounts[independentField]?.toExact() ?? ''
-      : parsedAmounts[dependentField]?.toSignificant(6) ?? ''
-  };
+  // const formattedAmounts = {
+  //   [independentField]: typedValue,
+  //   [dependentField]: showWrap
+  //     ? parsedAmounts[independentField]?.toExact() ?? ''
+  //     : parsedAmounts[dependentField]?.toSignificant(6) ?? ''
+  // };
 
-  const route = trade?.route;
-  const userHasSpecifiedInputOutput = Boolean(
-    currencies[FieldInput.INPUT] &&
-      currencies[FieldInput.OUTPUT] &&
-      parsedAmounts[independentField]?.greaterThan(JSBI.BigInt(0))
-  );
-  const noRoute = !route;
+  // const route = trade?.route;
+  // const userHasSpecifiedInputOutput = Boolean(
+  //   currencies[FieldInput.INPUT] &&
+  //     currencies[FieldInput.OUTPUT] &&
+  //     parsedAmounts[independentField]?.greaterThan(JSBI.BigInt(0))
+  // );
+  // const noRoute = !route;
 
-  useEffect(() => {
-    dispatch(switchCurrency('test'));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(switchCurrency('test'));
+  // }, [dispatch]);
 
   const onChangeDestination = (status: boolean) => {
     setDestination(status);
   };
 
   const onSubmit = (values: any) => {
-    submit(values);
+    submit({
+      ...values,
+      swap_amount,
+      buy_amount
+    });
   };
 
   const handleSwapAmount = (e: any) => {
-    setSwapAmount(e.target.value);
+    const temp = e.target.value.replace(/,/g, '.');
+    if (temp === '' || inputRegex.test(escapeRegExp(temp))) {
+      setSwapAmount(temp);
+      // handleTypeInput(temp);
+    }
   };
 
   const handleBuyAmount = (e: any) => {
@@ -233,7 +244,7 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
                     type="submit"
                     color="success"
                     className="swapform__submit"
-                    disabled={values.swap_amount === '0' || values.destination_wallet === '' || pending}
+                    disabled={swap_amount === '0' || values.destination_wallet === '' || pending}
                   >
                     {pending ? (
                       <div>

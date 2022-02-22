@@ -53,7 +53,7 @@ import swap from '~/app/modules/swap/reducer';
 import wallet from '~/app/modules/wallet/reducer';
 import rootSaga from './rootSaga';
 
-const PERSISTED_KEYS: string[] = ['homeBridge', 'swapBridge', 'walletBridge'];
+const PERSISTED_KEYS: string[] = ['homeBridge', 'walletBridge'];
 const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({

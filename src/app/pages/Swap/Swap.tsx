@@ -38,6 +38,7 @@ const Swap = () => {
 
   const { balance, selectedToken, fromNetwork, toNetwork } = useGetWalletState();
   const swapTokenAddr = selectedToken?.addresses[`${fromNetwork.symbol}`];
+  const swapTokenAddrInCallisto = selectedToken?.addresses.CLO;
 
   const { onApprove, allowed } = useGetAllowance(swapTokenAddr);
   const { onAdvancedSwap, onSimpleSwap } = useSwap();
@@ -57,6 +58,7 @@ const Swap = () => {
   }, [dispatch]);
 
   const onSubmit = (values: any) => {
+    console.log(canBuyCLO, values);
     if (canBuyCLO) {
       advancedSwap(values.swap_amount, values.destination_wallet, values.buy_amount);
       dispatch(setSwapType('advanced-swap'));
@@ -96,12 +98,13 @@ const Swap = () => {
       const byte_data = await getEncodedData(web3, [
         bigAmount,
         buyBigAmount,
-        ['0xCc0524d86Ba37Cb36B21a14B118723eAF609aDd8', '0xbd2D3BCe975FD72E44A73cC8e834aD1B8441BdDa'],
+        [swapTokenAddrInCallisto, '0xbd2D3BCe975FD72E44A73cC8e834aD1B8441BdDa'],
         distinationAddress
       ]);
 
       try {
         const tx = await onAdvancedSwap(address, swapTokenAddr, bigAmount, toNetwork.chainId, byte_data, value);
+        console.log(tx, '<===');
         if (tx.status) {
           setSucced(true);
           setPending(false);
@@ -161,7 +164,6 @@ const Swap = () => {
           dispatch(setStartSwapping(false));
         }
       } catch (error) {
-        console.log('error ::', error);
         setPending(false);
         setSucced(false);
         dispatch(setStartSwapping(false));

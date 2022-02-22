@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
@@ -9,7 +9,9 @@ import TokenSelection from '~/app/components/TokenSelection';
 import WalletInfo from '~/app/components/WalletInfo';
 import { IToken } from '~/app/constants/interface';
 import { tokenList } from '~/app/constants/strings';
+import { FieldInput, selectCurrency } from '~/app/modules/swap/action';
 import { setSelectedToken } from '~/app/modules/wallet/action';
+import useGetWalletState from '~/app/modules/wallet/hooks';
 import previousIcon from '~/assets/images/previous.svg';
 import './tokenlist.css';
 
@@ -18,82 +20,23 @@ const Default = ({ children }: any) => {
   return isNotMobile ? children : null;
 };
 
-// https://sdk.raydium.io/icons/2FPyTwcZLUg1MDrwsyoP4D6s1tM7hAkHYRjkNb5w6Pxk.png
-// const options = [
-//   {
-//     icon: cloIcon,
-//     name: 'CLO',
-//     value: 'clo'
-//   },
-//   {
-//     icon: bnbIcon,
-//     name: 'BNB',
-//     value: 'bnb'
-//   },
-//   {
-//     icon: ethIcon,
-//     name: 'ETH',
-//     value: 'eth'
-//   },
-//   {
-//     icon: etcIcon,
-//     name: 'ETC',
-//     value: 'etc'
-//   },
-//   {
-//     icon: usdtIcon,
-//     name: 'USDT',
-//     value: 'usdt'
-//   },
-//   {
-//     icon: cakeIcon,
-//     name: 'CAKE',
-//     value: 'cake'
-//   },
-//   {
-//     icon: twtIcon,
-//     name: 'TWT',
-//     value: 'twt'
-//   },
-//   {
-//     icon: wsgIcon,
-//     name: 'WSG',
-//     value: 'wsg'
-//   },
-//   {
-//     icon: reffIcon,
-//     name: 'REFF',
-//     value: 'reff'
-//   },
-//   {
-//     icon: bakeIcon,
-//     name: 'BAKE',
-//     value: 'bake'
-//   },
-//   {
-//     icon: shibIcon,
-//     name: 'SHIB',
-//     value: 'shib'
-//   },
-//   {
-//     icon: racaIcon,
-//     name: 'RACA',
-//     value: 'raca'
-//   },
-//   {
-//     icon: linaIcon,
-//     name: 'LINA',
-//     value: 'lina'
-//   }
-// ];
-
 export default function TokenList() {
   const [t] = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const { selectedToken } = useGetWalletState();
   const [token, setToken] = useState(null);
   const [value, setValue] = useState('');
+  const swapTokenAddr = selectedToken?.addresses[`CLO`];
+
+  useEffect(() => {
+    dispatch(
+      selectCurrency({
+        field: FieldInput.INPUT,
+        currencyId: swapTokenAddr
+      })
+    );
+  }, [swapTokenAddr, dispatch]);
 
   const onChangeToken = (option: IToken) => {
     setToken(option.symbol);

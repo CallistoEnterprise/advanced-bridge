@@ -24,12 +24,12 @@ function useTokensFromMap(tokenMap: TokenAddressMap): { [address: string]: Token
     if (!chainId) return {};
 
     // reduce to just tokens
-    // const mapWithoutUrls = Object.keys(tokenMap[chainId]).reduce<{ [address: string]: Token }>((newMap, address) => {
-    //   newMap[address] = tokenMap[chainId][address].token;
-    //   return newMap;
-    // }, {});
+    const mapWithoutUrls = Object.keys(tokenMap[20729]).reduce<{ [address: string]: Token }>((newMap, address) => {
+      newMap[address] = tokenMap[20729][address].token;
+      return newMap;
+    }, {});
 
-    return tokenMap;
+    return mapWithoutUrls;
   }, [chainId, tokenMap]);
 }
 
@@ -114,7 +114,6 @@ function parseStringOrBytes32(str: string | undefined, bytes32: string | undefin
 export function useToken(tokenAddress?: string): Token | undefined | null {
   const { chainId } = useWeb3React();
   const tokens = useAllTokens();
-
   const address = isAddress(tokenAddress);
 
   const tokenContract = useTokenContract(address || undefined, false);

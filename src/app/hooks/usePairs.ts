@@ -4,7 +4,7 @@ import { abi as IUniswapV2PairABI } from '@uniswap/v2-core/build/IUniswapV2Pair.
 import { useMemo } from 'react';
 import { useMultipleContractSingleData } from '~/app/modules/multicall/hooks';
 import { wrappedCurrency } from '../utils/wrappedCurrency';
-import useActiveWeb3React from './useActiveWeb3React';
+// import useActiveWeb3React from './useActiveWeb3React';
 
 const PAIR_INTERFACE = new Interface(IUniswapV2PairABI);
 
@@ -16,14 +16,14 @@ export enum PairState {
 }
 
 export function usePairs(currencies: [Currency | undefined, Currency | undefined][]): [PairState, Pair | null][] {
-  const { chainId } = useActiveWeb3React();
+  // const { chainId } = useActiveWeb3React();
   const tokens = useMemo(
     () =>
       currencies.map(([currencyA, currencyB]) => [
-        wrappedCurrency(currencyA, chainId),
-        wrappedCurrency(currencyB, chainId)
+        wrappedCurrency(currencyA, 20729),
+        wrappedCurrency(currencyB, 20729)
       ]),
-    [chainId, currencies]
+    [currencies]
   );
 
   const pairAddresses = useMemo(

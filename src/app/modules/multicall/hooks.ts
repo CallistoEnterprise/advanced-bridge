@@ -4,7 +4,6 @@ import { Contract } from '@ethersproject/contracts';
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, AppState } from '~/app/core/store';
-import useActiveWeb3React from '~/app/hooks/useActiveWeb3React';
 import { useBlockNumber } from '../home/hooks';
 import {
   addMulticallListeners,
@@ -50,7 +49,7 @@ export const NEVER_RELOAD: ListenerOptions = {
 
 // the lowest level call for subscribing to contract data
 function useCallsData(calls: (Call | undefined)[], options?: ListenerOptions): CallResult[] {
-  const { chainId } = useActiveWeb3React();
+  const chainId = 20729;
   const callResults = useSelector<AppState, AppState['multicallBridge']['callResults']>(
     (state: any) => state.multicallBridge.callResults
   );
@@ -90,7 +89,7 @@ function useCallsData(calls: (Call | undefined)[], options?: ListenerOptions): C
         })
       );
     };
-  }, [chainId, dispatch, options, serializedCallKeys]);
+  }, [dispatch, options, serializedCallKeys]);
 
   return useMemo(
     () =>

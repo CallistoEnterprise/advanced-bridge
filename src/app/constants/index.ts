@@ -5,9 +5,9 @@ import { BTCB, DAI, ETH, SOY, USDC, USDT, UST, WCLO } from './tokens';
 export const NetworkContextName = 'NETWORK';
 export const MAX_BIG_NUMBER = new BigNumber('0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff');
 
-export const ROUTER_ADDRESS = '0xeB5B468fAacC6bBdc14c4aacF0eec38ABCCC13e7'; // for mainnet
+// export const ROUTER_ADDRESS = '0xeB5B468fAacC6bBdc14c4aacF0eec38ABCCC13e7'; // for mainnet
 
-// export const ROUTER_ADDRESS = '0xdbe46b17FFd35D6865b69F9398AC5454389BF38c'  // for testnet
+export const ROUTER_ADDRESS = '0xdbe46b17FFd35D6865b69F9398AC5454389BF38c'; // for testnet
 
 // a list of tokens by chain
 type ChainTokenList = {
@@ -17,7 +17,7 @@ type ChainTokenList = {
 // used to construct intermediary pairs for trading
 export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList | any = {
   [ChainId.MAINNET]: [WETH[ChainId.MAINNET], SOY[ChainId.MAINNET], USDT, BTCB, UST, ETH, USDC],
-  [ChainId.CLOTESTNET]: [WETH[ChainId.CLOTESTNET], SOY[ChainId.CLOTESTNET], USDC]
+  [ChainId.CLOTESTNET]: [WETH[ChainId.CLOTESTNET], SOY[ChainId.CLOTESTNET]]
 };
 
 /**
@@ -25,7 +25,8 @@ export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList | any = {
  * @example { [WBTC.address]: [renBTC], [renBTC.address]: [WBTC] }
  */
 export const ADDITIONAL_BASES: { [chainId in ChainId]?: { [tokenAddress: string]: Token[] } } | any = {
-  [ChainId.MAINNET]: {}
+  [ChainId.MAINNET]: {},
+  [ChainId.CLOTESTNET]: {}
 };
 
 /**
@@ -40,13 +41,13 @@ export const CUSTOM_BASES: { [chainId in ChainId]?: { [tokenAddress: string]: To
 // used for display in the default list when adding liquidity
 export const SUGGESTED_BASES: ChainTokenList = {
   [ChainId.MAINNET]: [SOY[ChainId.MAINNET]],
-  [ChainId.CLOTESTNET]: [WETH[ChainId.CLOTESTNET], SOY[ChainId.CLOTESTNET], USDC]
+  [ChainId.CLOTESTNET]: [WETH[ChainId.CLOTESTNET], SOY[ChainId.CLOTESTNET]]
 };
 
 // used to construct the list of all pairs we consider by default in the frontend
 export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   [ChainId.MAINNET]: [WETH[ChainId.MAINNET], SOY[ChainId.MAINNET], DAI, USDC, USDT, ETH, BTCB],
-  [ChainId.CLOTESTNET]: [WETH[ChainId.CLOTESTNET], SOY[ChainId.CLOTESTNET], USDC]
+  [ChainId.CLOTESTNET]: [WETH[ChainId.CLOTESTNET], SOY[ChainId.CLOTESTNET]]
 };
 
 export const PINNED_PAIRS: { readonly [chainId in ChainId]?: [Token, Token][] } = {
