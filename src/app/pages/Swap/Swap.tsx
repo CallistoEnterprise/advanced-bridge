@@ -100,7 +100,7 @@ const Swap = () => {
         [swapTokenAddrInCallisto, '0xbd2D3BCe975FD72E44A73cC8e834aD1B8441BdDa'],
         distinationAddress
       ]);
-      console.log(bigAmount.toString(), buyBigAmount.toString(), '<=========');
+
       try {
         const tx = await onAdvancedSwap(address, swapTokenAddr, bigAmount, toNetwork.chainId, byte_data, value);
         // console.log(tx, '<===');
