@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
@@ -9,9 +9,7 @@ import TokenSelection from '~/app/components/TokenSelection';
 import WalletInfo from '~/app/components/WalletInfo';
 import { IToken } from '~/app/constants/interface';
 import { tokenList } from '~/app/constants/strings';
-import { FieldInput, selectCurrency } from '~/app/modules/swap/action';
 import { setSelectedToken } from '~/app/modules/wallet/action';
-import useGetWalletState from '~/app/modules/wallet/hooks';
 import previousIcon from '~/assets/images/previous.svg';
 import './tokenlist.css';
 
@@ -24,19 +22,19 @@ export default function TokenList() {
   const [t] = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { selectedToken } = useGetWalletState();
+  // const { selectedToken } = useGetWalletState();
   const [token, setToken] = useState(null);
   const [value, setValue] = useState('');
-  const swapTokenAddr = selectedToken?.addresses[`CLO`];
+  // const swapTokenAddr = selectedToken?.addresses?.CLO;
 
-  useEffect(() => {
-    dispatch(
-      selectCurrency({
-        field: FieldInput.INPUT,
-        currencyId: swapTokenAddr
-      })
-    );
-  }, [swapTokenAddr, dispatch]);
+  // useEffect(() => {
+  //   dispatch(
+  //     selectCurrency({
+  //       field: FieldInput.INPUT,
+  //       currencyId: swapTokenAddr
+  //     })
+  //   );
+  // }, [swapTokenAddr, dispatch]);
 
   const onChangeToken = (option: IToken) => {
     setToken(option.symbol);
