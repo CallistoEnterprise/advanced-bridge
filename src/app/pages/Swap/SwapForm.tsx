@@ -1,6 +1,7 @@
 import { Field, Formik } from 'formik';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
 // import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import CustomCheckbox from '~/app/components/common/CustomCheckbox';
@@ -13,6 +14,7 @@ import { useGetAmountsInput, useGetAmountsOut } from '~/app/hooks/useGetAmountsO
 import useGetWalletState from '~/app/modules/wallet/hooks';
 import { escapeRegExp } from '~/app/utils';
 import { getBalanceAmount } from '~/app/utils/decimal';
+import SwapFooter from './SwapFooter';
 import './swapform.css';
 
 type props = {
@@ -46,7 +48,7 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
   // const dispatch = useDispatch();
 
   const [destination, setDestination] = useState(false);
-  const [isInput, setIsInput] = useState(true);
+  // const [isInput, setIsInput] = useState(true);
 
   const { selectedToken } = useGetWalletState();
   const [swap_amount, setSwapAmount] = useState('');
@@ -55,8 +57,11 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
   const amountsOut = useGetAmountsOut(swap_amount);
   const amountsIn = useGetAmountsInput(buy_amount);
 
-  const dispInputAmount = isInput ? swap_amount : getBalanceAmount(amountsIn).toString();
-  const dispOutputAmount = isInput ? getBalanceAmount(amountsOut).toString() : buy_amount;
+  const intInputAmount = swap_amount === '' ? 0 : parseFloat(swap_amount);
+  const intOutputAmount = buy_amount === '' ? 0 : parseFloat(buy_amount);
+
+  const receiveOriginAmount = intInputAmount - getBalanceAmount(amountsIn).toNumber();
+  const fullOutAmount = getBalanceAmount(amountsOut, selectedToken?.decimals[`${selectedToken?.symbol}`]).toNumber();
 
   const onChangeDestination = (status: boolean) => {
     setDestination(status);
@@ -65,8 +70,8 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
   const onSubmit = (values: any) => {
     submit({
       ...values,
-      swap_amount: dispInputAmount,
-      buy_amount: dispOutputAmount
+      swap_amount,
+      buy_amount
     });
   };
 
@@ -74,16 +79,18 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
     const temp = e.target.value.replace(/,/g, '.');
     if (temp === '' || inputRegex.test(escapeRegExp(temp))) {
       setSwapAmount(temp);
-      setIsInput(true);
-      // handleTypeInput(temp);
     }
   };
 
   const handleBuyAmount = (e: any) => {
     const temp = e.target.value.replace(/,/g, '.');
+    if (parseFloat(temp) > fullOutAmount) {
+      toast.error(`You can buy CLO less than ${fullOutAmount}`);
+      setBuyAmount(fullOutAmount.toString());
+      return;
+    }
     if (temp === '' || inputRegex.test(escapeRegExp(temp))) {
       setBuyAmount(temp);
-      setIsInput(false);
     }
   };
 
@@ -114,7 +121,7 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
                         type="text"
                         groupname={selectedToken.name}
                         component={FormInput}
-                        value={dispInputAmount}
+                        value={swap_amount}
                         inputMode="decimal"
                         autoComplete="off"
                         autoCorrect="off"
@@ -150,7 +157,7 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
                             type={'text'}
                             groupname="CLO"
                             component={FormInput}
-                            value={dispOutputAmount}
+                            value={buy_amount}
                             inputMode="decimal"
                             autoComplete="off"
                             autoCorrect="off"
@@ -160,7 +167,12 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
                             spellCheck="false"
                             onChange={handleBuyAmount}
                           />
-                          {/* <SwapFooter values={values} /> */}
+                          <SwapFooter
+                            values={{
+                              swap_amount: `${receiveOriginAmount} ${selectedToken?.symbol}`,
+                              buy_amount: `${intOutputAmount}`
+                            }}
+                          />
                         </div>
                       </div>
                       <div className="row mt-4 swapform__row">
@@ -198,9 +210,7 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
                     type="submit"
                     color="success"
                     className="swapform__submit"
-                    disabled={
-                      dispInputAmount === '0' || dispInputAmount === '' || values.destination_wallet === '' || pending
-                    }
+                    disabled={swap_amount === '0' || swap_amount === '' || values.destination_wallet === '' || pending}
                   >
                     {pending ? (
                       <div>
