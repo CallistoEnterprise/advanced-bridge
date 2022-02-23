@@ -58,7 +58,6 @@ const Swap = () => {
   }, [dispatch]);
 
   const onSubmit = (values: any) => {
-    console.log(canBuyCLO, values);
     if (canBuyCLO) {
       advancedSwap(values.swap_amount, values.destination_wallet, values.buy_amount);
       dispatch(setSwapType('advanced-swap'));
@@ -101,10 +100,10 @@ const Swap = () => {
         [swapTokenAddrInCallisto, '0xbd2D3BCe975FD72E44A73cC8e834aD1B8441BdDa'],
         distinationAddress
       ]);
-
+      // console.log(bigAmount, buyBigAmount, '<=========');
       try {
         const tx = await onAdvancedSwap(address, swapTokenAddr, bigAmount, toNetwork.chainId, byte_data, value);
-        console.log(tx, '<===');
+        // console.log(tx, '<===');
         if (tx.status) {
           setSucced(true);
           setPending(false);

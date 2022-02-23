@@ -6,12 +6,13 @@ import * as Yup from 'yup';
 import CustomCheckbox from '~/app/components/common/CustomCheckbox';
 import FormInput from '~/app/components/common/FormInput';
 import Spinner from '~/app/components/common/Spinner';
+import { useGetAmountsInput, useGetAmountsOut } from '~/app/hooks/useGetAmountsOut';
 // import { FieldInput } from '~/app/modules/swap/action';
 // import { useSwapActionHandlers } from '~/app/modules/swap/hooks';
 // import useGetSwapState, { useDerivedSwapInfo, useSwapActionHandlers } from '~/app/modules/swap/hooks';
 import useGetWalletState from '~/app/modules/wallet/hooks';
 import { escapeRegExp } from '~/app/utils';
-import SwapFooter from './SwapFooter';
+import { getBalanceAmount } from '~/app/utils/decimal';
 import './swapform.css';
 
 type props = {
@@ -45,76 +46,17 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
   // const dispatch = useDispatch();
 
   const [destination, setDestination] = useState(false);
+  const [isInput, setIsInput] = useState(true);
 
   const { selectedToken } = useGetWalletState();
   const [swap_amount, setSwapAmount] = useState('');
   const [buy_amount, setBuyAmount] = useState('');
-  // const { independentField, typedValue } = useGetSwapState();
-  // const { v2Trade, parsedAmount, currencies, inputError: swapInputError } = useDerivedSwapInfo();
 
-  // console.log(v2Trade, '<===== derived variables ');
+  const amountsOut = useGetAmountsOut(swap_amount);
+  const amountsIn = useGetAmountsInput(buy_amount);
 
-  // const showWrap = false;
-  // const trade = showWrap ? undefined : v2Trade;
-
-  // const parsedAmounts: any = showWrap
-  //   ? {
-  //       [FieldInput.INPUT]: parsedAmount,
-  //       [FieldInput.OUTPUT]: parsedAmount
-  //     }
-  //   : {
-  //       [FieldInput.INPUT]: independentField === FieldInput.INPUT ? parsedAmount : trade?.inputAmount,
-  //       [FieldInput.OUTPUT]: independentField === FieldInput.OUTPUT ? parsedAmount : trade?.outputAmount
-  //     };
-
-  // const { onUserInput } = useSwapActionHandlers();
-  // const isValid = !swapInputError;
-  // const dependentField: FieldInput = independentField === FieldInput.INPUT ? FieldInput.OUTPUT : FieldInput.INPUT;
-
-  // const handleTypeInput = useCallback(
-  //   (value: string) => {
-  //     onUserInput(FieldInput.INPUT, value);
-  //   },
-  //   [onUserInput]
-  // );
-  // const handleTypeOutput = useCallback(
-  //   (value: string) => {
-  //     onUserInput(FieldInput.OUTPUT, value);
-  //   },
-  //   [onUserInput]
-  // );
-
-  // // modal and loading
-  // const [{ tradeToConfirm, swapErrorMessage, attemptingTxn, txHash }, setSwapState] = useState<{
-  //   tradeToConfirm: Trade | undefined;
-  //   attemptingTxn: boolean;
-  //   swapErrorMessage: string | undefined;
-  //   txHash: string | undefined;
-  // }>({
-  //   tradeToConfirm: undefined,
-  //   attemptingTxn: false,
-  //   swapErrorMessage: undefined,
-  //   txHash: undefined
-  // });
-
-  // const formattedAmounts = {
-  //   [independentField]: typedValue,
-  //   [dependentField]: showWrap
-  //     ? parsedAmounts[independentField]?.toExact() ?? ''
-  //     : parsedAmounts[dependentField]?.toSignificant(6) ?? ''
-  // };
-
-  // const route = trade?.route;
-  // const userHasSpecifiedInputOutput = Boolean(
-  //   currencies[FieldInput.INPUT] &&
-  //     currencies[FieldInput.OUTPUT] &&
-  //     parsedAmounts[independentField]?.greaterThan(JSBI.BigInt(0))
-  // );
-  // const noRoute = !route;
-
-  // useEffect(() => {
-  //   dispatch(switchCurrency('test'));
-  // }, [dispatch]);
+  const dispInputAmount = isInput ? swap_amount : getBalanceAmount(amountsIn).toString();
+  const dispOutputAmount = isInput ? getBalanceAmount(amountsOut).toString() : buy_amount;
 
   const onChangeDestination = (status: boolean) => {
     setDestination(status);
@@ -123,8 +65,8 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
   const onSubmit = (values: any) => {
     submit({
       ...values,
-      swap_amount,
-      buy_amount
+      swap_amount: dispInputAmount,
+      buy_amount: dispOutputAmount
     });
   };
 
@@ -132,12 +74,17 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
     const temp = e.target.value.replace(/,/g, '.');
     if (temp === '' || inputRegex.test(escapeRegExp(temp))) {
       setSwapAmount(temp);
+      setIsInput(true);
       // handleTypeInput(temp);
     }
   };
 
   const handleBuyAmount = (e: any) => {
-    setBuyAmount(e.target.value);
+    const temp = e.target.value.replace(/,/g, '.');
+    if (temp === '' || inputRegex.test(escapeRegExp(temp))) {
+      setBuyAmount(temp);
+      setIsInput(false);
+    }
   };
 
   return (
@@ -167,7 +114,7 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
                         type="text"
                         groupname={selectedToken.name}
                         component={FormInput}
-                        value={swap_amount}
+                        value={dispInputAmount}
                         inputMode="decimal"
                         autoComplete="off"
                         autoCorrect="off"
@@ -203,10 +150,17 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
                             type={'text'}
                             groupname="CLO"
                             component={FormInput}
-                            value={buy_amount}
+                            value={dispOutputAmount}
+                            inputMode="decimal"
+                            autoComplete="off"
+                            autoCorrect="off"
+                            pattern="^[0-9]*[.,]?[0-9]*$"
+                            minLength={1}
+                            maxLength={79}
+                            spellCheck="false"
                             onChange={handleBuyAmount}
                           />
-                          <SwapFooter values={values} />
+                          {/* <SwapFooter values={values} /> */}
                         </div>
                       </div>
                       <div className="row mt-4 swapform__row">
@@ -244,7 +198,9 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
                     type="submit"
                     color="success"
                     className="swapform__submit"
-                    disabled={swap_amount === '0' || values.destination_wallet === '' || pending}
+                    disabled={
+                      dispInputAmount === '0' || dispInputAmount === '' || values.destination_wallet === '' || pending
+                    }
                   >
                     {pending ? (
                       <div>

@@ -32,12 +32,12 @@ export default function Home() {
     if (account) {
       navigate(`/${page}`);
     }
-  }, [account, navigate]);
+  }, [account, navigate, page]);
 
   const onClaim = () => {
     // navigate('/network');
   };
-
+  console.log('====');
   const onPreviousClaim = async () => {
     setPage('previousclaim');
     login(isMobile ? ConnectorNames.WalletConnect : ConnectorNames.Injected, Networks[0]);

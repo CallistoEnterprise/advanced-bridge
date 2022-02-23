@@ -14,4 +14,17 @@ const useGetWeb3 = (rpc: string) => {
   return web3;
 };
 
+// export const useGetWeb3Provider = (rpc: string) => {
+//   const [provider, setWeb3Provider] = useState(null);
+
+//   useEffect(() => {
+//     const get = async () => {
+//       const w = new ethers.providers.Web3Provider(JsonRpcProvider);
+//       setWeb3Provider(w);
+//     };
+//     get();
+//   }, [rpc]);
+//   return provider;
+// };
+
 export default useGetWeb3;

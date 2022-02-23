@@ -3,6 +3,7 @@ import BigNumber from 'bignumber.js';
 import { ethers } from 'ethers';
 import sample from 'lodash/sample';
 import { useEffect, useMemo, useState } from 'react';
+import Web3 from 'web3';
 import WETH_ABI from '~/app/constants/abis/weth.json';
 import { getContract } from '~/app/utils';
 import useActiveWeb3React from './useActiveWeb3';
@@ -103,6 +104,10 @@ export const useERC20 = (address: string) => {
 export const useRpcProvider = (rpcs: string[]) => {
   const RPC_URL = getNodeUrl(rpcs);
   return useMemo(() => new ethers.providers.JsonRpcProvider(RPC_URL), [RPC_URL]);
+};
+
+export const useWeb3Provider = (rpcs: string) => {
+  return useMemo(() => new Web3(new Web3.providers.HttpProvider(rpcs)), [rpcs]);
 };
 
 export const getErc20Contract = (address: string, signer?: ethers.Signer | ethers.providers.Provider) => {
