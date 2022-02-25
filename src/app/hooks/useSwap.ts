@@ -14,9 +14,9 @@ const useSwap = () => {
       const tx = await bridgeContract.depositTokens(receiver, tkAddress, amount.toString(), toChainId, {
         value
       });
-      const receipt = await tx.wait();
+      // const receipt = await tx.wait(64);
       return {
-        status: receipt.status,
+        status: false,
         hash: tx.hash
       };
     },
@@ -39,9 +39,9 @@ const useSwap = () => {
           value
         }
       );
-      const receipt = await tx.wait();
+      // const receipt = await tx.wait();
       return {
-        status: receipt.status,
+        status: false,
         hash: tx.hash
       };
     },

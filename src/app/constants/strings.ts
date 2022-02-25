@@ -1,6 +1,3 @@
-// import t from '../components/Header/types';
-// import { Assets } from './images';
-
 import bnbIcon from '~/assets/images/bnb.svg';
 import cloIcon from '~/assets/images/clo.svg';
 import etcIcon from '~/assets/images/etc.svg';
@@ -8,39 +5,6 @@ import ethIcon from '~/assets/images/eth.svg';
 import cakeIcon from '~/assets/images/tokens/cake.png';
 import soyIcon from '~/assets/images/tokens/soy.svg';
 import usdtIcon from '~/assets/images/tokens/usdt.png';
-
-// export const links = [
-//   {
-//     type: t.DROPDOWN,
-//     name: 'Services',
-//     link: '/services'
-//   },
-//   {
-//     type: t.DROPDOWN,
-//     name: 'Ecosystem',
-//     link: '/ecosystem'
-//   },
-//   {
-//     type: '',
-//     name: 'Blog',
-//     link: '/blog'
-//   },
-//   {
-//     type: '',
-//     name: 'Cryptocurrency',
-//     link: '/cryptocurrency'
-//   },
-//   {
-//     type: '',
-//     name: 'Get an audit',
-//     link: '/news'
-//   },
-//   {
-//     type: t.RECT,
-//     name: 'Whitepaper',
-//     link: '/whitepaper'
-//   }
-// ];
 
 export const social = [
   {

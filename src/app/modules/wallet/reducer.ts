@@ -11,6 +11,7 @@ export interface walletState {
   byte_data: string;
   swapType: string;
   start_swapping: boolean;
+  confirmedBlockCounts?: number;
 }
 
 export const initialState: walletState = {
@@ -22,7 +23,8 @@ export const initialState: walletState = {
   destinationAddress: '',
   byte_data: '',
   swapType: 'swap',
-  start_swapping: false
+  start_swapping: false,
+  confirmedBlockCounts: 0
 };
 
 function reducer(state = initialState, action: walletActionTypes) {
@@ -72,6 +74,11 @@ function reducer(state = initialState, action: walletActionTypes) {
       return {
         ...state,
         start_swapping: action.payload
+      };
+    case actionTypes.SET_CONFIRMED_BLOCK_COUNTS:
+      return {
+        ...state,
+        confirmedBlockCounts: action.payload
       };
     default:
       return state;

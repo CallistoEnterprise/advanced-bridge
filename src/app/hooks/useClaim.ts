@@ -11,8 +11,8 @@ const useClaim = () => {
       const tx = await bridgeContract.claim(respJson.token, txHash, respJson.to, respJson.value, fromChainId, sig, {
         value: 0
       });
-      const receipt = tx.wait();
-      return receipt;
+      // const receipt = tx.wait();
+      return tx;
     },
     [library, account]
   );
@@ -33,8 +33,8 @@ const useClaim = () => {
           value: 0
         }
       );
-      const receipt = tx.wait();
-      return receipt;
+      // const receipt = tx.wait();
+      return tx;
     },
     [library, account]
   );

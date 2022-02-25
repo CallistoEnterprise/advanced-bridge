@@ -7,7 +7,8 @@ export const actionTypes = {
   SET_DESTINATION_ADDRESS: 'SET_DESTINATION_ADDRESS',
   SET_BYTEDATA: 'SET_BYTEDATA',
   SET_SWAP_TYPE: 'SET_SWAP_TYPE',
-  SET_START_SWAPPING: 'SET_START_SWAPPING'
+  SET_START_SWAPPING: 'SET_START_SWAPPING',
+  SET_CONFIRMED_BLOCK_COUNTS: 'SET_CONFIRMED_BLOCK_COUNTS'
 };
 export function setFromNetwork(payload: any) {
   return { type: actionTypes.SET_FROM_NETWORK, payload };
@@ -43,4 +44,8 @@ export function setSwapType(payload: any) {
 
 export function setStartSwapping(payload: any) {
   return { type: actionTypes.SET_START_SWAPPING, payload: payload };
+}
+
+export function setConfirmedBlockCounts(payload: number) {
+  return { type: actionTypes.SET_CONFIRMED_BLOCK_COUNTS, payload: payload };
 }

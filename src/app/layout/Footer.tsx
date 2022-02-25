@@ -1,9 +1,10 @@
 import classNames from 'classnames';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useMediaQuery } from 'react-responsive';
+import useActiveWeb3React from '~/app/hooks/useActiveWeb3React';
 import arrowDown from '~/assets/images/arrowdown.svg';
 import blockIcon from '~/assets/images/block.png';
 import discord from '~/assets/images/discord.svg';
@@ -12,6 +13,7 @@ import medium from '~/assets/images/medium.svg';
 import telegram from '~/assets/images/telegram.svg';
 import twitter from '~/assets/images/twitter.svg';
 import whiteLogo from '~/assets/images/white-logo.svg';
+import { blockConfirmations } from '../constants/config';
 import './footer.css';
 
 const Mobile = ({ children }: any) => {
@@ -25,30 +27,34 @@ const Default = ({ children }: any) => {
 };
 
 export default function Footer() {
+  const { chainId } = useActiveWeb3React();
   const [t] = useTranslation();
   const [documentList, setDocumentList] = useState(false);
   const [resourceslist, setResourcesList] = useState(false);
 
-  const [number, setNumber] = useState(0);
+  // const [number, setNumber] = useState(0);
 
-  const start_swapping = useSelector((state: any) => state.walletBridge.start_swapping);
+  const { start_swapping, confirmedBlockCounts } = useSelector((state: any) => state.walletBridge);
 
-  useEffect(() => {
-    let interval: any;
-    if (start_swapping && number < 12) {
-      interval = setInterval(() => setNumber(number + 1), 1000);
-    }
-    return () => {
-      clearInterval(interval);
-    };
-  }, [number, start_swapping]);
+  // useEffect(() => {
+  //   let interval: any;
+  //   if (start_swapping && number < 12) {
+  //     interval = setInterval(() => setNumber(number + 1), 1000);
+  //   }
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, [number, start_swapping]);
+
+  const dispBNumber =
+    !start_swapping && confirmedBlockCounts !== 0 ? blockConfirmations[chainId] : confirmedBlockCounts;
 
   return (
     <div className={classNames('footer', { footer__animation: start_swapping })}>
       {start_swapping && (
         <div className="footer__blockContent">
           <img src={blockIcon} alt="blockIcon" className="footer__blockIcon" />
-          <p className="footer__blockNumber">block {number}</p>
+          <p className="footer__blockNumber">block {dispBNumber}</p>
         </div>
       )}
       <Container>

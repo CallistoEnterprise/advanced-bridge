@@ -8,12 +8,13 @@ import BorderContainer from '~/app/components/common/BorderContainer';
 import CustomButton from '~/app/components/common/CustomButton';
 import Notice from '~/app/components/Notice';
 import WalletInfo from '~/app/components/WalletInfo';
+import { blockConfirmations } from '~/app/constants/config';
 import useActiveWeb3React from '~/app/hooks/useActiveWeb3';
 import useGetAllowance from '~/app/hooks/useGetAllowance';
 import useGetWeb3 from '~/app/hooks/useGetWeb3';
 import useSwap from '~/app/hooks/useSwap';
 import {
-  setBytedata,
+  setConfirmedBlockCounts,
   setDestinationAddress,
   setHash,
   setStartSwapping,
@@ -35,6 +36,8 @@ const Swap = () => {
   const [pending, setPending] = useState(false);
   const [succeed, setSucced] = useState(false);
   const [canBuyCLO, setCanBuyCLO] = useState(false);
+  const [txBlockNumber, setTxBlockNumber] = useState(0);
+  // const [confirmedCounts, setConfirmedBlockCounts] = useState(0);
 
   const { balance, selectedToken, fromNetwork, toNetwork } = useGetWalletState();
   const swapTokenAddr = selectedToken?.addresses[`${fromNetwork.symbol}`];
@@ -45,7 +48,7 @@ const Swap = () => {
   const web3 = useGetWeb3(fromNetwork?.rpcs[0]);
 
   const [claimAddress, setClaimAddress] = useState('');
-  const { account } = useActiveWeb3React();
+  const { account, chainId } = useActiveWeb3React();
 
   const disable = fromNetwork?.symbol === 'CLO' || toNetwork?.symbol !== 'CLO';
 
@@ -56,6 +59,28 @@ const Swap = () => {
   useEffect(() => {
     dispatch(setStartSwapping(false));
   }, [dispatch]);
+
+  useEffect(() => {
+    const getCurrentBlock = () => {
+      const timer = setInterval(async () => {
+        const b = await web3.eth.getBlockNumber();
+        if (b - txBlockNumber >= blockConfirmations[chainId]) {
+          clearInterval(timer);
+          setSucced(true);
+          setPending(false);
+          dispatch(setStartSwapping(false));
+          await switchNetwork(toNetwork);
+          setTxBlockNumber(0);
+          dispatch(setConfirmedBlockCounts(0));
+        } else {
+          dispatch(setConfirmedBlockCounts(b - txBlockNumber));
+        }
+      }, 1000);
+    };
+    if (txBlockNumber !== 0 && pending) {
+      getCurrentBlock();
+    }
+  }, [dispatch, txBlockNumber, pending, chainId, toNetwork, web3]);
 
   const onSubmit = (values: any) => {
     if (canBuyCLO) {
@@ -69,10 +94,8 @@ const Swap = () => {
 
   async function advancedSwap(amount: any, distinationAddress: string, buy_amount: any) {
     setPending(true);
-    dispatch(setStartSwapping(true));
     const address: any = distinationAddress === '' ? account : distinationAddress;
     setClaimAddress(address);
-    // const swapTokenAddr = selectedToken.addresses[`${fromNetwork.symbol}`];
 
     const bigAmount = getDecimalAmount(
       new BigNumber(amount.toString()),
@@ -87,7 +110,6 @@ const Swap = () => {
     if (swapTokenAddr.slice(0, -2) === '0x00000000000000000000000000000000000000') {
       value = bigAmount.toString();
     } else {
-      // const allowed: boolean = await onGetAllowance(swapTokenAddr);
       if (!allowed) {
         await onApprove();
       }
@@ -103,32 +125,25 @@ const Swap = () => {
 
       try {
         const tx = await onAdvancedSwap(address, swapTokenAddr, bigAmount, toNetwork.chainId, byte_data, value);
-        // console.log(tx, '<===');
-        if (tx.status) {
-          setSucced(true);
-          setPending(false);
-          dispatch(setStartSwapping(false));
-          await switchNetwork(toNetwork);
-          dispatch(setBytedata(byte_data));
-          dispatch(setHash(tx.hash));
-          dispatch(setDestinationAddress(address));
-        } else {
-          setPending(false);
+        if (tx.hash) {
+          await handleSetPending(tx.hash, address);
         }
       } catch (error) {
         setPending(false);
+        setSucced(false);
+        dispatch(setStartSwapping(false));
       }
     } catch (error) {
       setPending(false);
+      setSucced(false);
+      dispatch(setStartSwapping(false));
     }
   }
 
   async function onClickSwap(amount: any, distinationAddress: string) {
     setPending(true);
-    dispatch(setStartSwapping(true));
     const address: any = distinationAddress === '' ? account : distinationAddress;
     setClaimAddress(address);
-    // const swapTokenAddr = selectedToken.addresses[`${fromNetwork.symbol}`];
 
     const bigAmount = getDecimalAmount(
       new BigNumber(amount.toString()),
@@ -142,7 +157,6 @@ const Swap = () => {
       if (swapTokenAddr.slice(0, -2) === '0x00000000000000000000000000000000000000') {
         value = bigAmount.toString();
       } else {
-        // const allowed: boolean = await onGetAllowance(swapTokenAddr);
         if (!allowed) {
           await onApprove();
         }
@@ -150,17 +164,8 @@ const Swap = () => {
 
       try {
         const tx = await onSimpleSwap(address, swapTokenAddr, bigAmount, toNetwork.chainId, value);
-        if (tx.status) {
-          setSucced(true);
-          setPending(false);
-          dispatch(setStartSwapping(false));
-          await switchNetwork(toNetwork);
-          dispatch(setHash(tx.hash));
-          dispatch(setDestinationAddress(address));
-        } else {
-          setPending(false);
-          setSucced(false);
-          dispatch(setStartSwapping(false));
+        if (tx.hash) {
+          await handleSetPending(tx.hash, address);
         }
       } catch (error) {
         setPending(false);
@@ -170,12 +175,20 @@ const Swap = () => {
     }
   }
 
+  const handleSetPending = async (hash: string, toAddr: string) => {
+    dispatch(setStartSwapping(true));
+    const lastBlock = await web3.eth.getBlockNumber();
+    setTxBlockNumber(lastBlock);
+    dispatch(setHash(hash));
+    dispatch(setDestinationAddress(toAddr));
+  };
+
   const claim_address = useMemo(() => claimAddress, [claimAddress]);
 
   return (
     <>
       {pending || succeed ? (
-        <Claim succeed={succeed} address={claim_address} />
+        <Claim succeed={succeed} address={claim_address} totalBlockCounts={blockConfirmations[chainId]} web3={web3} />
       ) : (
         <div className="swap container">
           <div className="swap__content">
