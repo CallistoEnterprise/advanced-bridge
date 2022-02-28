@@ -12,9 +12,10 @@ const getSignatures = async (hash: string, chainId: string) => {
 
   if (sig3) {
     signatures.push(sig3);
-  } else {
-    return { signatures, respJSON: {} };
   }
+  //  else {
+  //   return { signatures, respJSON: {} };
+  // }
   const sig2 = await getSecondSig(hash, chainId);
   if (sig2) {
     signatures.push(sig2);
