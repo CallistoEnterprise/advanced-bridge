@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import CustomButton from '~/app/components/common/CustomButton';
 import Spinner from '~/app/components/common/Spinner';
-import { blockConfirmations } from '~/app/constants/config';
-import useActiveWeb3React from '~/app/hooks/useActiveWeb3React';
+// import useActiveWeb3React from '~/app/hooks/useActiveWeb3React';
 import useClaim from '~/app/hooks/useClaim';
-import { setConfirmedBlockCounts, setStartSwapping } from '~/app/modules/wallet/action';
 import useGetWalletState from '~/app/modules/wallet/hooks';
 import getSignatures from '~/app/utils/getSignatures';
 import claimAnimal from '~/assets/images/animal.gif';
@@ -22,41 +20,41 @@ type props = {
   web3?: any;
 };
 
-export default function Claim({ succeed, totalBlockCounts, web3 }: props) {
-  const { chainId } = useActiveWeb3React();
+export default function Claim({ succeed, totalBlockCounts }: props) {
+  // const { chainId } = useActiveWeb3React();
   const [t] = useTranslation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const [pending, setPending] = useState(false);
-  const [txBlockNumber, setTxBlockNumber] = useState(0);
+  // const [txBlockNumber, setTxBlockNumber] = useState(0);
 
   const { hash, fromNetwork, swapType } = useGetWalletState();
   const { onSimpleClaim, onAdvancedClaim } = useClaim();
 
-  useEffect(() => {
-    const getCurrentBlock = () => {
-      const timer = setInterval(async () => {
-        const b = await web3.eth.getBlockNumber();
-        if (b - txBlockNumber >= blockConfirmations[chainId]) {
-          clearInterval(timer);
-          setPending(false);
-          dispatch(setStartSwapping(false));
-          setTxBlockNumber(0);
-          dispatch(setConfirmedBlockCounts(0));
-          window.localStorage.removeItem('prevData');
-          setPending(false);
-          navigate('/transfer');
-          toast.success('Claimed successfully.');
-        } else {
-          dispatch(setConfirmedBlockCounts(b - txBlockNumber));
-        }
-      }, 1000);
-    };
-    if (txBlockNumber !== 0 && pending) {
-      getCurrentBlock();
-    }
-  }, [dispatch, navigate, txBlockNumber, pending, chainId, web3]);
+  // useEffect(() => {
+  //   const getCurrentBlock = () => {
+  //     const timer = setInterval(async () => {
+  //       const b = await web3.eth.getBlockNumber();
+  //       if (b - txBlockNumber >= blockConfirmations[chainId]) {
+  //         clearInterval(timer);
+  //         setPending(false);
+  //         dispatch(setStartSwapping(false));
+  //         setTxBlockNumber(0);
+  //         dispatch(setConfirmedBlockCounts(0));
+  //         window.localStorage.removeItem('prevData');
+  //         setPending(false);
+  //         navigate('/transfer');
+  //         toast.success('Claimed successfully.');
+  //       } else {
+  //         dispatch(setConfirmedBlockCounts(b - txBlockNumber));
+  //       }
+  //     }, 1000);
+  //   };
+  //   if (txBlockNumber !== 0 && pending) {
+  //     getCurrentBlock();
+  //   }
+  // }, [dispatch, navigate, txBlockNumber, pending, chainId, web3]);
 
   const onClaim = () => {
     if (hash === '') {
@@ -78,8 +76,13 @@ export default function Claim({ succeed, totalBlockCounts, web3 }: props) {
       }
       try {
         const receipt = await onAdvancedClaim(respJSON, hash, fromNetwork.chainId, signatures);
-        if (receipt.hash) {
-          await handleSetPending();
+        if (receipt.status) {
+          // await handleSetPending();
+          setPending(false);
+          window.localStorage.removeItem('prevData');
+          setPending(false);
+          navigate('/transfer');
+          toast.success('Claimed successfully.');
         }
       } catch (error) {
         setPending(false);
@@ -102,8 +105,13 @@ export default function Claim({ succeed, totalBlockCounts, web3 }: props) {
         return;
       }
       const receipt = await onSimpleClaim(respJSON, hash, fromNetwork.chainId, signatures);
-      if (receipt.hash) {
-        await handleSetPending();
+      if (receipt.status) {
+        // await handleSetPending();
+        setPending(false);
+        window.localStorage.removeItem('prevData');
+        setPending(false);
+        navigate('/transfer');
+        toast.success('Claimed successfully.');
       }
     } catch (err) {
       toast.error('Failed to get signature. Please try again.');
@@ -111,11 +119,11 @@ export default function Claim({ succeed, totalBlockCounts, web3 }: props) {
     }
   }
 
-  const handleSetPending = async () => {
-    dispatch(setStartSwapping(true));
-    const lastBlock = await web3.eth.getBlockNumber();
-    setTxBlockNumber(lastBlock);
-  };
+  // const handleSetPending = async () => {
+  //   dispatch(setStartSwapping(true));
+  //   const lastBlock = await web3.eth.getBlockNumber();
+  //   setTxBlockNumber(lastBlock);
+  // };
 
   return (
     <div className="claim container">
