@@ -5,6 +5,7 @@ import sample from 'lodash/sample';
 import { useEffect, useMemo, useState } from 'react';
 import Web3 from 'web3';
 import WETH_ABI from '~/app/constants/abis/weth.json';
+import defaultTokens from '~/app/constants/tokenLists/tokenLists2.json';
 import { getContract } from '~/app/utils';
 import useActiveWeb3React from './useActiveWeb3';
 
@@ -94,6 +95,10 @@ export const useTokenBalance = (fromNet: any, curAsset?: any) => {
     curAsset.symbol
   ]);
   return amt;
+};
+
+export const useGetTokenBalances = (fromNet: any) => {
+  const [tokens, setTokens] = useState(defaultTokens.tokens);
 };
 
 export const useERC20 = (address: string) => {

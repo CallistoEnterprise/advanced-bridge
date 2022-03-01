@@ -1,0 +1,529 @@
+{
+  "tokens": [
+    {
+      "name": "Callisto Coin",
+      "symbol": "CLO",
+      "address": {
+        "20729": "0x0000000000000000000000000000000000000001",
+        "820": "0x0000000000000000000000000000000000000001",
+        "56": "0xCcbf1C9E8b4f2cDF3Bfba1098b8f56f97d219D53",
+        "97": "",
+        "1": "0xCcbf1C9E8b4f2cDF3Bfba1098b8f56f97d219D53",
+        "42": "",
+        "61": "0xCcbf1C9E8b4f2cDF3Bfba1098b8f56f97d219D53",
+        "199": "0xCcbf1C9E8b4f2cDF3Bfba1098b8f56f97d219D53"
+      },
+      "decimals": {
+        "20729": 18,
+        "820": 18,
+        "56": 18,
+        "97": 18,
+        "1": 18,
+        "42": 18,
+        "61": 18,
+        "199": 18
+      },
+      "logoURI": "https://app.soy.finance/images/coins/clo.png"
+    },
+    {
+      "name": "Bulls USD",
+      "symbol": "USDT",
+      "address": {
+        "20729": "",
+        "820": "0xbf6c50889d3a620eb42C0F188b65aDe90De958c4",
+        "56": "0x55d398326f99059ff775485246999027b3197955",
+        "97": "",
+        "1": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+        "42": "",
+        "61": "",
+        "199": ""
+      },
+      "decimals": {
+        "20729": 18,
+        "820": 18,
+        "56": 18,
+        "97": 18,
+        "1": 6,
+        "42": 6,
+        "61": 18,
+        "199": 18
+      },
+      "logoURI": "https://app.soy.finance/images/coins/0xbf6c50889d3a620eb42C0F188b65aDe90De958c4.png"
+    },
+    {
+      "name": "Wrapped BNB",
+      "symbol": "BNB",
+      "address": {
+        "20729": "0xCc0524d86Ba37Cb36B21a14B118723eAF609aDd8",
+        "820": "0xcCDe29903E621Ca12DF33BB0aD9D1ADD7261Ace9",
+        "56": "0x0000000000000000000000000000000000000007",
+        "97": "",
+        "1": "",
+        "42": "",
+        "61": "",
+        "199": ""
+      },
+      "decimals": {
+        "20729": 18,
+        "820": 18,
+        "56": 18,
+        "97": 18,
+        "1": 18,
+        "42": 18,
+        "61": 18,
+        "199": 18
+      },
+      "logoURI": "https://app.soy.finance/images/coins/0xcCDe29903E621Ca12DF33BB0aD9D1ADD7261Ace9.png"
+    },
+    {
+      "name": "Wrapped ETH",
+      "symbol": "ETH",
+      "address": {
+        "20729": "",
+        "820": "0xcC208c32Cc6919af5d8026dAB7A3eC7A57CD1796",
+        "56": "",
+        "97": "",
+        "1": "0x0000000000000000000000000000000000000006",
+        "42": "",
+        "61": "",
+        "199": ""
+      },
+      "decimals": {
+        "20729": 18,
+        "820": 18,
+        "56": 18,
+        "97": 18,
+        "1": 18,
+        "42": 18,
+        "61": 18,
+        "199": 18
+      },
+      "logoURI": "https://app.soy.finance/images/coins/0xcC208c32Cc6919af5d8026dAB7A3eC7A57CD1796.png"
+    },
+    {
+      "name": "Ethereum Classic",
+      "symbol": "ETC",
+      "address": {
+        "20729": "",
+        "820": "0xCCc766f97629a4E14b3af8C91EC54f0b5664A69F",
+        "56": "",
+        "97": "",
+        "1": "0x0000000000000000000000000000000000000005",
+        "42": "",
+        "61": "",
+        "199": ""
+      },
+      "decimals": {
+        "20729": 18,
+        "820": 18,
+        "56": 18,
+        "97": 18,
+        "1": 18,
+        "42": 18,
+        "61": 18,
+        "199": 18
+      },
+      "logoURI": "https://app.soy.finance/images/coins/0xCCc766f97629a4E14b3af8C91EC54f0b5664A69F.png"
+    },
+    {
+      "name": "Wrapped CAKE",
+      "symbol": "CAKE",
+      "address": {
+        "20729": "",
+        "820": "0xCC2D45F7fE1b8864a13F5D552345eB3f5a005FEd",
+        "56": "0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82",
+        "97": "",
+        "1": "",
+        "42": "",
+        "61": "",
+        "199": ""
+      },
+      "decimals": {
+        "20729": 18,
+        "820": 18,
+        "56": 18,
+        "97": 18,
+        "1": 18,
+        "42": 18,
+        "61": 18,
+        "199": 18
+      },
+      "logoURI": "https://app.soy.finance/images/coins/0xCC2D45F7fE1b8864a13F5D552345eB3f5a005FEd.png"
+    },
+    {
+      "name": "Wrapped TWT",
+      "symbol": "TWT",
+      "address": {
+        "20729": "",
+        "820": "0xCC099e75152ACCda96d54FAbaf6e333ca44AD86e",
+        "56": "0x4B0F1812e5Df2A09796481Ff14017e6005508003",
+        "97": "",
+        "1": "",
+        "42": "",
+        "61": "",
+        "199": ""
+      },
+      "decimals": {
+        "20729": 18,
+        "820": 18,
+        "56": 18,
+        "97": 18,
+        "1": 18,
+        "42": 18,
+        "61": 18,
+        "199": 18
+      },
+      "logoURI": "https://app.soy.finance/images/coins/0xCC099e75152ACCda96d54FAbaf6e333ca44AD86e.png"
+    },
+    {
+      "name": "Wrapped WSG",
+      "symbol": "WSG",
+      "address": {
+        "20729": "",
+        "820": "0xccEbb9f0EE6D720DebccEE42f52915037f774A70",
+        "56": "0xA58950F05FeA2277d2608748412bf9F802eA4901",
+        "97": "",
+        "1": "",
+        "42": "",
+        "61": "",
+        "199": ""
+      },
+      "decimals": {
+        "20729": 18,
+        "820": 18,
+        "56": 18,
+        "97": 18,
+        "1": 18,
+        "42": 18,
+        "61": 18,
+        "199": 18
+      },
+      "logoURI": "https://app.soy.finance/images/coins/0xccEbb9f0EE6D720DebccEE42f52915037f774A70.png"
+    },
+    {
+      "name": "Wrapped REEF",
+      "symbol": "REEF",
+      "address": {
+        "20729": "",
+        "820": "0xCc1530716A7eBecFdc7572eDCbF01766f042155c",
+        "56": "0xF21768cCBC73Ea5B6fd3C687208a7c2def2d966e",
+        "97": "",
+        "1": "",
+        "42": "",
+        "61": "",
+        "199": ""
+      },
+      "decimals": {
+        "20729": 18,
+        "820": 18,
+        "56": 18,
+        "97": 18,
+        "1": 18,
+        "42": 18,
+        "61": 18,
+        "199": 18
+      },
+      "logoURI": "https://app.soy.finance/images/coins/0xCc1530716A7eBecFdc7572eDCbF01766f042155c.png"
+    },
+    {
+      "name": "Wrapped BAKE",
+      "symbol": "BAKE",
+      "address": {
+        "20729": "",
+        "820": "0xCCeC9F26F52E8e0D1d88365004f4F475f5274279",
+        "56": "0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5",
+        "97": "",
+        "1": "",
+        "42": "",
+        "61": "",
+        "199": ""
+      },
+      "decimals": {
+        "20729": 18,
+        "820": 18,
+        "56": 18,
+        "97": 18,
+        "1": 18,
+        "42": 18,
+        "61": 18,
+        "199": 18
+      },
+      "logoURI": "https://app.soy.finance/images/coins/0xCCeC9F26F52E8e0D1d88365004f4F475f5274279.png"
+    },
+    {
+      "name": "Wrapped SHIB",
+      "symbol": "SHIB",
+      "address": {
+        "20729": "",
+        "820": "0xccA4F2ED7Fc093461c13f7F5d79870625329549A",
+        "56": "",
+        "97": "",
+        "1": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
+        "42": "",
+        "61": "",
+        "199": ""
+      },
+      "decimals": {
+        "20729": 18,
+        "820": 18,
+        "56": 18,
+        "97": 18,
+        "1": 18,
+        "42": 18,
+        "61": 18,
+        "199": 18
+      },
+      "logoURI": "https://app.soy.finance/images/coins/0xccA4F2ED7Fc093461c13f7F5d79870625329549A.png"
+    },
+    {
+      "name": "Wrapped RACA",
+      "symbol": "RACA",
+      "address": {
+        "20729": "",
+        "820": "0xCC8B04c0f7d0797B3BD6b7BE8E0061ac0c3c0A9b",
+        "56": "0x12BB890508c125661E03b09EC06E404bc9289040",
+        "97": "",
+        "1": "",
+        "42": "",
+        "61": "",
+        "199": ""
+      },
+      "decimals": {
+        "20729": 18,
+        "820": 18,
+        "56": 18,
+        "97": 18,
+        "1": 18,
+        "42": 18,
+        "61": 18,
+        "199": 18
+      },
+      "logoURI": "https://app.soy.finance/images/coins/0xCC8B04c0f7d0797B3BD6b7BE8E0061ac0c3c0A9b.png"
+    },
+    {
+      "name": "Wrapped LINA",
+      "symbol": "LINA",
+      "address": {
+        "20729": "",
+        "820": "0xCC10A4050917f771210407DF7A4C048e8934332c",
+        "56": "0x762539b45A1dCcE3D36d080F74d1AED37844b878",
+        "97": "",
+        "1": "",
+        "42": "",
+        "61": "",
+        "199": ""
+      },
+      "decimals": {
+        "20729": 18,
+        "820": 18,
+        "56": 18,
+        "97": 18,
+        "1": 18,
+        "42": 18,
+        "61": 18,
+        "199": 18
+      },
+      "logoURI": "https://app.soy.finance/images/coins/0xCC10A4050917f771210407DF7A4C048e8934332c.png"
+    },
+    {
+      "name": "Wrapped TON",
+      "symbol": "TON",
+      "address": {
+        "20729": "",
+        "820": "0xCC50D400042177B9DAb6bd31ede73aE8e1ED6F08",
+        "56": "0x76A797A59Ba2C17726896976B7B3747BfD1d220f",
+        "97": "",
+        "1": "",
+        "42": "",
+        "61": "",
+        "199": ""
+      },
+      "decimals": {
+        "20729": 9,
+        "820": 9,
+        "56": 9,
+        "97": 9,
+        "1": 18,
+        "42": 18,
+        "61": 18,
+        "199": 18
+      },
+      "logoURI": "https://app.soy.finance/images/coins/0xCC50D400042177B9DAb6bd31ede73aE8e1ED6F08.png"
+    },
+    {
+      "name": "Wrapped XMS",
+      "symbol": "XMS",
+      "address": {
+        "20729": "",
+        "820": "0xcc45afedd2065EDcA770801055d1E376473a871B",
+        "56": "0x7859B01BbF675d67Da8cD128a50D155cd881B576",
+        "97": "",
+        "1": "",
+        "42": "",
+        "61": "",
+        "199": ""
+      },
+      "decimals": {
+        "20729": 18,
+        "820": 18,
+        "56": 18,
+        "97": 18,
+        "1": 18,
+        "42": 18,
+        "61": 18,
+        "199": 18
+      },
+      "logoURI": "https://app.soy.finance/images/coins/0xcc45afedd2065EDcA770801055d1E376473a871B.png"
+    },
+    {
+      "name": "Wrapped FTM",
+      "symbol": "FTM",
+      "address": {
+        "20729": "",
+        "820": "0xcc50aB63766660C6C1157B8d6A5D51ceA82Dff34",
+        "56": "",
+        "97": "",
+        "1": "0x4E15361FD6b4BB609Fa63C81A2be19d873717870",
+        "42": "",
+        "61": "",
+        "199": ""
+      },
+      "decimals": {
+        "20729": 18,
+        "820": 18,
+        "56": 18,
+        "97": 18,
+        "1": 18,
+        "42": 18,
+        "61": 18,
+        "199": 18
+      },
+      "logoURI": "https://app.soy.finance/images/coins/0xcc50aB63766660C6C1157B8d6A5D51ceA82Dff34.png"
+    },
+    {
+      "name": "Wrapped BTT",
+      "symbol": "BTT",
+      "address": {
+        "20729": "",
+        "820": "0xCc99C6635Fae4DAcF967a3fc2913ab9fa2b349C3",
+        "56": "",
+        "97": "",
+        "1": "",
+        "42": "",
+        "61": "",
+        "199": "0x0000000000000000000000000000000000000003"
+      },
+      "decimals": {
+        "20729": 18,
+        "820": 18,
+        "56": 18,
+        "97": 18,
+        "1": 18,
+        "42": 18,
+        "61": 18,
+        "199": 18
+      },
+      "logoURI": "https://app.soy.finance/images/coins/0xCc99C6635Fae4DAcF967a3fc2913ab9fa2b349C3.png"
+    },
+    {
+      "name": "Wrapped BBT",
+      "symbol": "BBT",
+      "address": {
+        "20729": "",
+        "820": "0xcCCaC2f22752bbe77D4DAb4e9421F2AC6c988427",
+        "56": "0xD48474E7444727bF500a32D5AbE01943f3A59A64",
+        "97": "",
+        "1": "",
+        "42": "",
+        "61": "",
+        "199": "0x0000000000000000000000000000000000000003"
+      },
+      "decimals": {
+        "20729": 8,
+        "820": 8,
+        "56": 8,
+        "97": 8,
+        "1": 8,
+        "42": 8,
+        "61": 8,
+        "199": 8
+      },
+      "logoURI": "https://app.soy.finance/images/coins/0xcCCaC2f22752bbe77D4DAb4e9421F2AC6c988427.png"
+    },
+    {
+      "name": "Wrapped ANTEX",
+      "symbol": "ANTEX",
+      "address": {
+        "20729": "",
+        "820": "0xCCd792f5D06b73685a1b54A32fE786346cAd1894",
+        "56": "0xCA1aCAB14e85F30996aC83c64fF93Ded7586977C",
+        "97": "",
+        "1": "",
+        "42": "",
+        "61": "",
+        "199": ""
+      },
+      "decimals": {
+        "20729": 8,
+        "820": 8,
+        "56": 8,
+        "97": 8,
+        "1": 8,
+        "42": 8,
+        "61": 8,
+        "199": 8
+      },
+      "logoURI": "https://app.soy.finance/images/coins/0xCCd792f5D06b73685a1b54A32fE786346cAd1894.png"
+    },
+    {
+      "name": "Wrapped ZOO",
+      "symbol": "ZOO",
+      "address": {
+        "20729": "",
+        "820": "0xCC9aFcE1e164fC2b381A3a104909e2D9E52cfB5D",
+        "56": "0x1D229B958D5DDFca92146585a8711aECbE56F095",
+        "97": "",
+        "1": "",
+        "42": "",
+        "61": "",
+        "199": ""
+      },
+      "decimals": {
+        "20729": 18,
+        "820": 18,
+        "56": 18,
+        "97": 18,
+        "1": 18,
+        "42": 18,
+        "61": 18,
+        "199": 18
+      },
+      "logoURI": "https://app.soy.finance/images/coins/0xCC9aFcE1e164fC2b381A3a104909e2D9E52cfB5D.png"
+    },
+    {
+      "name": "Wrapped BCOIN",
+      "symbol": "BCOIN",
+      "address": {
+        "20729": "",
+        "820": "0xcC6e7E97A46B6F0eD3bC81518Fc816da78F7cb65",
+        "56": "0x00e1656e45f18ec6747F5a8496Fd39B50b38396D",
+        "97": "",
+        "1": "",
+        "42": "",
+        "61": "",
+        "199": ""
+      },
+      "decimals": {
+        "20729": 18,
+        "820": 18,
+        "56": 18,
+        "97": 18,
+        "1": 18,
+        "42": 18,
+        "61": 18,
+        "199": 18
+      },
+      "logoURI": "https://app.soy.finance/images/coins/0xcC6e7E97A46B6F0eD3bC81518Fc816da78F7cb65.png"
+    }
+  ]
+}

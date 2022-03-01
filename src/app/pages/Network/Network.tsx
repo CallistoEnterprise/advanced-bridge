@@ -11,7 +11,7 @@ import WalletInfo from '~/app/components/WalletInfo';
 import { INetwork } from '~/app/constants/interface';
 import { Networks, walletTokens } from '~/app/constants/strings';
 import useActiveWeb3React from '~/app/hooks/useActiveWeb3';
-import { useNativeCoinBalance } from '~/app/hooks/wallet';
+import { useGetTokenBalances, useNativeCoinBalance } from '~/app/hooks/wallet';
 import { setBalance, setFromNetwork, setToNetwork } from '~/app/modules/wallet/action';
 import { switchNetwork } from '~/app/utils/wallet';
 import previousIcon from '~/assets/images/previous.svg';
@@ -34,6 +34,8 @@ export default function Network() {
   const cloBalance = useNativeCoinBalance(networkOne, walletTokens[0]);
   // const soyBalance = useNativeCoinBalance(networkOne, walletTokens[1]);
   const bnbBalance = useNativeCoinBalance(networkOne, walletTokens[1]);
+
+  useGetTokenBalances(networkOne);
 
   useEffect(() => {
     setPendingBalance(true);
