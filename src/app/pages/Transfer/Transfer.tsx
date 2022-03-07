@@ -50,7 +50,7 @@ const options = [
     value: 'clo',
     symbol: 'ccBNB',
     chainId: 20729,
-    address: '0xcCDe29903E621Ca12DF33BB0aD9D1ADD7261Ace9',
+    address: '0xCc0524d86Ba37Cb36B21a14B118723eAF609aDd8',
     network: 'Callisto'
   },
   {

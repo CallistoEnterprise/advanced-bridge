@@ -71,7 +71,9 @@ export default function SwapForm({ submit, initialData, pending, canBuyCLO, setB
     submit({
       ...values,
       swap_amount,
-      buy_amount
+      buy_amount,
+      amountsIn,
+      amountsOut
     });
   };
 

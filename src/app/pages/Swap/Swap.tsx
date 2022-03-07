@@ -84,7 +84,13 @@ const Swap = () => {
 
   const onSubmit = (values: any) => {
     if (canBuyCLO) {
-      advancedSwap(values.swap_amount, values.destination_wallet, values.buy_amount);
+      advancedSwap(
+        values.swap_amount,
+        values.destination_wallet,
+        values.buy_amount,
+        values.amountsIn,
+        values.amountsOut
+      );
       dispatch(setSwapType('advanced-swap'));
     } else {
       onClickSwap(values.swap_amount, values.destination_wallet);
@@ -92,7 +98,13 @@ const Swap = () => {
     }
   };
 
-  async function advancedSwap(amount: any, distinationAddress: string, buy_amount: any) {
+  async function advancedSwap(
+    amount: any,
+    distinationAddress: string,
+    buy_amount: any,
+    amountsIn: any,
+    amountsOut: any
+  ) {
     setPending(true);
     const address: any = distinationAddress === '' ? account : distinationAddress;
     setClaimAddress(address);
@@ -117,8 +129,8 @@ const Swap = () => {
 
     try {
       const byte_data = await getEncodedData(web3, [
-        bigAmount,
         buyBigAmount,
+        amountsIn,
         [swapTokenAddrInCallisto, '0xbd2D3BCe975FD72E44A73cC8e834aD1B8441BdDa'],
         distinationAddress
       ]);
