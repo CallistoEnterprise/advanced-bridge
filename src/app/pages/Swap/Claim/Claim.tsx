@@ -133,7 +133,13 @@ export default function Claim({ succeed, totalBlockCounts }: props) {
         </div>
         <div className="claim__content--text">
           <h4>{t('Transfert in progress')}</h4>
-          <p>{t(`Please wait for ${totalBlockCounts} blocks confirmations to claim your transaction.`)}</p>
+          <p>
+            {t(
+              `Please wait for ${totalBlockCounts} ${
+                totalBlockCounts === 1 ? 'block confirmation' : 'blocks confirmations'
+              } to claim your transaction.`
+            )}
+          </p>
           {succeed && (
             <CustomButton className="claim__claimbtn" disabled={pending} onClick={onClaim}>
               {pending ? (

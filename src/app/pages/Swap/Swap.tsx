@@ -37,6 +37,7 @@ const Swap = () => {
   const [succeed, setSucced] = useState(false);
   const [canBuyCLO, setCanBuyCLO] = useState(false);
   const [txBlockNumber, setTxBlockNumber] = useState(0);
+  const [switched, setSwitched] = useState(false);
   // const [confirmedCounts, setConfirmedBlockCounts] = useState(0);
 
   const { balance, selectedToken, fromNetwork, toNetwork } = useGetWalletState();
@@ -70,6 +71,7 @@ const Swap = () => {
           setPending(false);
           dispatch(setStartSwapping(false));
           await switchNetwork(toNetwork);
+          setSwitched(true);
           setTxBlockNumber(0);
           dispatch(setConfirmedBlockCounts(0));
         } else {
@@ -200,7 +202,12 @@ const Swap = () => {
   return (
     <>
       {pending || succeed ? (
-        <Claim succeed={succeed} address={claim_address} totalBlockCounts={blockConfirmations[chainId]} web3={web3} />
+        <Claim
+          succeed={succeed}
+          address={claim_address}
+          totalBlockCounts={switched ? 1 : blockConfirmations[chainId]}
+          web3={web3}
+        />
       ) : (
         <div className="swap container">
           <div className="swap__content">
